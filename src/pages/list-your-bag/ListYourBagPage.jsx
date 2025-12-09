@@ -26,6 +26,8 @@ import React from 'react';
 
         const { formState: { errors } } = form;
 
+        console.log('Form Values:', form.watch()); // Log all form values
+        console.log('Form Errors:', errors); // Log form errors
         const renderForm = () => (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 <Card className="lg:col-span-2 shadow-lg border-border/30">

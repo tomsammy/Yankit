@@ -16,6 +16,7 @@ import { AirportSelect } from '@/components/AirportSelect';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { cn } from '@/lib/utils';
+import { globalAirportsList } from '@/lib/airportData';
 
 const pageVariants = {
   initial: { opacity: 0, x: -50 },
@@ -41,6 +42,12 @@ const EditListingPage = () => {
     available_space_kg: 20,
   });
 
+  // Helper to find airport object by label string from DB
+  const findAirportByLabel = useCallback((label) => {
+    if (!label) return null;
+    return globalAirportsList.find(a => a.label === label) || null;
+  }, []);
+
   const fetchListing = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -55,9 +62,14 @@ const EditListingPage = () => {
       if (!data) throw new Error("Listing not found.");
 
       setListing(data);
+
+      // Convert stored labels to airport objects for the select component
+      const originAirport = findAirportByLabel(data.origin);
+      const destinationAirport = findAirportByLabel(data.destination);
+
       setFormData({
-        origin: data.origin,
-        destination: data.destination,
+        origin: originAirport || data.origin, // Fallback to string if object not found
+        destination: destinationAirport || data.destination,
         departure_date: new Date(data.departure_date),
         number_of_bags: data.number_of_bags,
         available_space_kg: data.available_space_kg,
@@ -74,7 +86,7 @@ const EditListingPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [listingId, toast]);
+  }, [listingId, toast, findAirportByLabel]);
 
   useEffect(() => {
     fetchListing();
@@ -104,12 +116,17 @@ const EditListingPage = () => {
         return;
     }
 
+    // Extract labels if they are objects (which they should be from AirportSelect or our populate logic)
+    // We store the label string to match database convention
+    const originLabel = typeof origin === 'object' && origin?.label ? origin.label : origin;
+    const destinationLabel = typeof destination === 'object' && destination?.label ? destination.label : destination;
+
     try {
       const { error } = await supabase
         .from('listings')
         .update({
-          origin,
-          destination,
+          origin: originLabel,
+          destination: destinationLabel,
           departure_date: departure_date.toISOString(),
           number_of_bags,
           available_space_kg,

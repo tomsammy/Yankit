@@ -6,13 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar as CalendarIcon, Briefcase, Info, Percent } from 'lucide-react';
+import { Calendar as CalendarIcon, Briefcase } from 'lucide-react';
 import { format, addDays } from "date-fns";
 import { cn } from "@/lib/utils";
 import { AirportSelect } from '@/components/AirportSelect';
-import { MAX_BAGGAGE_WEIGHT_PER_BAG, MAX_BAGS_PER_LISTING } from '@/config/constants';
-import YankABagNowEstimatedEarningsCard from '@/pages/yank-a-bag-now/YankABagNowEstimatedEarningsCard';
-import { useToast } from '@/components/ui/use-toast'; // Import useToast
+import { MAX_BAGS_PER_LISTING } from '@/config/constants';
+import { useToast } from '@/components/ui/use-toast';
 
 const YankABagNowFormFields = ({
   formData,
@@ -102,18 +101,6 @@ const YankABagNowFormFields = ({
         }} className="text-xs text-red-500 mt-2">{errors.numberOfBags}</motion.p>}
             </div>
           </div>
-
-          {shouldShowEarningsCard && <motion.div initial={{
-      opacity: 0,
-      y: 10
-    }} animate={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      duration: 0.3
-    }} className="mt-8 min-h-[100px]">
-              <YankABagNowEstimatedEarningsCard isLoading={isCalculationPending} estimatedDistance={estimatedDistance} estimatedEarnings={estimatedEarnings} numberOfBags={formData.numberOfBags} />
-            </motion.div>}
 
           <div className="flex items-start space-x-2 mt-6">
             <Checkbox id="termsAccepted" name="termsAccepted" checked={formData.termsAccepted} onCheckedChange={checked => handleInputChange({

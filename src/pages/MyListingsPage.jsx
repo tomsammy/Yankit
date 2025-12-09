@@ -33,7 +33,7 @@ import React, { useState, useEffect } from 'react';
             transition={{ duration: 0.6 }}
         >
             <List className="w-16 h-16 text-primary mx-auto mb-4" />
-            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary mb-3">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary mb-5">
                 My Listings
             </h1>
             <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-xl mx-auto">
