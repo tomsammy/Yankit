@@ -1,0 +1,115 @@
+@tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    @layer base {
+      @font-face {
+        font-family: 'Vernaccia Bold';
+        src: url('/fonts/vernaccia-bold.woff2') format('woff2'), /* Replace with actual path */
+             url('/fonts/vernaccia-bold.woff') format('woff');   /* Replace with actual path */
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --background: 0 0% 100%; /* White */
+        --foreground: 224 71.4% 4.1%; /* Dark Blue-Gray */
+
+        --card: 0 0% 100%;
+        --card-foreground: 224 71.4% 4.1%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 224 71.4% 4.1%;
+
+        --primary: 217 91% 60%; /* Primary Blue */
+        --primary-foreground: 0 0% 100%; /* White */
+
+        --secondary: 210 40% 96.1%; 
+        --secondary-foreground: 224 71.4% 4.1%;
+        
+        --muted: 220 14.3% 95.9%; /* Light Gray */
+        --muted-foreground: 220 8.9% 46.1%;
+
+        --accent: 217 91% 96.1%; /* Lighter Blue Accent */
+        --accent-foreground: 217 91% 40%; /* Darker Blue for accent text */
+
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 217 91% 60%; /* Primary Blue for focus rings */
+
+        --radius: 0.75rem;
+
+        --font-sans: 'Inter', sans-serif; /* Example, ensure Inter is loaded or use system default */
+        --font-heading-brand: 'Vernaccia Bold', var(--font-sans);
+      }
+
+      .dark {
+        --background: 224 71.4% 4.1%; /* Dark Blue-Gray */
+        --foreground: 210 20% 98%; /* Light Gray for text */
+
+        --card: 224 71.4% 5.1%; 
+        --card-foreground: 210 20% 98%;
+
+        --popover: 224 71.4% 4.1%;
+        --popover-foreground: 210 20% 98%;
+
+        --primary: 217 91% 60%; /* Primary Blue */
+        --primary-foreground: 0 0% 100%; 
+        
+        --secondary: 224 71.4% 10.1%; 
+        --secondary-foreground: 210 20% 98%; 
+
+        --muted: 215 27.9% 16.9%;
+        --muted-foreground: 217.9 10.6% 64.9%;
+
+        --accent: 217 91% 20.1%; 
+        --accent-foreground: 217 91% 70%; 
+        
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 85.7% 97.3%;
+
+        --border: 215 27.9% 16.9%;
+        --input: 215 27.9% 16.9%;
+        --ring: 217 91% 60%; 
+      }
+    }
+
+    @layer base {
+      * {
+        @apply border-border;
+      }
+      html {
+        @apply h-full;
+        scroll-behavior: smooth;
+      }
+      body {
+        @apply bg-background text-foreground h-full;
+        font-family: var(--font-sans);
+        font-feature-settings: "rlig" 1, "calt" 1;
+        overflow-y: scroll; /* Always show scrollbar to prevent layout shifts */
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading-brand); /* Apply to headings by default if desired */
+      }
+    }
+    
+    @layer utilities {
+      .font-vernaccia-bold {
+        font-family: 'Vernaccia Bold', var(--font-sans); /* Fallback to sans-serif */
+      }
+    }
+
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .dark .glassmorphism {
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
