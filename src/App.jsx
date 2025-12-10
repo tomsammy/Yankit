@@ -9,6 +9,7 @@ import React, { Suspense } from 'react';
     import { AuthProvider, useAuth } from '@/contexts/SupabaseAuthContext';
     import { AppStateProvider } from '@/contexts/AppStateContext';
     import ProtectedRoute from '@/components/ProtectedRoute'; 
+import CallbackPage from './pages/CallbackPage';
 
     // Page Imports
     const HomePage = React.lazy(() => import('@/pages/HomePage'));
@@ -79,6 +80,7 @@ import React, { Suspense } from 'react';
       { path: "/terms", element: <TermsOfServicePage />, name: "Terms of Service" },
       { path: "/privacy", element: <PrivacyPolicyPage />, name: "Privacy Policy" },
       { path: "/cookies", element: <CookiePolicyPage />, name: "Cookie Policy" },
+      { path: "/callback", element: <CallbackPage />, name: "Callback" },
     ];
 
     const AppRoutes = () => {
