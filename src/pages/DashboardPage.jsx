@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
     import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
     import { User, Star, Settings, Briefcase, MessageSquare } from 'lucide-react';
     import { motion } from 'framer-motion';
-    import { supabase } from '@/lib/supabaseClient';
+
     import DashboardHeader from '@/components/dashboard/DashboardHeader';
     import DashboardQuickActions from '@/components/dashboard/DashboardQuickActions';
     import DashboardProfileTab from '@/components/dashboard/DashboardProfileTab';
@@ -43,30 +43,6 @@ import React, { useState, useEffect } from 'react';
 
       const [activeTab, setActiveTab] = useState(location.state?.defaultTab || "profile");
       
-      useEffect(() => {
-        const handleAuthRedirect = async () => {
-          const hash = window.location.hash; 
-          const params = new URLSearchParams(hash.replace('#', '?'));
-          const access_token = params.get('access_token');
-          const refresh_token = params.get('refresh_token');
-    
-          if (access_token) {
-            const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-    
-            if (error) {
-              console.error('Error setting session:', error.message);
-            } else {
-              console.log('User authenticated');
-              navigate('/dashboard');
-            }
-          } else {
-            console.log('No access token found');
-          }
-        };
-    
-        handleAuthRedirect();
-      }, [navigate]);
-    
       useEffect(() => {
         if (location.state?.defaultTab) {
             setActiveTab(location.state.defaultTab);
