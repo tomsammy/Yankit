@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 
 const CallbackPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleAuthRedirect = async () => {
@@ -13,12 +13,11 @@ const CallbackPage = () => {
         console.log("Error in callback:", error.message);
       } else if (user) {
         console.log("User authenticated:", user);
-        history.push('/dashboard');
-      }
+        navigate('/dashboard');      }
     };
 
     handleAuthRedirect();
-  }, [history]);
+  }, [navigate]);
 
   return <div>Loading...</div>;
 };
