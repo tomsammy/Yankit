@@ -23,6 +23,8 @@ const CallbackPage = () => {
           }
         } else {
           console.log('No access token found');
+          navigate('/dashboard');
+
         }
       };
   
