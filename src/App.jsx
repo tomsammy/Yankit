@@ -8,6 +8,7 @@ import React, { Suspense } from 'react';
     import ScrollToTop from '@/components/ScrollToTop';
     import { AuthProvider, useAuth } from '@/contexts/SupabaseAuthContext';
     import { AppStateProvider } from '@/contexts/AppStateContext';
+    import CallbackPage from './pages/CallbackPage';
     import ProtectedRoute from '@/components/ProtectedRoute'; 
 
     // Page Imports
@@ -79,6 +80,7 @@ import React, { Suspense } from 'react';
       { path: "/terms", element: <TermsOfServicePage />, name: "Terms of Service" },
       { path: "/privacy", element: <PrivacyPolicyPage />, name: "Privacy Policy" },
       { path: "/cookies", element: <CookiePolicyPage />, name: "Cookie Policy" },
+      { path: "/callback", element: <CallbackPage />, name: "Callback" },
     ];
 
     const AppRoutes = () => {
