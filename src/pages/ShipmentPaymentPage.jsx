@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/customSupabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Loader2, Info, CreditCard, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import { getStripe } from '@/lib/stripe'; // Import getStripe
+import { getStripe } from '@/lib/stripe';
 
 const STRIPE_SHIPMENT_PRICE_ID = 'price_1S1fZKGdi1lKRwhj5miGgAUq';
 
@@ -19,7 +19,7 @@ const ShipmentPaymentPage = () => {
     const [shipmentDetails, setShipmentDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isGeneratingLink, setIsGeneratingLink] = useState(false);
-    const [paymentLink, setPaymentLink] = useState(null); // This will now store Stripe checkout URL if needed
+    const [paymentLink, setPaymentLink] = useState(null); 
 
     const fetchShipmentDetails = useCallback(async () => {
         if (!shipmentId) return;
@@ -52,12 +52,6 @@ const ShipmentPaymentPage = () => {
 
             setShipmentDetails(data);
             
-            // For Stripe, we don't store a "payment link" directly in the same way Revolut did.
-            // The link is generated on the fly via the session.
-            // However, we can use this `setPaymentLink` state to indicate if a user
-            // already attempted to pay and was redirected, so we can show a "Pay Again" button.
-            // For simplicity for now, we won't persist this. Each payment attempt creates a new session.
-
         } catch (error) {
             console.error("Error fetching shipment details:", error);
             toast({ variant: "destructive", title: "Error", description: `Could not load shipment details: ${error.message}` });
@@ -94,12 +88,9 @@ const ShipmentPaymentPage = () => {
             if (functionData.error) throw new Error(functionData.error);
 
             if (functionData.sessionId) {
-                // Update shipment status to awaiting_yanker (or similar, if this applies to Stripe flow)
-                // Note: Actual status update should ideally happen after successful payment webhook from Stripe
-                // For now, mirroring previous Revolut logic:
                 const { error: updateError } = await supabase
                     .from('shipments')
-                    .update({ status: 'awaiting_yanker' }) // This status might need review based on full payment flow
+                    .update({ status: 'awaiting_yanker' })
                     .eq('id', shipmentId);
 
                 if (updateError) {
@@ -174,7 +165,7 @@ const ShipmentPaymentPage = () => {
                     </div>
                     
                      <div className="text-center">
-                        {paymentLink ? ( // This `paymentLink` state is not used for Stripe direct redirects, but kept for conditional rendering if needed
+                        {paymentLink ? (  
                             <div className="space-y-4">
                                 <p className="text-muted-foreground">Click below to proceed to payment.</p>
                                 <Button onClick={handleGeneratePaymentLink} className="w-full text-lg py-6 bg-gradient-to-r from-green-500 to-emerald-600 hover:opacity-90">

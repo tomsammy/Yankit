@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import { useToast } from '@/components/ui/use-toast';
     import { AlertTriangle } from 'lucide-react';
     import ChatHeader from './ChatHeader';

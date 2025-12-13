@@ -48,7 +48,6 @@ import { useState } from 'react';
             return;
           }
         } else if (!convId && (!listingId || !otherUserId)) {
-           // This case might happen if onOpenChat is called with partial data from somewhere unexpected
            console.warn("Attempted to open chat without sufficient information (listingId or otherUserId missing and no conversationId).");
            toast({ title: "Chat Error", description: "Cannot open chat due to missing information.", variant: "destructive" });
            return;
@@ -69,7 +68,7 @@ import { useState } from 'react';
         currentChatInfo,
         handleOpenChat,
         handleCloseChat,
-        setIsChatOpen, // Exposing this directly for more control if needed by Dialog
+        setIsChatOpen, 
       };
     };
 

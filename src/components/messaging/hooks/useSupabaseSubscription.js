@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import isEqual from 'lodash/isEqual'; 
 
     const useSupabaseSubscription = (subscriptionConfigs) => {
@@ -42,13 +42,11 @@ import { useEffect, useRef } from 'react';
             )
             .subscribe((status, err) => {
               if (status === 'SUBSCRIBED') {
-                // console.log(`Successfully subscribed to ${channelKey}`);
               } else if (status === 'CHANNEL_ERROR') {
                 console.error(`Failed to subscribe to ${channelKey}: CHANNEL_ERROR`, err);
               } else if (status === 'TIMED_OUT') {
                 console.error(`Failed to subscribe to ${channelKey}: TIMED_OUT`, err);
               } else if (status === 'CLOSED') {
-                // console.log(`Subscription to ${channelKey} closed.`);
               }
             });
           return channel;
@@ -58,7 +56,6 @@ import { useEffect, useRef } from 'react';
           channels.forEach(channel => {
             if (channel) {
               supabase.removeChannel(channel).then(status => {
-                // console.log(`Unsubscribed from channel ${channel.topic}, status: ${status}`);
               }).catch(error => {
                 console.error(`Error unsubscribing from channel ${channel.topic}:`, error);
               });

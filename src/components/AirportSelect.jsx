@@ -73,7 +73,6 @@ import React, { useState, useMemo, useEffect } from "react";
         if (type === 'flights') {
           return duffelAirports;
         }
-        // For 'origin', 'destination', and 'all', we use the same comprehensive list.
         return allUniqueYankitAirports;
       }, [type, duffelAirports]);
 

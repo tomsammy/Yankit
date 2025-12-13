@@ -1,4 +1,4 @@
-import { BaggageClaim, Info, Phone, Send as SendIcon, Plane, Search, DollarSign, Menu, ShieldCheck, AlertTriangle, UserCircle, FileText, Percent, MapPin, Edit3, Lock } from 'lucide-react';
+import { BaggageClaim, Info, Phone, Send as SendIcon, Plane, Search, DollarSign, Menu, ShieldCheck, AlertTriangle, UserCircle, MapPin, Edit3, Lock } from 'lucide-react';
 
     const commonKeywords = {
       help: ['help', 'support', 'assistance', 'problem', 'issue'],
@@ -278,12 +278,11 @@ import { BaggageClaim, Info, Phone, Send as SendIcon, Plane, Search, DollarSign,
             }
         }
         
-        // General keyword matching if not found in specific flow
         for (const commonKey in commonKeywords) {
             if (commonKeywords[commonKey].some(k => userInput.includes(k))) {
                 if (commonKey === 'send_package') return 'sendingItemInfo';
                 if (commonKey === 'offer_baggage') return 'offeringBaggageInfo';
-                if (commonKey === 'flights') return 'bookingFlightInfo'; // Assuming you might add this
+                if (commonKey === 'flights') return 'bookingFlightInfo'; 
                 if (commonKey === 'payment' || commonKey === 'fees') return 'feesInfo';
                 if (commonKey === 'help' || commonKey === 'support' || commonKey === 'contact') return 'contactSupport';
                 if (commonKey === 'baggage_allowance') return 'baggageAllowanceInfo';

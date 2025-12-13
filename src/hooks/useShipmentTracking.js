@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/customSupabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
 const generateTrackingEvents = (shipment) => {
     if (!shipment) return [];
@@ -28,7 +28,7 @@ const generateTrackingEvents = (shipment) => {
         events.push({
             title: 'In Transit',
             description: 'The traveler has started their journey with the item.',
-            date: new Date(updated_at), // Placeholder date
+            date: new Date(updated_at), 
             isComplete: true,
         });
     } else {
@@ -45,7 +45,7 @@ const generateTrackingEvents = (shipment) => {
         events.push({
             title: 'Out for Delivery',
             description: 'The traveler has arrived and is coordinating delivery with the recipient.',
-            date: new Date(updated_at), // Placeholder date
+            date: new Date(updated_at), 
             isComplete: true,
         });
     } else {
@@ -62,7 +62,7 @@ const generateTrackingEvents = (shipment) => {
          events.push({
             title: 'Delivered',
             description: 'The item has been successfully delivered to the recipient.',
-            date: new Date(updated_at), // This should be the actual delivery date if available
+            date: new Date(updated_at), 
             isComplete: true,
         });
     } else {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
     import { useNavigate } from 'react-router-dom';
     import { motion } from 'framer-motion';
     import { LockKeyhole, ArrowLeft } from 'lucide-react';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';

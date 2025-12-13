@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar as CalendarIcon, Edit, Save, ArrowLeft, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
-
-import { supabase } from '@/lib/customSupabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -42,7 +41,6 @@ const EditListingPage = () => {
     available_space_kg: 20,
   });
 
-  // Helper to find airport object by label string from DB
   const findAirportByLabel = useCallback((label) => {
     if (!label) return null;
     return globalAirportsList.find(a => a.label === label) || null;
@@ -63,12 +61,11 @@ const EditListingPage = () => {
 
       setListing(data);
 
-      // Convert stored labels to airport objects for the select component
       const originAirport = findAirportByLabel(data.origin);
       const destinationAirport = findAirportByLabel(data.destination);
 
       setFormData({
-        origin: originAirport || data.origin, // Fallback to string if object not found
+        origin: originAirport || data.origin,
         destination: destinationAirport || data.destination,
         departure_date: new Date(data.departure_date),
         number_of_bags: data.number_of_bags,
@@ -116,8 +113,6 @@ const EditListingPage = () => {
         return;
     }
 
-    // Extract labels if they are objects (which they should be from AirportSelect or our populate logic)
-    // We store the label string to match database convention
     const originLabel = typeof origin === 'object' && origin?.label ? origin.label : origin;
     const destinationLabel = typeof destination === 'object' && destination?.label ? destination.label : destination;
 

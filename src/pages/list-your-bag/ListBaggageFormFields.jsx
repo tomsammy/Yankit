@@ -11,7 +11,7 @@ import React from 'react';
     import { cn } from "@/lib/utils";
     import { MAX_BAGGAGE_WEIGHT_PER_BAG, MAX_BAGS_PER_LISTING } from '@/config/constants';
 
-    const ListBaggageFormFields = React.memo(({ form, isLoading, estimatedDistance, estimatedEarnings, numberOfBags }) => {
+    const ListBaggageFormFields = React.memo(({ form, isLoading, numberOfBags }) => {
         const { control, formState: { errors } } = form;
 
         return (

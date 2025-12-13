@@ -1,7 +1,3 @@
-// This file contains the Haversine formula to calculate the distance between two points on Earth.
-    // It uses a manually maintained list of airport coordinates.
-
-    // Haversine formula implementation
     function toRad(x) {
         return (x * Math.PI) / 180;
       }
@@ -11,7 +7,7 @@
           return null;
         }
   
-        const R = 6371; // Earth's radius in kilometers
+        const R = 6371;
         const dLat = toRad(coords2.lat - coords1.lat);
         const dLon = toRad(coords2.lon - coords1.lon);
         const lat1 = toRad(coords1.lat);
@@ -25,7 +21,6 @@
         return R * c;
       }
   
-      // Airport coordinates data
       export const placeholderAirportCoords = {
         "SYD": { lat: -33.946111, lon: 151.177222 },
         "MEL": { lat: -37.673333, lon: 144.843333 },
@@ -129,7 +124,6 @@
         "HKT": { lat: 8.113, lon: 98.316 }
       };
   
-      // Helper function to get coordinates for a given IATA code
       export function getCoords(iata) {
         return placeholderAirportCoords[iata] || null;
       }

@@ -38,7 +38,6 @@ import { useForm } from 'react-hook-form';
                 if (destination) setValue('destination', destination);
                 if (date) setValue('departure_date', parseISO(date));
                 if (bags) setValue('number_of_bags', bags.toString());
-                // Clear state to prevent re-populating on navigation
                 navigate(location.pathname, { replace: true, state: {} });
             }
         }, [location.state, setValue, navigate, location.pathname]);

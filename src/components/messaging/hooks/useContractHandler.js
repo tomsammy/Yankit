@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
 
     const PLATFORM_FEE_PERCENTAGE = 0.21;
 
@@ -8,9 +8,9 @@ import { useState, useEffect, useCallback } from 'react';
       const [isContractLoading, setIsContractLoading] = useState(false);
       const [contractFormData, setContractFormData] = useState({ 
         item_description: '', 
-        agreed_price: '', // This will store the amount traveler receives
+        agreed_price: '',
         currency: 'USD',
-        item_weight_kg: '', // New field for weight if proposing based on listing
+        item_weight_kg: '',
       });
 
       const fetchContract = useCallback(async () => {
@@ -30,17 +30,15 @@ import { useState, useEffect, useCallback } from 'react';
             setContractFormData(prev => ({ 
               ...prev,
               item_description: data.item_description || '', 
-              agreed_price: data.agreed_price || '', // Traveler's price
+              agreed_price: data.agreed_price || '',
               currency: data.currency || 'USD',
-              // item_weight_kg might not be stored directly on contract, or could be if needed
             }));
           } else {
-             // If no contract, and we have listingDetails, pre-fill based on that
             if (listingDetails?.price_per_kg) {
                 setContractFormData(prev => ({
                     ...prev,
                     item_description: '',
-                    agreed_price: '', // Will be calculated if weight is entered
+                    agreed_price: '', 
                     currency: 'USD',
                     item_weight_kg: '',
                 }));
@@ -98,7 +96,7 @@ import { useState, useEffect, useCallback } from 'react';
             sender_user_id: itemSenderId,
             traveler_user_id: itemTravelerId,
             item_description: contractFormData.item_description,
-            agreed_price: finalAgreedPrice, // This is the amount the traveler receives
+            agreed_price: finalAgreedPrice, 
             currency: contractFormData.currency,
             status: 'pending_agreement',
             updated_at: new Date().toISOString(), 
@@ -108,7 +106,6 @@ import { useState, useEffect, useCallback } from 'react';
           if (error) throw error;
           
           setContract(data);
-          // Update form data to reflect the actual proposed price (traveler's share)
           setContractFormData(prev => ({ ...prev, agreed_price: data.agreed_price.toString() }));
           toast({ title: 'Success', description: 'Contract proposed.' });
         } catch (error) {

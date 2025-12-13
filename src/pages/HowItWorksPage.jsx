@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Send, Search, Plane, Briefcase, CheckCircle, Users, Shield, Globe, Ship, HeartHandshake as Handshake, Landmark, FileText, MapPin, ClipboardCheck } from 'lucide-react';
+import { ArrowRight, Send, Search, Briefcase, CheckCircle, Users, Shield, Globe, Landmark, MapPin, ClipboardCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";

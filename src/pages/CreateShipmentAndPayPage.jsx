@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
     import { useLocation, useNavigate } from 'react-router-dom';
     import { motion } from 'framer-motion';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import { useToast } from '@/components/ui/use-toast';
     import { Button } from '@/components/ui/button';
     import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
     import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
     import { CreditCard, Loader2, Package, ArrowRight, ShieldCheck } from 'lucide-react';
     import LoadingSpinner from '@/components/ui/LoadingSpinner';
-    import { getStripe } from '@/lib/stripe'; // Import getStripe
+    import { getStripe } from '@/lib/stripe'; 
 
     const STRIPE_SHIPMENT_PRICE_ID = 'price_1S1fZKGdi1lKRwhj5miGgAUq';
 

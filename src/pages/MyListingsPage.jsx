@@ -113,7 +113,6 @@ import React, { useState, useEffect } from 'react';
         useEffect(() => {
             if (location.state?.activeTab) {
                 setActiveTab(location.state.activeTab);
-                // Clean up state from location
                 navigate(location.pathname, { replace: true, state: {} });
             }
         }, [location.state, navigate, location.pathname]);

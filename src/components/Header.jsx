@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, X, Sun, Moon, LogIn, UserPlus, Send, Briefcase, Home, Info, LayoutDashboard, LogOut } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
-import Logo from '@/components/Header/Logo'; // Use the unified Logo component
+import Logo from '@/components/Header/Logo';
 
 const navLinks = [
   { name: 'Home', path: '/', icon: Home },

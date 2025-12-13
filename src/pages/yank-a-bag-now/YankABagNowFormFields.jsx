@@ -7,7 +7,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar as CalendarIcon, Briefcase } from 'lucide-react';
-import { format, addDays } from "date-fns";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { AirportSelect } from '@/components/AirportSelect';
 import { MAX_BAGS_PER_LISTING } from '@/config/constants';
@@ -21,18 +21,14 @@ const YankABagNowFormFields = ({
   handleNumberOfBagsChange,
   errors,
   isLoading,
-  estimatedDistance,
-  estimatedEarnings,
-  isCalculationPending
 }) => {
   const [isDatePopoverOpen, setIsDatePopoverOpen] = React.useState(false);
-  const { toast } = useToast(); // Initialize toast
+  const { toast } = useToast(); 
 
   const handleDateSelect = date => {
     handleDateChange(date);
     setIsDatePopoverOpen(false);
   };
-  const shouldShowEarningsCard = formData.origin && formData.destination && formData.numberOfBags;
   let dateButtonText = "Select Departure Date";
   if (formData.departureDate) {
     dateButtonText = format(formData.departureDate, "PPP");

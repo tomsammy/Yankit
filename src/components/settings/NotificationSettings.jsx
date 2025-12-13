@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
     import { Switch } from '@/components/ui/switch';
     import { Label } from '@/components/ui/label';
     import { useToast } from '@/components/ui/use-toast';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import { useAuth } from '@/contexts/AuthContext';
     import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
@@ -24,7 +24,7 @@ import React, { useEffect, useState, useCallback } from 'react';
                 .eq('user_id', session.user.id)
                 .single();
 
-            if (error && error.code !== 'PGRST116') { // PGRST116: row not found
+            if (error && error.code !== 'PGRST116') {
                 console.error('Error fetching notification preferences:', error);
                 setError('Could not load your notification settings. Please try again.');
                 toast({ title: 'Error', description: 'Failed to fetch notification settings.', variant: 'destructive' });
@@ -53,7 +53,7 @@ import React, { useEffect, useState, useCallback } from 'react';
             if (error) {
                 console.error('Error updating notification preferences:', error);
                 toast({ title: 'Error', description: 'Failed to save your changes.', variant: 'destructive' });
-                setPreferences(oldPreferences); // Revert on error
+                setPreferences(oldPreferences); 
             } else {
                 toast({ title: 'Success', description: 'Notification settings updated.', className: 'bg-green-500 text-white' });
             }

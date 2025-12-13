@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
     import ContactMethodsSection from '@/components/support/ContactMethodsSection';
     import FaqSection from '@/components/support/FaqSection';
     import ContactFormSection from '@/components/support/ContactFormSection';
-    // import OfficeInfoSection from '@/components/support/OfficeInfoSection'; // Removed as requested
 
     const pageVariants = {
       initial: { opacity: 0, y: 20 },
@@ -66,9 +65,6 @@ import React, { useEffect } from 'react';
               <ContactFormSection />
             </SectionWrapper>
 
-            {/* <SectionWrapper delay={0.4} id="office-info"> // Removed as requested
-              <OfficeInfoSection />
-            </SectionWrapper> */}
           </div>
         </motion.div>
       );

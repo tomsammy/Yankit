@@ -21,7 +21,6 @@ import React, { Suspense } from 'react';
     const DashboardPage = React.lazy(() => import('@/pages/DashboardPage'));
     const EmailConfirmationPage = React.lazy(() => import('@/pages/EmailConfirmationPage'));
     const ForgotPasswordPage = React.lazy(() => import('@/pages/ForgotPasswordPage'));
-    const ResetPasswordPage = React.lazy(() => import('@/pages/ResetPasswordPage'));
     const ChangePasswordPage = React.lazy(() => import('@/pages/ChangePasswordPage'));
     const MyShipmentsPage = React.lazy(() => import('@/pages/MyShipmentsPage'));
     const MyListingsPage = React.lazy(() => import('@/pages/MyListingsPage'));
@@ -32,7 +31,6 @@ import React, { Suspense } from 'react';
     const PaymentSuccessPage = React.lazy(() => import('@/pages/PaymentSuccessPage'));
     const PaymentCancelledPage = React.lazy(() => import('@/pages/PaymentCancelledPage'));
     
-    // Static Page Imports
     const AboutPage = React.lazy(() => import('@/pages/static/AboutPage'));
     const CareersPage = React.lazy(() => import('@/pages/static/CareersPage'));
     const PressPage = React.lazy(() => import('@/pages/static/PressPage'));
@@ -61,7 +59,6 @@ import React, { Suspense } from 'react';
       { path: "/dashboard", element: <DashboardPage />, isProtected: true, name: "Dashboard" },
       { path: "/confirm-email", element: <EmailConfirmationPage />, name: "Confirm Email" },
       { path: "/forgot-password", element: <ForgotPasswordPage />, name: "Forgot Password" },
-      { path: "/reset-password", element: <ResetPasswordPage />, name: "Reset Password" },
       { path: "/change-password", element: <ChangePasswordPage />, isProtected: true, name: "Change Password" },
       { path: "/my-shipments", element: <MyShipmentsPage />, isProtected: true, name: "My Shipments" },
       { path: "/my-listings", element: <MyListingsPage />, isProtected: true, name: "My Listings" },

@@ -11,7 +11,6 @@ const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estima
   let description = "Potential earnings for your Yank a Bag Now offer.";
   let content;
 
-  // Helper to safely check if a value is a valid number (not null, not undefined, not NaN)
   const isValidNumber = (val) => typeof val === 'number' && !isNaN(val);
 
   if (isLoading) {
@@ -24,7 +23,6 @@ const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estima
       </div>
     );
   } else if (!isValidNumber(estimatedEarnings) || !isValidNumber(estimatedDistance)) {
-     // If either is missing or invalid, show the "Enter Details" state
      title = "Enter Details to Estimate";
      description = "Select origin, destination, and number of bags to see potential earnings.";
      content = (

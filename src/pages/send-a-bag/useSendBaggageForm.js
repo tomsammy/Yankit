@@ -3,9 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { getStripe } from '@/lib/stripe';
-import { supabase } from '@/lib/customSupabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
-import { globalAirportsList } from '@/lib/airportData';
 import { BASE_EARNING, PER_KM_RATE, YANKIT_SERVICE_FEE_PERCENTAGE, DEFAULT_CURRENCY } from '@/config/constants';
 
 const useSendBaggageForm = () => {
@@ -38,7 +37,6 @@ const useSendBaggageForm = () => {
             return;
         }
 
-        // Use getCoords to retrieve coordinates based on IATA code (value)
         const originCoords = getCoords(origin.value);
         const destinationCoords = getCoords(destination.value);
 
@@ -49,7 +47,6 @@ const useSendBaggageForm = () => {
             const totalCost = price + serviceFee;
             setEstimatedCost({ price, serviceFee, totalCost });
         } else {
-            // If coordinates are missing, we can't calculate.
             setEstimatedCost({ price: 0, serviceFee: 0, totalCost: 0 });
         }
     }, [origin, destination, numberOfBags]);
@@ -75,7 +72,6 @@ const useSendBaggageForm = () => {
             return;
         }
 
-        // Recalculate cost here to ensure data integrity and avoid NaN
         const numBags = parseInt(data.number_of_bags, 10);
         const originCoords = getCoords(data.origin?.value);
         const destinationCoords = getCoords(data.destination?.value);

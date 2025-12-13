@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-    import { supabase } from '@/lib/customSupabaseClient';
+    import { supabase } from '@/lib/supabaseClient';
     import { Button } from '@/components/ui/button';
     import { useToast } from '@/components/ui/use-toast';
     import { AlertTriangle, CheckCircle, XCircle, Info, Send, FileText, ShieldCheck, MessageSquare, Star as StarIcon } from 'lucide-react';
@@ -93,7 +93,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 
       const triggerReviewPrompt = async (completedShipment) => {
         if (!currentUserProfile || !otherUserProfile) {
-          await fetchUserProfiles(); // Ensure profiles are loaded
+          await fetchUserProfiles(); 
         }
 
         const reviewTarget = isTraveler ? otherUserProfile : otherUserProfile;
@@ -229,7 +229,7 @@ import React, { useState, useEffect, useCallback } from 'react';
                 </AlertDialogContent>
               </AlertDialog>
             );
-          case 'Delivered': // This state is primarily for traveler, sender action is to complete.
+          case 'Delivered':
              return (
               <AlertDialog>
                 <AlertDialogTrigger asChild>

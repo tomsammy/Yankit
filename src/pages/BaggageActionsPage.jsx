@@ -14,7 +14,6 @@ const BaggageActionsPage = () => {
         return <YankABagNowPage />;
     }
 
-    // Fallback or loading state if needed
     return <div>Loading page...</div>;
 };
 

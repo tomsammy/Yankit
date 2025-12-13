@@ -1,22 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Send } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import Logo from '@/components/Header/Logo'; // Import the unified Logo component
+import Logo from '@/components/Header/Logo';
 
 const Footer = () => {
-  const {
-    toast
-  } = useToast();
-  const handleNewsletterSignup = e => {
-    e.preventDefault();
-    toast({
-      title: "🚧 Feature Not Implemented",
-      description: "This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
-  };
   const footerLinks = {
     legal: [{
       name: "Terms of Service",
