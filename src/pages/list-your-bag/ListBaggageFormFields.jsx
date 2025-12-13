@@ -6,7 +6,6 @@ import React from 'react';
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
     import { Button } from '@/components/ui/button';
     import { AirportSelect } from '@/components/AirportSelect';
-    import EstimatedEarningsCard from '@/pages/list-baggage/EstimatedEarningsCard';
     import { CalendarPlus as CalendarIcon, PackagePlus, Info } from 'lucide-react';
     import { format } from "date-fns";
     import { cn } from "@/lib/utils";
@@ -123,14 +122,7 @@ import React from 'react';
               )}
               {errors.number_of_bags && <p className="text-xs text-red-500 mt-1">{errors.number_of_bags.message}</p>}
             </div>
-            
-            <EstimatedEarningsCard 
-              origin={form.getValues('origin')?.value}
-              destination={form.getValues('destination')?.value}
-              numberOfBags={numberOfBags}
-              estimatedDistance={estimatedDistance}
-              estimatedEarnings={estimatedEarnings}
-            />
+
           </div>
         );
     });
