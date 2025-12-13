@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
     import { useNavigate, useLocation } from 'react-router-dom';
     import { supabase } from '@/lib/supabaseClient';
     import { useToast } from '@/components/ui/use-toast';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import { useState, useEffect, useCallback } from 'react';
     import { MAX_BAGGAGE_WEIGHT_PER_BAG, BASE_EARNING, PER_KM_RATE } from '@/config/constants';
     import { haversineDistance, getCoords } from '@/lib/distanceUtils';

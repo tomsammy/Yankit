@@ -3,7 +3,6 @@ import React from 'react';
     import { Button } from '@/components/ui/button';
     import { Link } from 'react-router-dom';
     import { PlusCircle, Plane, Box, List } from 'lucide-react';
-    import { useToast } from '@/components/ui/use-toast';
 
     const actionItems = [
       {
@@ -41,13 +40,6 @@ import React from 'react';
     ];
 
     const DashboardQuickActions = () => {
-      const { toast } = useToast();
-
-      const handleComingSoon = () => {
-        toast({
-          title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-        });
-      };
 
       return (
         <section className="mb-10">

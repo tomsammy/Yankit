@@ -6,12 +6,11 @@ import React, { Suspense } from 'react';
 
     import PageLayout from '@/components/layouts/PageLayout';
     import ScrollToTop from '@/components/ScrollToTop';
-    import { AuthProvider, useAuth } from '@/contexts/SupabaseAuthContext';
+    import { AuthProvider, useAuth } from '@/contexts/AuthContext';
     import { AppStateProvider } from '@/contexts/AppStateContext';
     import ProtectedRoute from '@/components/ProtectedRoute'; 
-import CallbackPage from './pages/CallbackPage';
+    import CallbackPage from './pages/CallbackPage';
 
-    // Page Imports
     const HomePage = React.lazy(() => import('@/pages/HomePage'));
     const SupportPage = React.lazy(() => import('@/pages/SupportPage'));
     const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
@@ -27,7 +26,6 @@ import CallbackPage from './pages/CallbackPage';
     const MyShipmentsPage = React.lazy(() => import('@/pages/MyShipmentsPage'));
     const MyListingsPage = React.lazy(() => import('@/pages/MyListingsPage'));
     const EditListingPage = React.lazy(() => import('@/pages/EditListingPage'));
-    const AfricanAnecdotesPage = React.lazy(() => import('@/pages/AfricanAnecdotesPage'));
     const ShipmentPaymentPage = React.lazy(() => import('@/pages/ShipmentPaymentPage'));
     const CreateShipmentAndPayPage = React.lazy(() => import('@/pages/CreateShipmentAndPayPage'));
     const ShipmentTrackingPage = React.lazy(() => import('@/pages/ShipmentTrackingPage'));
@@ -42,6 +40,7 @@ import CallbackPage from './pages/CallbackPage';
     const TermsOfServicePage = React.lazy(() => import('@/pages/static/TermsOfServicePage'));
     const PrivacyPolicyPage = React.lazy(() => import('@/pages/static/PrivacyPolicyPage'));
     const CookiePolicyPage = React.lazy(() => import('@/pages/static/CookiePolicyPage'));
+    const AfricanAnecdotesPage = React.lazy(() => import('@/pages/static/AfricanAnecdotesPage'));
 
     const AppLoadingScreen = () => (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-800">

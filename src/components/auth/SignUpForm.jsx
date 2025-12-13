@@ -6,7 +6,7 @@ import React, { useState } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import { useNavigate } from 'react-router-dom';
     import { UserPlus, Mail, Lock, Eye, EyeOff, User, AlertTriangle } from 'lucide-react';
-     import { useAuth } from '../../contexts/SupabaseAuthContext';
+     import { useAuth } from '../../contexts/AuthContext';
 import GoogleLoginButton from './GoogleLoginButton';
 
     const FormField = ({ id, label, type = "text", placeholder, value, onChange, required = false, icon, children }) => (

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
-import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { getStripe } from '@/lib/stripe';
 import { supabase } from '@/lib/customSupabaseClient';
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';

@@ -1,6 +1,6 @@
 import React from 'react';
     import { Helmet } from 'react-helmet';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import AuthWall from '@/components/auth/AuthWall';
     import YankABagNowPageHeader from './YankABagNowPageHeader';
     import YankABagNowFormFields from './YankABagNowFormFields';

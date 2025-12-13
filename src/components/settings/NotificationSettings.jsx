@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
     import { Label } from '@/components/ui/label';
     import { useToast } from '@/components/ui/use-toast';
     import { supabase } from '@/lib/customSupabaseClient';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
     const NotificationSettings = () => {

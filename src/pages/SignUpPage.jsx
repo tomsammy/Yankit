@@ -2,7 +2,7 @@ import React from 'react';
     import { Navigate } from 'react-router-dom';
     import { CardContent } from '@/components/ui/card';
     import SignUpForm from '@/components/auth/SignUpForm';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import AuthCard from '@/components/auth/AuthCard';
     import LoadingSpinner from '@/components/ui/LoadingSpinner';
     import { SignUpPageHeader, SignInLink } from '@/components/auth/pagecomponents/SignUpPageElements';

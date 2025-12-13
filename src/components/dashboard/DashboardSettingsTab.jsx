@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Bell, Shield, Palette, CreditCard, Trash2, KeyRound, LogOut } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +20,6 @@ import {
 import { supabase } from '@/lib/supabaseClient';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import NotificationSettings from '@/components/settings/NotificationSettings';
-import PaymentMethodsManager from '@/components/settings/PaymentMethodsManager';
 
 const SettingsSection = ({ title, description, icon: Icon, children }) => (
   <Card className="bg-background/70 dark:bg-slate-800/50 shadow-lg border-border dark:border-slate-700/50">
@@ -98,10 +97,6 @@ const DashboardSettingsTab = () => {
 
       <SettingsSection title="Appearance" description="Customize the look and feel of your dashboard." icon={Palette}>
         <p className="text-sm text-muted-foreground dark:text-slate-400">Theme settings are managed using the global toggle.</p>
-      </SettingsSection>
-
-      <SettingsSection title="Payment Methods" description="Manage your saved payment methods." icon={CreditCard}>
-        <PaymentMethodsManager />
       </SettingsSection>
 
       <SettingsSection title="Danger Zone" description="Irreversible actions for your account." icon={Trash2}>

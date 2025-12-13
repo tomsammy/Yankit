@@ -1,147 +1,205 @@
-import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
-    import { supabase } from '@/lib/supabaseClient';
-    import { useToast } from '@/components/ui/use-toast';
-    import { useNavigate, useLocation } from 'react-router-dom';
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import { supabase } from '@/lib/supabaseClient'; 
+import { useToast } from '@/components/ui/use-toast';
 
-    const AuthContext = createContext(null);
+const AuthContext = createContext(null);
 
-    export const AuthProvider = ({ children }) => {
-      const [session, setSession] = useState(undefined); 
-      const [userLoading, setUserLoading] = useState(true); 
-      const [authError, setAuthError] = useState(null);
-      const { toast } = useToast();
-      const navigate = useNavigate();
-      const location = useLocation();
+export const useAuth = () => useContext(AuthContext);
 
-      const createProfileIfNeeded = useCallback(async (currentUser) => {
-        if (!currentUser) return;
+export const AuthProvider = ({ children }) => {
+  const { toast } = useToast();
 
-        try {
-          const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('id')
-            .eq('id', currentUser.id)
-            .single();
+  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-          if (profileError && profileError.code === 'PGRST116') { // PGRST116: Row does not exist
-            const userMetaData = currentUser.user_metadata;
-            const newProfile = {
-              id: currentUser.id,
-              email: currentUser.email,
-              full_name: userMetaData?.full_name || `${userMetaData?.first_name || ''} ${userMetaData?.surname || ''}`.trim() || 'New User',
-              first_name: userMetaData?.first_name || '',
-              surname: userMetaData?.surname || '',
-              avatar_url: userMetaData?.avatar_url || null,
-              updated_at: new Date().toISOString(),
-              created_at: new Date().toISOString(),
-            };
-            const { error: insertError } = await supabase.from('profiles').insert(newProfile);
-            if (insertError) {
-              toast({ title: 'Profile Creation Failed', description: `Could not save profile: ${insertError.message}`, variant: 'destructive' });
-            } else {
-              toast({ title: 'Profile Created', description: 'Your profile has been successfully created.', variant: 'default', className: "bg-green-500 dark:bg-green-600 text-white" });
-            }
-          } else if (profileError) {
-            toast({ title: 'Error loading profile', description: profileError.message, variant: 'destructive' });
-          }
-        } catch (error) {
-          toast({ title: 'Profile Operation Failed', description: error.message, variant: 'destructive' });
-        }
-      }, [toast]);
+  const handleSession = useCallback(async (session) => {
+    setSession(session);
+    setUser(session?.user ?? null);
+    setLoading(false);
+  }, []);
 
-
-      useEffect(() => {
-        setUserLoading(true);
-        setAuthError(null);
-        
-        supabase.auth.getSession().then(async ({ data: { session: initialSession }, error }) => {
-          if (error) {
-            console.error("Error fetching initial session:", error);
-            toast({ title: "Session Error", description: `Failed to fetch initial session: ${error.message}. Check network.`, variant: "destructive" });
-            setAuthError(error.message);
-            setSession(null);
-          } else {
-            setSession(initialSession);
-            if (initialSession?.user) {
-              await createProfileIfNeeded(initialSession.user);
-            }
-          }
-          setUserLoading(false); 
-        }).catch(error => {
-            console.error("Critical error during initial session fetch:", error);
-            toast({ title: "Application Error", description: "A critical error occurred. Check network.", variant: "destructive" });
-            setAuthError(error.message);
-            setSession(null);
-            setUserLoading(false);
-        });
-
-        const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
-          setSession(currentSession);
-          setAuthError(null);
-          
-          if (_event === 'SIGNED_IN' && currentSession?.user) {
-            await createProfileIfNeeded(currentSession.user);
-            
-            const hashParams = new URLSearchParams(window.location.hash.substring(1));
-            const type = hashParams.get('type');
-
-            if (type === 'invite' || type === 'signup' || _event === 'USER_UPDATED' || (currentSession?.user?.email_confirmed_at && !currentSession?.user?.last_sign_in_at)) {
-              toast({ title: "Welcome!", description: "You're signed in and ready to go!", variant: "default", className: "bg-green-500 dark:bg-green-600 text-white" });
-              if (window.location.hash) {
-                window.location.hash = ''; 
-              }
-              navigate('/dashboard', { replace: true });
-            }
-          } else if (_event === 'SIGNED_OUT') {
-            navigate('/signin', { replace: true });
-          }
-          
-          if (userLoading) setUserLoading(false);
-        });
-
-        return () => {
-          authListener.subscription.unsubscribe();
-        };
-      }, [toast, createProfileIfNeeded, navigate, userLoading]);
-
-
-      useEffect(() => {
-        if (userLoading || session === undefined) return; 
-
-        const currentUser = session?.user;
-        const fromPath = location.state?.from;
-        const searchCriteria = location.state?.searchCriteria;
-        const formData = location.state?.formData;
-        
-        if (currentUser) { 
-          const isAuthPage = ['/signin', '/signup', '/confirm-email'].includes(location.pathname);
-          
-          if (isAuthPage) {
-             navigate(fromPath || '/dashboard', { replace: true, state: { searchCriteria, formData } });
-          } else if (fromPath && fromPath !== location.pathname) {
-             navigate(fromPath, { replace: true, state: { searchCriteria, formData } });
-          }
-        } else { 
-          const protectedRoutes = ['/dashboard', '/my-activity', '/my-bookings', '/my-shipments', '/payment', '/tracking'];
-          if (protectedRoutes.some(route => location.pathname.startsWith(route))) {
-            if (location.pathname !== '/signin') {
-              navigate('/signin', { replace: true, state: { from: location.pathname } });
-            }
-          }
-        }
-      }, [session, userLoading, location, navigate, toast]);
-
-      return (
-        <AuthContext.Provider value={{ session, loading: userLoading, authError, setSession }}>
-          {children}
-        </AuthContext.Provider>
-      );
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      handleSession(session);
     };
 
-    export const useAuth = () => {
-      const context = useContext(AuthContext);
-      if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
+    getSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        handleSession(session);
       }
-      return context;
-    };
+    );
+
+    return () => subscription.unsubscribe();
+  }, [handleSession]);
+  
+  const signUp = useCallback(async (email, password, options) => {
+    console.log("signUp called:", { email, options });
+  
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options,
+    });
+  
+    console.log("supabase signUp response:", { data, error });
+  
+    if (error) {
+      console.log("supabase error:", error);
+      toast({
+        variant: "destructive",
+        title: "Sign Up Failed",
+        description: error.message,
+      });
+      return { data: null, error };
+    }
+  
+    if (data?.user && data.user.identities.length === 0) {
+      console.log("duplicate email");
+      const err = new Error("Email already exists or is already registered.");
+  
+      toast({
+        variant: "destructive",
+        title: "Email Already Registered",
+        description: "This email is already in use. Please sign in instead.",
+      });
+  
+      return { data: null, error: err };
+    }
+  
+    console.log("signup success returning");
+    return { data, error: null };
+  }, [toast]);
+  
+
+  const signIn = useCallback(async (email, password) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Sign in Failed",
+        description: error.message || "Something went wrong",
+      });
+    }
+
+    return { error };
+  }, [toast]);
+
+  const sendPasswordResetEmail = useCallback(async (email) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://yankit.com.au/reset-password"
+    });
+  
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Reset Failed",
+        description: error.message || "Could not send reset email.",
+      });
+    }
+  
+    return { error };
+  }, [toast]);
+
+  const resendConfirmationEmail = useCallback(async (email) => {
+    const { data, error } = await supabase.auth.resend({
+      type: "signup",
+      email,
+      options: {
+        emailRedirectTo: "https://yankit.com.au/verify-email"
+      }
+    });
+  
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Resend Failed",
+        description: error.message || "Could not resend confirmation email.",
+      });
+    } else {
+      toast({
+        title: "Email Sent",
+        description: "A new confirmation link has been sent to your email.",
+        className: "bg-green-500 dark:bg-green-600 text-white"
+      });
+    }
+  
+    return { error };
+  }, [toast]);
+
+  const signOut = useCallback(async () => {
+    setUser(null);
+    setSession(null);
+  
+    const { error } = await supabase.auth.signOut();
+  
+    localStorage.removeItem("supabase.auth.token");
+    localStorage.removeItem("supabase.auth.refresh_token");
+    localStorage.removeItem("supabase.auth.expires_at");
+  
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith("sb-"))
+      .forEach((k) => localStorage.removeItem(k));
+  
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Sign out Failed",
+        description: error.message || "Something went wrong",
+      });
+    }
+  
+    return { error };
+  }, [toast]);
+
+  const signInWithGoogle = useCallback(async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/callback`,
+      },
+    });
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Google Sign-In Failed",
+        description: error.message,
+      });
+    }
+
+    return { error };
+  }, [toast]);
+  
+
+  const value = useMemo(() => ({
+    user,
+    session,
+    loading,
+    signUp,
+    signIn,
+    signOut,
+    sendPasswordResetEmail,
+    resendConfirmationEmail,
+    signInWithGoogle,
+  }), [
+    user,
+    session,
+    loading,
+    signUp,
+    signIn,
+    signOut,
+    sendPasswordResetEmail,
+    resendConfirmationEmail,
+    signInWithGoogle,
+  ]);
+  
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

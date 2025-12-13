@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
     import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
     import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
     import useUserListings from '@/hooks/useUserListings';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import LoadingSpinner from '@/components/ui/LoadingSpinner';
     import {
         AlertDialog,

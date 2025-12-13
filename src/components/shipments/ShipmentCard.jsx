@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Plane, ArrowRight, Calendar, Weight, User, Package, DollarSign, CreditCard } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 const ShipmentCard = ({ shipment }) => {
   const navigate = useNavigate();

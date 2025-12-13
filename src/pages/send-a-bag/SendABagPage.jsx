@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import SendABagPageHeader from './SendABagPageHeader';
 import SendABagFormFields from './SendABagFormFields';
 import EstimatedCostCard from './EstimatedCostCard';

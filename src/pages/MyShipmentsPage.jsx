@@ -10,7 +10,7 @@ import React, { useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import { Button } from '@/components/ui/button';
     import { Loader2 } from 'lucide-react';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
 
     const pageVariants = {
       initial: { opacity: 0, y: 20 },

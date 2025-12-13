@@ -4,7 +4,7 @@ import React, { useState } from 'react';
     import { Button } from '@/components/ui/button';
     import { MailCheck, LogIn } from 'lucide-react';
     import { Link } from 'react-router-dom';
-    import { useAuth } from '../contexts/SupabaseAuthContext';
+    import { useAuth } from '../contexts/AuthContext';
 
     const EmailConfirmationPage = () => {
       const { resendConfirmationEmail, user } = useAuth();

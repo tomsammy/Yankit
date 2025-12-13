@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
     import { useNavigate, useLocation, Link } from 'react-router-dom';
     import { motion } from 'framer-motion';
-    import { useAuth } from '@/contexts/SupabaseAuthContext';
+    import { useAuth } from '@/contexts/AuthContext';
     import { LogIn } from 'lucide-react';
     import AuthCard from '@/components/auth/AuthCard';
     import SignInForm from '@/components/auth/SignInForm';
