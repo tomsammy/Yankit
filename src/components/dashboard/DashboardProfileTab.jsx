@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { motion } from 'framer-motion';
 
-const DashboardProfileTab = ({ profile, session, onProfileUpdate, stats }) => {
+const DashboardProfileTab = ({ profile, session, onProfileUpdate }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     full_name: '',

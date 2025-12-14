@@ -90,8 +90,6 @@ import GoogleLoginButton from './GoogleLoginButton';
               onSuccess();
             } else {
               let fromPath = location.state?.from || '/dashboard';
-              if (fromPath === '/offer-space') fromPath = '/yank-a-bag';
-              if (fromPath === '/find-space') fromPath = '/send-a-bag';
               
               const navState = { 
                 searchCriteria: searchCriteria || location.state?.searchCriteria,

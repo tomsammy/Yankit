@@ -23,7 +23,7 @@ const ShipmentList = ({ shipments, type, isLoading }) => {
         <CardDescription className="text-muted-foreground dark:text-slate-300 mt-2 mb-4">
           {type === 'sent' ? "You haven't sent any bags yet." : "You are not currently carrying any bags for others."}
         </CardDescription>
-        <Link to={type === 'sent' ? "/send-a-bag" : "/list-your-bag"}>
+        <Link to={type === 'sent' ? "/list-baggage" : "/yank-a-bag"}>
           <Button className="bg-gradient-to-r from-primary to-purple-600 text-white">
             {type === 'sent' ? "Send a Bag" : "List Your Bag"}
           </Button>

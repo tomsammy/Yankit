@@ -101,10 +101,9 @@ const useShipmentTracking = (shipmentId) => {
             const { data, error: shipmentError } = await supabase
                 .from('shipments')
                 .select(`
-                    *,
-                    listing:listings(*),
-                    sender_profile:profiles!shipments_shipper_user_id_fkey(full_name, avatar_url),
-                    traveler_profile:profiles!shipments_traveler_user_id_fkey(full_name, avatar_url)
+                *,
+                shipper:profiles!shipper_user_id(*),
+                traveler:profiles!traveler_user_id(*)
                 `)
                 .eq('id', shipmentId)
                 .single();

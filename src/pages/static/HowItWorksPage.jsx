@@ -118,7 +118,7 @@ const HowItWorksPage = () => {
           </div>
           <motion.div variants={itemVariants} className="text-center mt-12">
             <Button asChild size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300">
-              <Link to="/send-a-bag">
+              <Link to="/list-baggage">
                 Send an Item Now <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -140,7 +140,7 @@ const HowItWorksPage = () => {
           </div>
           <motion.div variants={itemVariants} className="text-center mt-12">
             <Button asChild size="lg" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300">
-              <Link to="/yank-a-bag-now">
+              <Link to="/yank-a-bag">
                 List Your Trip <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>

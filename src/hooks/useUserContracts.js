@@ -22,11 +22,10 @@ const useUserContracts = () => {
         .from('shipments')
         .select(`
           *,
-          listing:listings (*),
-          shipper:profiles!shipper_user_id (*),
-          traveler:profiles!traveler_user_id (*)
+          shipper:profiles!shipper_user_id(*),
+          traveler:profiles!traveler_user_id(*)
         `)
-        .or(`shipper_user_id.eq.${session.user.id},traveler_user_id.eq.${session.user.id}`)
+                .or(`shipper_user_id.eq.${session.user.id},traveler_user_id.eq.${session.user.id}`)
         .order('created_at', { ascending: false });
 
       if (fetchError) {

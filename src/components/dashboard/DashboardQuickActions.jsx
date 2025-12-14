@@ -7,32 +7,24 @@ import React from 'react';
     const actionItems = [
       {
         icon: PlusCircle,
-        title: "Create Listing",
-        description: "Offer your baggage space for others.",
-        link: "/list-your-bag",
+        title: "List Baggage",
+        description: "List your baggage to be carried by others.",
+        link: "/list-baggage",
         color: "from-purple-500 to-indigo-500",
         action: () => {}
       },
       {
         icon: Plane,
-        title: "Find Shipments",
-        description: "Search for bags to carry on your flight.",
-        link: "/yank-a-bag-now",
+        title: "Yank a Bag",
+        description: "Offer your service to carry bags on your flight.",
+        link: "/yank-a-bag",
         color: "from-blue-500 to-sky-500",
-        action: () => {}
-      },
-      {
-        icon: Box,
-        title: "My Shipments",
-        description: "View and manage your sent/carried bags.",
-        link: "/my-shipments",
-        color: "from-green-500 to-teal-500",
         action: () => {}
       },
       {
         icon: List,
         title: "My Listings",
-        description: "Manage your available baggage space listings.",
+        description: "Manage your sent baggage and available baggage space listings.",
         link: "/my-listings",
         color: "from-yellow-500 to-orange-500",
         action: () => {}
@@ -51,7 +43,7 @@ import React from 'react';
           >
             Quick Actions
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {actionItems.map((item, index) => (
               <motion.div
                 key={index}

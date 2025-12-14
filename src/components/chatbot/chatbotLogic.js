@@ -81,7 +81,7 @@ import { BaggageClaim, Info, Phone, Send as SendIcon, Plane, Search, DollarSign,
       sendingItemInfo: {
         response: "To send an item: \n1. Go to 'Send a Bag'. \n2. Search for Yankers (travellers) going to your destination. \n3. Contact a Yanker via in-app chat, agree on terms, and finalize the contract. \nPayment is held securely by <span class='font-vernaccia-bold'>Yankit</span> and released after confirmation.",
         options: [
-          { id: 'search_listings_now', text: 'Go to Send a Bag', icon: Search, action: 'navigate', path: '/send-a-bag', nextFlow: 'initial' },
+          { id: 'search_listings_now', text: 'Go to Send a Bag', icon: Search, action: 'navigate', path: '/list-baggage', nextFlow: 'initial' },
           { id: 'payment_info_sending', text: 'About Payments', icon: DollarSign, nextFlow: 'feesInfo' },
           { id: 'prohibited_items_q', text: 'What can I send?', icon: AlertTriangle, nextFlow: 'prohibitedItemsInfo' },
           { id: 'main_menu_from_sending', text: 'Main Menu', icon: Menu, nextFlow: 'initial' },
@@ -89,7 +89,7 @@ import { BaggageClaim, Info, Phone, Send as SendIcon, Plane, Search, DollarSign,
         keywordResponses: {
           payment: 'feesInfo',
           prohibited_items: 'prohibitedItemsInfo',
-          search_listings_now: { action: 'navigate', path: '/send-a-bag', nextFlow: 'initial' },
+          search_listings_now: { action: 'navigate', path: '/list-baggage', nextFlow: 'initial' },
           main_menu_from_sending: 'initial'
         }
       },

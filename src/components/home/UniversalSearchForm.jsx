@@ -158,7 +158,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
         if (onSearch) {
           onSearch(criteria);
         } else {
-          const targetPath = mode === 'send' ? '/send-a-bag' : '/list-your-bag';
+          const targetPath = mode === 'send' ? '/list-baggage' : '/yank-a-bag';
           navigate(targetPath, { state: { searchCriteria: criteria } });
         }
       }, [navigate, onSearch]);

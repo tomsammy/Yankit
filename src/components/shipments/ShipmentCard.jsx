@@ -89,7 +89,7 @@ const ShipmentCard = ({ shipment }) => {
           </div>
           <div className="flex items-center">
             <DollarSign className="mr-2 h-4 w-4" />
-            <span>Price: {shipment.agreed_price} {shipment.currency}</span>
+            <span>Price: {shipment.agreed_price.toFixed(2)} {shipment.currency}</span>
           </div>
           <div className="flex items-center">
             <User className="mr-2 h-4 w-4" />

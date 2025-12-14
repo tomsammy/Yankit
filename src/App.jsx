@@ -10,21 +10,20 @@ import React, { Suspense } from 'react';
     import { AppStateProvider } from '@/contexts/AppStateContext';
     import ProtectedRoute from '@/components/ProtectedRoute'; 
     import CallbackPage from './pages/CallbackPage';
+    import EditShipmentPage from './pages/EditShipmentPage';
+    import EditYankingPage from './pages/EditYankingPage';
 
     const HomePage = React.lazy(() => import('@/pages/HomePage'));
     const SupportPage = React.lazy(() => import('@/pages/SupportPage'));
     const SignInPage = React.lazy(() => import('@/pages/SignInPage'));
     const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
-    const HowItWorksPage = React.lazy(() => import('@/pages/HowItWorksPage')); 
-    const BaggageActionsPage = React.lazy(() => import('@/pages/BaggageActionsPage'));
-    const ListYourBagPage = React.lazy(() => import('@/pages/list-your-bag/ListYourBagPage'));
+    const HowItWorksPage = React.lazy(() => import('@/pages/static/HowItWorksPage')); 
+    const YankABagPage = React.lazy(() => import('@/pages/yank-a-bag/YankABagPage'));
+    const ListBaggagePage = React.lazy(() => import('@/pages/list-baggage/ListBaggagePage'));
     const DashboardPage = React.lazy(() => import('@/pages/DashboardPage'));
     const EmailConfirmationPage = React.lazy(() => import('@/pages/EmailConfirmationPage'));
     const ForgotPasswordPage = React.lazy(() => import('@/pages/ForgotPasswordPage'));
-    const ChangePasswordPage = React.lazy(() => import('@/pages/ChangePasswordPage'));
-    const MyShipmentsPage = React.lazy(() => import('@/pages/MyShipmentsPage'));
     const MyListingsPage = React.lazy(() => import('@/pages/MyListingsPage'));
-    const EditListingPage = React.lazy(() => import('@/pages/EditListingPage'));
     const ShipmentPaymentPage = React.lazy(() => import('@/pages/ShipmentPaymentPage'));
     const CreateShipmentAndPayPage = React.lazy(() => import('@/pages/CreateShipmentAndPayPage'));
     const ShipmentTrackingPage = React.lazy(() => import('@/pages/ShipmentTrackingPage'));
@@ -53,16 +52,14 @@ import React, { Suspense } from 'react';
       { path: "/signin", element: <SignInPage />, name: "Sign In" },
       { path: "/signup", element: <SignUpPage />, name: "Sign Up" },
       { path: "/how-it-works", element: <HowItWorksPage />, name: "How It Works" }, 
-      { path: "/yank-a-bag-now", element: <BaggageActionsPage />, name: "Yank a Bag Now" },
-      { path: "/send-a-bag", element: <BaggageActionsPage />, isProtected: false, name: "Send a Bag" },
-      { path: "/list-your-bag", element: <ListYourBagPage />, isProtected: true, name: "List Your Bag" },
+      { path: "/yank-a-bag", element: <YankABagPage />, name: "Yank a Bag" },
+      { path: "/list-baggage", element: <ListBaggagePage />, isProtected: true, name: "List Your Bag" },
       { path: "/dashboard", element: <DashboardPage />, isProtected: true, name: "Dashboard" },
       { path: "/confirm-email", element: <EmailConfirmationPage />, name: "Confirm Email" },
       { path: "/forgot-password", element: <ForgotPasswordPage />, name: "Forgot Password" },
-      { path: "/change-password", element: <ChangePasswordPage />, isProtected: true, name: "Change Password" },
-      { path: "/my-shipments", element: <MyShipmentsPage />, isProtected: true, name: "My Shipments" },
       { path: "/my-listings", element: <MyListingsPage />, isProtected: true, name: "My Listings" },
-      { path: "/edit-listing/:listingId", element: <EditListingPage />, isProtected: true, name: "Edit Listing" },
+      { path: "/edit-shipment/:id", element: <EditShipmentPage />, isProtected: true, name: "Edit Shipment" },
+      { path: "/edit-yanking/:id", element: <EditYankingPage />, isProtected: true, name: "Edit Yanking" },
       { path: "/african-anecdotes", element: <AfricanAnecdotesPage />, name: "African Anecdotes" },
       { path: "/payment/shipment/:shipmentId", element: <ShipmentPaymentPage />, isProtected: true, name: "Shipment Payment" },
       { path: "/create-shipment-and-pay", element: <CreateShipmentAndPayPage />, isProtected: true, name: "Create Shipment And Pay" },
@@ -119,7 +116,7 @@ import React, { Suspense } from 'react';
         return <AppLoadingScreen />;
       }
       
-      const showChatbotOnRoutes = ['/', '/support', '/how-it-works', '/send-a-bag', '/yank-a-bag-now'];
+      const showChatbotOnRoutes = ['/', '/support', '/how-it-works', '/yank-a-bag'];
       const shouldShowChatbot = showChatbotOnRoutes.includes(location.pathname);
 
       return (

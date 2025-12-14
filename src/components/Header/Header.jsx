@@ -10,8 +10,8 @@ import MobileMenuSheet from './MobileMenuSheet';
 
 const navLinks = [
   { path: '/', name: 'Home', icon: Home },
-  { path: '/yank-a-bag-now', name: 'Yank a Bag', icon: Briefcase },
-  { path: '/send-a-bag', name: 'Send a Bag', icon: Send },
+  { path: '/yank-a-bag', name: 'Yank a Bag', icon: Briefcase },
+  { path: '/list-baggage', name: 'List Bagggage', icon: Send },
   { path: '/support', name: 'Support', icon: LifeBuoy },
 ];
 

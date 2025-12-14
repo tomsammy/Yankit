@@ -27,7 +27,7 @@ import React, { useState, useEffect } from 'react';
                     title: 'Error',
                     description: 'No shipment details found. Please create a shipment request first.',
                 });
-                navigate('/send-a-bag');
+                navigate('/list-baggage');
             }
         }, [shipment, navigate, toast]);
 

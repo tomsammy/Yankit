@@ -50,7 +50,9 @@ import React, { useState, useEffect } from 'react';
             departure_date,
             available_space_kg,
             number_of_bags,
-            total_potential_earnings,
+            estimated_earnings,
+            agreed_price,
+            agreed_weight_kg,
             status,
         } = listing;
 
@@ -71,9 +73,9 @@ import React, { useState, useEffect } from 'react';
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                    <div className="font-medium"><span className="text-muted-foreground dark:text-slate-400 block text-xs">Space</span> {available_space_kg} kg</div>
+                    <div className="font-medium"><span className="text-muted-foreground dark:text-slate-400 block text-xs">Space</span> {available_space_kg || agreed_weight_kg} kg</div>
                     <div className="font-medium"><span className="text-muted-foreground dark:text-slate-400 block text-xs">Bags</span> {number_of_bags}</div>
-                    <div className="font-medium"><span className="text-muted-foreground dark:text-slate-400 block text-xs">Earnings</span> ${total_potential_earnings}</div>
+                    <div className="font-medium"><span className="text-muted-foreground dark:text-slate-400 block text-xs">Earnings</span> ${estimated_earnings || agreed_price.toFixed(2)}</div>
                 </CardContent>
                 <CardFooter className="flex justify-end gap-2 pt-4">
                     <Button variant="outline" size="sm" onClick={() => onEdit(id)}><Edit className="w-4 h-4 mr-2" /> Edit</Button>
@@ -118,8 +120,8 @@ import React, { useState, useEffect } from 'react';
         }, [location.state, navigate, location.pathname]);
 
 
-        const handleEdit = (listingId) => {
-            navigate(`/edit-listing/${listingId}`);
+        const handleEdit = (id) => {
+            activeTab === 'yanking' ? navigate(`/edit-yanking/${id}`) : navigate(`/edit-shipment/${id}`);
         };
 
         const confirmDelete = (listingId) => {
@@ -182,7 +184,7 @@ import React, { useState, useEffect } from 'react';
                                 title="You have no shipping listings."
                                 description="Request to send a bag with a traveler."
                                 buttonText="Create Shipping Listing"
-                                buttonLink="/send-a-bag"
+                                buttonLink="/list-baggage"
                                 icon={ClipboardList}
                             />
                         ) : (

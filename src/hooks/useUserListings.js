@@ -1,99 +1,83 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-    import { supabase } from '@/lib/supabaseClient';
-    import { useToast } from '@/components/ui/use-toast';
-    import { useAuth } from '@/contexts/AuthContext';
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { useToast } from '@/components/ui/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
-    const useUserListings = () => {
-        const { session } = useAuth();
-        const [listings, setListings] = useState([]);
-        const [isLoading, setIsLoading] = useState(true);
-        const { toast } = useToast();
-        const currentUserId = session?.user?.id;
+const useUserListings = () => {
+  const { session } = useAuth();
+  const { toast } = useToast();
+  const userId = session?.user?.id;
 
-        const fetchUserListings = useCallback(async (userId) => {
-            if (!userId) {
-                setListings([]);
-                setIsLoading(false);
-                return;
-            }
+  const [yankingListings, setYankingListings] = useState([]);
+  const [shippingListings, setShippingListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-            setIsLoading(true);
-            try {
-                const { data, error } = await supabase
-                    .from('listings')
-                    .select('*')
-                    .eq('user_id', userId)
-                    .order('created_at', { ascending: false });
+  const fetchListings = useCallback(async () => {
+    if (!userId) {
+      setYankingListings([]);
+      setShippingListings([]);
+      setIsLoading(false);
+      return;
+    }
 
-                if (error) {
-                    throw new Error(error.message || "Failed to fetch user listings");
-                }
-                setListings(data || []);
-            } catch (error) {
-                console.error("Error fetching user listings:", error);
-                toast({
-                    title: "Error Fetching Listings",
-                    description: error.message,
-                    variant: "destructive",
-                });
-                setListings([]);
-            } finally {
-                setIsLoading(false);
-            }
-        }, [toast]);
-        
-        const yankingListings = useMemo(() => listings.filter(l => l.listing_type === 'yanking'), [listings]);
-        const shippingListings = useMemo(() => listings.filter(l => l.listing_type === 'shipping'), [listings]);
+    setIsLoading(true);
 
-        const deleteListing = async (listingId) => {
-            try {
-                const { error } = await supabase
-                    .from('listings')
-                    .delete()
-                    .eq('id', listingId);
-                
-                if (error) throw error;
+    try {
+      const [{ data: yankings, error: yErr }, { data: shipments, error: sErr }] =
+        await Promise.all([
+          supabase
+            .from('yankings')
+            .select('*')
+            .eq('yanker_user_id', userId)
+            .order('created_at', { ascending: false }),
 
-                toast({
-                    title: "Success!",
-                    description: "Your listing has been deleted.",
-                });
-                
-                fetchUserListings(currentUserId);
-                return true;
+          supabase
+            .from('shipments')
+            .select('*')
+            .eq('shipper_user_id', userId)
+            .order('created_at', { ascending: false }),
+        ]);
 
-            } catch (error) {
-                console.error("Error deleting listing:", error);
-                toast({
-                    title: "Error",
-                    description: `Failed to delete listing: ${error.message}`,
-                    variant: "destructive",
-                });
-                return false;
-            }
-        };
+      if (yErr) throw yErr;
+      if (sErr) throw sErr;
 
-        useEffect(() => {
-            if (currentUserId) {
-                fetchUserListings(currentUserId);
-            } else {
-                fetchUserListings(null);
-            }
-        }, [currentUserId, fetchUserListings]);
+      setYankingListings(yankings || []);
+      setShippingListings(shipments || []);
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: 'Error',
+        description: 'Failed to load your listings',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [userId, toast]);
 
-        return {
-            listings,
-            yankingListings,
-            shippingListings,
-            isLoading,
-            currentUserId,
-            deleteListing,
-            refetchListings: () => {
-                if (currentUserId) {
-                    fetchUserListings(currentUserId);
-                }
-            },
-        };
-    };
+  const deleteYanking = async (id) => {
+    const { error } = await supabase.from('yankings').delete().eq('id', id);
+    if (error) throw error;
+    fetchListings();
+  };
 
-    export default useUserListings;
+  const deleteShipment = async (id) => {
+    const { error } = await supabase.from('shipments').delete().eq('id', id);
+    if (error) throw error;
+    fetchListings();
+  };
+
+  useEffect(() => {
+    fetchListings();
+  }, [fetchListings]);
+
+  return {
+    yankingListings,
+    shippingListings,
+    isLoading,
+    deleteYanking,
+    deleteShipment,
+  };
+};
+
+export default useUserListings;
