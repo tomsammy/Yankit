@@ -112,9 +112,9 @@ import React, { Suspense } from 'react';
       const auth = useAuth();
       const location = useLocation();
       
-      // if (auth?.loading) { 
-      //   return <AppLoadingScreen />;
-      // }
+      if (auth?.loading) { 
+        return <AppLoadingScreen />;
+      }
       
       const showChatbotOnRoutes = ['/', '/support', '/how-it-works', '/yank-a-bag'];
       const shouldShowChatbot = showChatbotOnRoutes.includes(location.pathname);
