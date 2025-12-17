@@ -1,37 +1,34 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { supabase } from '@/lib/supabaseClient';
+import { useEffect } from 'react'
+import { supabase } from '@/lib/supabaseClient'
+import { useNavigate } from 'react-router-dom'
+import { Loader2 } from 'lucide-react'
 
-const CallbackPage = () => {
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-      const handleAuthRedirect = async () => {
-        const hash = window.location.hash; 
-        const params = new URLSearchParams(hash.replace('#', '?'));
-        const access_token = params.get('access_token');
-        const refresh_token = params.get('refresh_token');
-  
-        if (access_token) {
-          const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-  
-          if (error) {
-            console.error('Error setting session:', error.message);
-          } else {
-            console.log('User authenticated');
-            navigate('/dashboard');
-          }
-        } else {
-          console.log('No access token found');
-          navigate('/dashboard');
+export default function CallbackPage() {
+  const navigate = useNavigate()
 
-        }
-      };
-  
-      handleAuthRedirect();
-    }, [navigate]);
-  
-    return <div>Loading...</div>;
-  };
-  
-  export default CallbackPage;
+  useEffect(() => {
+    const finishOAuth = async () => {
+      const { data, error } = await supabase.auth.getSession()
+
+      if (error) {
+        console.error(error)
+        navigate('/signin')
+        return
+      }
+
+      if (data.session) {
+        navigate('/dashboard', { replace: true })
+      } else {
+        navigate('/signin')
+      }
+    }
+
+    finishOAuth()
+  }, [navigate])
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <Loader2 className="w-10 h-10 animate-spin" />
+    </div>
+  )
+}

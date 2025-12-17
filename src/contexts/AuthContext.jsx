@@ -20,21 +20,29 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      handleSession(session);
-    };
-
-    getSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        handleSession(session);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, [handleSession]);
+    let mounted = true
+  
+    supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return
+      setSession(data.session)
+      setUser(data.session?.user ?? null)
+      setLoading(false)
+    })
+  
+    const { data: { subscription } } =
+      supabase.auth.onAuthStateChange((_event, session) => {
+        if (!mounted) return
+        setSession(session)
+        setUser(session?.user ?? null)
+        setLoading(false)
+      })
+  
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
+  }, [])
+  
   
   const signUp = useCallback(async (email, password, options) => {
     console.log("signUp called:", { email, options });
