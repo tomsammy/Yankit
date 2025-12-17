@@ -12,6 +12,7 @@ import React, { Suspense } from 'react';
     import CallbackPage from './pages/CallbackPage';
     import EditShipmentPage from './pages/EditShipmentPage';
     import EditYankingPage from './pages/EditYankingPage';
+import AuthHandler from './components/auth/AuthHandler';
 
     const HomePage = React.lazy(() => import('@/pages/HomePage'));
     const SupportPage = React.lazy(() => import('@/pages/SupportPage'));
@@ -90,6 +91,7 @@ import React, { Suspense } from 'react';
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="flex-grow"
             >
+              <AuthHandler />
               <Routes location={location}>
                 {routesConfig.map(({ path, element, isProtected, name }) => {
                   return (
