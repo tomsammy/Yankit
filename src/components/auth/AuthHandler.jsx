@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from "@/lib/supabaseClient";
 import { useNavigate } from 'react-router-dom'
 
 function AuthHandler() {
@@ -15,7 +15,7 @@ function AuthHandler() {
       }
 
       if (data.session) {
-        navigate('/dashboard') // or wherever
+        navigate('/dashboard') 
       }
     }
 
