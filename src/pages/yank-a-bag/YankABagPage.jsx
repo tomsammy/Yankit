@@ -32,9 +32,10 @@ const YankABagPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const ok = await submitYanking();
-    if (ok) navigate('/my-listings');
+    const yanking = await submitYanking();
+    if (yanking?.id) navigate(`/yankings/${yanking.id}/matches`);
   };
+  
 
   if (!session) {
     return <AuthWall message="You need to be signed in to Yank a Bag." />;

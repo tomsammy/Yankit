@@ -25,6 +25,9 @@ export const useYankABagForm = (userId) => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [estimatedDistance, setEstimatedDistance] = useState(null);
   const [estimatedEarnings, setEstimatedEarnings] = useState(null);
+  const [matchingShipments, setMatchingShipments] = useState([]);
+  const [yankingId, setYankingId] = useState(null);
+  const [isFetchingMatches, setIsFetchingMatches] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -107,40 +110,82 @@ export const useYankABagForm = (userId) => {
     return () => clearTimeout(t);
   }, [fetchDistanceAndEarnings]);
 
+  const fetchMatchingShipments = useCallback(async () => {
+    if (!yankingId || !userId) return;
+
+    setIsFetchingMatches(true);
+
+    const matchDate = new Date(formData.departureDate)
+    .toISOString()
+    .split('T')[0];
+
+    const { data, error } = await supabase
+      .from('shipments')
+      .select('*')
+      .eq('origin', formData.origin.label)
+      .eq('destination', formData.destination.label)
+      .eq('departure_date', matchDate)      
+      .eq('status', 'open')
+      .is('traveler_user_id', null)
+      .neq('shipper_user_id', userId)
+      .lte(
+        'agreed_weight_kg',
+        parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG
+      )
+      .lte('number_of_bags', parseInt(formData.numberOfBags, 10));
+
+    if (!error) setMatchingShipments(data || []);
+    setIsFetchingMatches(false);
+  }, [yankingId, userId, formData]);
+
+  useEffect(() => {
+    fetchMatchingShipments();
+  }, [fetchMatchingShipments]);
+
   const submitYanking = async () => {
-    if (!userId) return false;
-    if (!validateForm()) return false;
-
+    if (!userId) return null;
+    if (!validateForm()) return null;
+  
     setIsSubmitting(true);
-
+  
     try {
-      await supabase.from('yankings').insert({
-        yanker_user_id: userId,
-        origin: formData.origin.label,
-        destination: formData.destination.label,
-        departure_date: formData.departureDate,
-        number_of_bags: parseInt(formData.numberOfBags, 10),
-        available_space_kg:
-          parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG,
-        estimated_distance_km: estimatedDistance,
-        estimated_earnings: estimatedEarnings,
-        bag_handling_accepted: true,
-        status: 'active',
-      });
-
+      const { data, error } = await supabase
+        .from('yankings')
+        .insert({
+          yanker_user_id: userId,
+          origin: formData.origin.label,
+          destination: formData.destination.label,
+          departure_date: new Date(formData.departureDate)
+          .toISOString()
+          .split('T')[0],
+                  number_of_bags: parseInt(formData.numberOfBags, 10),
+          available_space_kg:
+            parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG,
+          estimated_distance_km: estimatedDistance,
+          estimated_earnings: estimatedEarnings,
+          bag_handling_accepted: true,
+          status: 'active',
+        })
+        .select()
+        .single();
+  
+      if (error) throw error;
+  
+      setYankingId(data.id);
       toast({ title: 'Success', description: 'Yanking listed successfully.' });
-      return true;
+      return data;
     } catch (err) {
       toast({
         title: 'Error',
         description: err.message || 'Failed to create yanking.',
         variant: 'destructive',
       });
-      return false;
+      return null;
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return {
     formData,
@@ -149,6 +194,8 @@ export const useYankABagForm = (userId) => {
     isCalculating,
     estimatedDistance,
     estimatedEarnings,
+    matchingShipments,
+    isFetchingMatches,
     handleInputChange,
     handleDateChange,
     handleAirportChange,
