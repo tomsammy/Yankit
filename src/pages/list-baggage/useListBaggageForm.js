@@ -11,6 +11,7 @@ import {
 } from '@/config/constants';
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
 import { parseISO } from 'date-fns';
+import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
 
 export const useListBaggageForm = () => {
   const { session } = useAuth();
@@ -77,9 +78,10 @@ export const useListBaggageForm = () => {
 
     if (o && d) {
       const distance = Math.round(haversineDistance(o, d));
-      const earnings = BASE_EARNING + distance * PER_KM_RATE;
+      const grossCost = BASE_EARNING + distance * PER_KM_RATE;
+      const netCost = grossCost + (grossCost * YANKIT_SERVICE_FEE_PERCENTAGE);
       setEstimatedDistance(distance);
-      setEstimatedCostPerBag(earnings);
+      setEstimatedCostPerBag(Number(netCost.toFixed(2)));
       clearErrors('destination');
     } else {
       setEstimatedDistance(null);

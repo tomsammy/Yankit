@@ -71,7 +71,7 @@ const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estima
           </span>
         </div>
         <p className="text-xs text-muted-foreground dark:text-slate-400 mt-3 text-center">
-          This is an estimate. Actual earnings may vary. Service fees apply.
+         Includes 20% platform fee. This is an estimate. Actual earnings may vary. Service fees apply.
         </p>
       </>
     );

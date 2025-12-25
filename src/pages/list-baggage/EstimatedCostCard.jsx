@@ -93,6 +93,7 @@ import React from 'react';
                 </CardContent>
                  <CardFooter>
                     <p className="text-xs text-center text-slate-500 dark:text-slate-500 w-full">
+                        Includes 20% platform fee.
                     This is an estimate. The final cost is calculated and based on flight distance.
                     </p>
                 </CardFooter>

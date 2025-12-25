@@ -8,6 +8,7 @@ import {
   PER_KM_RATE,
 } from '@/config/constants';
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
+import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
 
 export const useYankABagForm = (userId) => {
   const { toast } = useToast();
@@ -98,10 +99,11 @@ export const useYankABagForm = (userId) => {
 
     const distance = Math.round(haversineDistance(o, d));
     const bags = parseInt(formData.numberOfBags, 10) || 1;
-    const total = (BASE_EARNING + distance * PER_KM_RATE) * bags;
+    const grossEarning = (BASE_EARNING + distance * PER_KM_RATE) * bags;
+    const netEarning = grossEarning - (grossEarning * YANKIT_SERVICE_FEE_PERCENTAGE);
 
     setEstimatedDistance(distance);
-    setEstimatedEarnings(Number(total.toFixed(2)));
+    setEstimatedEarnings(Number(netEarning.toFixed(2)));
     setIsCalculating(false);
   }, [formData.origin, formData.destination, formData.numberOfBags]);
 
