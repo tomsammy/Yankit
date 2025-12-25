@@ -5,7 +5,7 @@ import { useListBaggageForm } from './useListBaggageForm';
 import AuthWall from '@/components/auth/AuthWall';
 import ListBaggagePageHeader from './ListBaggagePageHeader';
 import ListBaggageFormFields from './ListBaggageFormFields';
-import EstimatedEarningsCard from './EstimatedEarningsCard';
+import EstimatedCostCard from './EstimatedCostCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -19,7 +19,7 @@ const ListBaggagePage = () => {
     isCalculating,
     isSubmitting,
     estimatedDistance,
-    estimatedEarningsPerBag,
+    estimatedCostPerBag,
     onSubmit,
   } = useListBaggageForm();
 
@@ -69,10 +69,10 @@ const ListBaggagePage = () => {
       </Card>
 
       <div className="lg:col-span-1 sticky top-28">
-        <EstimatedEarningsCard
+        <EstimatedCostCard
           isCalculating={isCalculating}
           estimatedDistance={estimatedDistance}
-          estimatedEarningsPerBag={estimatedEarningsPerBag}
+          estimatedCostPerBag={estimatedCostPerBag}
           numberOfBags={form.watch('number_of_bags')}
         />
       </div>

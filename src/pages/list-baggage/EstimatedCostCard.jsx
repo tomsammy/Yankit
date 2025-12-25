@@ -4,9 +4,9 @@ import React from 'react';
     import { motion, AnimatePresence } from 'framer-motion';
     import { Loader2, Zap, TrendingUp, Info } from 'lucide-react';
 
-    const EstimatedEarningsCard = ({ isCalculating, estimatedDistance, estimatedEarningsPerBag, numberOfBags }) => {
-        const hasValues = estimatedDistance !== null && estimatedEarningsPerBag !== null;
-        const totalEarnings = hasValues ? (estimatedEarningsPerBag * parseInt(numberOfBags, 10)) : 0;
+    const EstimatedCostCard = ({ isCalculating, estimatedDistance, estimatedCostPerBag, numberOfBags }) => {
+        const hasValues = estimatedDistance !== null && estimatedCostPerBag !== null;
+        const totalCost = hasValues ? (estimatedCostPerBag * parseInt(numberOfBags, 10)) : 0;
 
         const cardVariants = {
             hidden: { opacity: 0, y: 20 },
@@ -23,10 +23,10 @@ import React from 'react';
                 <CardHeader>
                     <CardTitle className="flex items-center text-xl font-bold text-slate-800 dark:text-slate-100">
                         <TrendingUp className="mr-3 h-6 w-6 text-green-500" />
-                        Estimated Earnings
+                        Estimated Costs
                     </CardTitle>
                     <CardDescription className="text-slate-600 dark:text-slate-400 pt-1">
-                        Here's what you could earn for this trip.
+                    Here's what this shipment could cost.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -40,10 +40,10 @@ import React from 'react';
                                 className="flex flex-col items-center justify-center h-48 text-slate-600 dark:text-slate-400"
                             >
                                 <Loader2 className="h-10 w-10 animate-spin text-green-500 mb-3" />
-                                <p className="font-semibold text-lg">Calculating Earnings...</p>
+                                <p className="font-semibold text-lg">Calculating Cost...</p>
                                 <p className="text-sm">Based on your selected route.</p>
                             </motion.div>
-                        ) : hasValues && estimatedEarningsPerBag > 0 ? (
+                        ) : hasValues && estimatedCostPerBag > 0 ? (
                             <motion.div
                                 key="results"
                                 variants={cardVariants}
@@ -62,9 +62,9 @@ import React from 'react';
                                 <motion.div variants={itemVariants} className="flex justify-between items-center text-slate-700 dark:text-slate-300">
                                     <div className="flex items-center">
                                         <Info className="h-5 w-5 mr-3 text-sky-500" />
-                                        <span className="font-medium">Earnings per Bag</span>
+                                        <span className="font-medium">Cost per Bag</span>
                                     </div>
-                                    <span className="font-semibold text-lg">${estimatedEarningsPerBag.toFixed(2)}</span>
+                                    <span className="font-semibold text-lg">${estimatedCostPerBag.toFixed(2)}</span>
                                 </motion.div>
                                 
                                 <Separator className="my-4 bg-slate-200 dark:bg-slate-700" />
@@ -74,8 +74,8 @@ import React from 'react';
                                     animate={{ scale: 1, opacity: 1, transition: { delay: 0.4, type: 'spring', stiffness: 150 } }}
                                     className="flex justify-between items-center p-4 bg-green-100/80 dark:bg-green-900/40 rounded-lg"
                                 >
-                                    <span className="text-xl font-bold text-green-700 dark:text-green-300">Total Potential Earnings</span>
-                                    <span className="text-3xl font-extrabold text-green-800 dark:text-green-200">${totalEarnings.toFixed(2)}</span>
+                                    <span className="text-xl font-bold text-green-700 dark:text-green-300">Total Potential Cost</span>
+                                    <span className="text-3xl font-extrabold text-green-800 dark:text-green-200">${totalCost.toFixed(2)}</span>
                                 </motion.div>
                             </motion.div>
                         ) : (
@@ -85,19 +85,19 @@ import React from 'react';
                                 animate={{ opacity: 1 }}
                                 className="text-center h-48 flex flex-col justify-center items-center text-slate-500 dark:text-slate-400"
                             >
-                                <p className="font-medium text-lg">Your earnings estimate will appear here.</p>
-                                <p className="text-sm">Please select your origin and destination.</p>
+                                <p className="font-medium text-lg">Your cost estimate will appear here.</p>
+                                <p className="text-sm">Please provide the baggage details and destination.</p>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </CardContent>
                  <CardFooter>
                     <p className="text-xs text-center text-slate-500 dark:text-slate-500 w-full">
-                        This is an estimate. The final amount is confirmed upon successful delivery.
+                    This is an estimate. The final cost is calculated and based on flight distance.
                     </p>
                 </CardFooter>
             </Card>
         );
     };
 
-    export default EstimatedEarningsCard;
+    export default EstimatedCostCard;

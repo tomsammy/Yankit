@@ -21,7 +21,7 @@ export const useListBaggageForm = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [estimatedDistance, setEstimatedDistance] = useState(null);
-  const [estimatedEarningsPerBag, setEstimatedEarningsPerBag] = useState(null);
+  const [estimatedCostPerBag, setEstimatedCostPerBag] = useState(null);
 
   const form = useForm({
     defaultValues: {
@@ -57,7 +57,7 @@ export const useListBaggageForm = () => {
   const calculateEstimates = useCallback(() => {
     if (!origin || !destination) {
       setEstimatedDistance(null);
-      setEstimatedEarningsPerBag(null);
+      setEstimatedCostPerBag(null);
       return;
     }
 
@@ -79,11 +79,11 @@ export const useListBaggageForm = () => {
       const distance = Math.round(haversineDistance(o, d));
       const earnings = BASE_EARNING + distance * PER_KM_RATE;
       setEstimatedDistance(distance);
-      setEstimatedEarningsPerBag(earnings);
+      setEstimatedCostPerBag(earnings);
       clearErrors('destination');
     } else {
       setEstimatedDistance(null);
-      setEstimatedEarningsPerBag(null);
+      setEstimatedCostPerBag(null);
     }
 
     setIsCalculating(false);
@@ -104,7 +104,7 @@ export const useListBaggageForm = () => {
       return;
     }
 
-    if (!estimatedEarningsPerBag) {
+    if (!estimatedCostPerBag) {
       toast({
         title: 'Calculation Error',
         description: 'Unable to calculate earnings.',
@@ -147,7 +147,7 @@ export const useListBaggageForm = () => {
         destination: data.destination.label,
         departure_date: data.departure_date,
         agreed_weight_kg: bagWeight * bags,
-        agreed_price: estimatedEarningsPerBag * bags,
+        agreed_price: estimatedCostPerBag * bags,
         status: 'open',
         currency: 'USD',
         number_of_bags: bags,
@@ -185,7 +185,7 @@ export const useListBaggageForm = () => {
     isCalculating,
     isSubmitting,
     estimatedDistance,
-    estimatedEarningsPerBag,
+    estimatedCostPerBag,
     onSubmit,
   };
 };
