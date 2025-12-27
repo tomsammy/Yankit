@@ -8,7 +8,7 @@ import React from 'react';
       return (
         <section className="relative bg-gradient-to-br from-primary to-blue-700 dark:from-blue-800 dark:to-slate-900 text-white py-20 md:py-24 overflow-hidden">
           <div className="absolute inset-0 opacity-10">
-            <img  alt="Abstract airport pattern" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1683971454407-1758772c10e0" />
+            <img  alt="Abstract airport pattern" className="w-full h-full object-cover" src="./hero.jpeg" />
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
