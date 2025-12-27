@@ -141,44 +141,51 @@ export const useListBaggageForm = () => {
     }
 
     setIsSubmitting(true);
+    const totalAmount = estimatedCostPerBag * bags;
 
     try {
-      await supabase.from('shipments').insert({
-        shipper_user_id: session.user.id,
-        origin: data.origin.label,
-        destination: data.destination.label,
-        departure_date: data.departure_date,
-        agreed_weight_kg: bagWeight * bags,
-        agreed_price: estimatedCostPerBag * bags,
-        status: 'pending_payment',
-        currency: 'USD',
-        number_of_bags: bags,
-
-        bag_weight_kg: bagWeight,
-        bag_length_cm: Number(data.bag_length_cm),
-        bag_width_cm: Number(data.bag_width_cm),
-        bag_height_cm: Number(data.bag_height_cm),
-
-        recipient_name: data.recipient_name,
-        recipient_contact: data.recipient_contact,
-        dangerous_goods_declaration: true,
-      });
-
-      if (error) throw error;
-
-      const { data: payment } = await supabase.functions.invoke(
-        'create-revolut-payment-link',
-        {
-          body: {
-            shipmentId: shipment.id,
-            amount: Math.round(totalAmount * 100),
-            currency: 'USD',
-          },
-        }
-      );
+    const { data: created, error: insertError } = await supabase
+    .from('shipments')
+    .insert({
+      shipper_user_id: session.user.id,
+      origin: data.origin.label,
+      destination: data.destination.label,
+      departure_date: data.departure_date,
+      agreed_weight_kg: bagWeight * bags,
+      agreed_price: totalAmount,
+      status: 'pending_payment',
+      currency: 'USD',
+      number_of_bags: bags,
+      bag_weight_kg: bagWeight,
+      bag_length_cm: Number(data.bag_length_cm),
+      bag_width_cm: Number(data.bag_width_cm),
+      bag_height_cm: Number(data.bag_height_cm),
+      recipient_name: data.recipient_name,
+      recipient_contact: data.recipient_contact,
+      dangerous_goods_declaration: true,
+    })
+    .select('id')
+    .single();
   
-      window.location.href = payment.paymentUrl;
-      // toast({
+  if (insertError) throw insertError;
+  
+  const shipmentId = created.id;
+  
+  const { data: stripeData, error: stripeErr } = await supabase.functions.invoke(
+    'create-stripe-checkout-session',
+    {
+      body: {
+        shipmentId,
+        successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${window.location.origin}/payment-cancel`,
+      },
+    }
+  );
+  
+  if (stripeErr) throw stripeErr;
+  
+  window.location.href = stripeData.url;          
+    // toast({
       //   title: 'Success',
       //   description: 'Shipment listed successfully.',
       // });
