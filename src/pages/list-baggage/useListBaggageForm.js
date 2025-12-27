@@ -150,7 +150,7 @@ export const useListBaggageForm = () => {
         departure_date: data.departure_date,
         agreed_weight_kg: bagWeight * bags,
         agreed_price: estimatedCostPerBag * bags,
-        status: 'open',
+        status: 'pending_payment',
         currency: 'USD',
         number_of_bags: bags,
 
@@ -164,12 +164,26 @@ export const useListBaggageForm = () => {
         dangerous_goods_declaration: true,
       });
 
-      toast({
-        title: 'Success',
-        description: 'Shipment listed successfully.',
-      });
+      if (error) throw error;
 
-      navigate('/my-listings');
+      const { data: payment } = await supabase.functions.invoke(
+        'create-revolut-payment-link',
+        {
+          body: {
+            shipmentId: shipment.id,
+            amount: Math.round(totalAmount * 100),
+            currency: 'USD',
+          },
+        }
+      );
+  
+      window.location.href = payment.paymentUrl;
+      // toast({
+      //   title: 'Success',
+      //   description: 'Shipment listed successfully.',
+      // });
+
+      // navigate('/my-listings');
     } catch (err) {
       console.error(err);
       toast({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { DollarSign, TrendingUp, Route, Loader2, AlertCircle, Info } from 'lucide-react';
+import { DollarSign, TrendingUp, Route, Loader2, AlertCircle, Info, BaggageClaimIcon, Percent } from 'lucide-react';
 import { DEFAULT_CURRENCY } from '@/config/constants';
 
 const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estimatedEarnings, numberOfBags }) => {
@@ -12,6 +12,11 @@ const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estima
   let content;
 
   const isValidNumber = (val) => typeof val === 'number' && !isNaN(val);
+
+  const grossEarnings = isValidNumber(estimatedEarnings) ? estimatedEarnings / 0.8 : 0;
+  const yankitFee = isValidNumber(estimatedEarnings) ? grossEarnings - estimatedEarnings : 0;
+  const earningsPerBag = isValidNumber(estimatedEarnings) ? estimatedEarnings / numBags : 0;
+  const earningsPerKg = grossEarnings ? (grossEarnings / numBags) / 20 : 0;
 
   if (isLoading) {
     title = "Calculating Earnings...";
@@ -61,6 +66,22 @@ const YankABagNowEstimatedEarningsCard = ({ isLoading, estimatedDistance, estima
             {currencySymbol}{(estimatedEarnings / numBags).toFixed(2)}
           </span>
         </div>
+        <div className="flex items-center justify-between mb-3 pb-3 border-b border-border dark:border-slate-700">
+          <div className="flex items-center">
+            <BaggageClaimIcon className="h-5 w-5 text-purple-500 dark:text-purple-400 mr-2" />
+          <span className="text-sm text-muted-foreground dark:text-slate-400">Gross per bag (20kg)</span>
+          </div>
+          <span className="text-sm font-semibold text-purple-600 dark:text-purple-300">{currencySymbol}{(grossEarnings / numBags).toFixed(2)}</span>
+        </div>
+
+        <div className="flex items-center justify-between mb-3 pb-3 border-b border-border dark:border-slate-700">
+          <div className="flex items-center">
+          <Percent className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+          <span className="text-sm text-muted-foreground dark:text-slate-400">Yankit fee (20%)</span>
+          </div>
+          <span className="text-sm font-semibold text-red-600 dark:text-red-300">-{currencySymbol}{(yankitFee / numBags).toFixed(2)}</span>
+        </div>
+
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <TrendingUp className="h-5 w-5 text-primary dark:text-sky-400 mr-2" />

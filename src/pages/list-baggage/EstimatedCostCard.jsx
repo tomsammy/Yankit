@@ -2,17 +2,22 @@ import React from 'react';
     import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
     import { Separator } from "@/components/ui/separator";
     import { motion, AnimatePresence } from 'framer-motion';
-    import { Loader2, Zap, TrendingUp, Info } from 'lucide-react';
+    import { Loader2, Zap, TrendingUp, Info, DollarSign, BaggageClaimIcon, Percent } from 'lucide-react';
 
     const EstimatedCostCard = ({ isCalculating, estimatedDistance, estimatedCostPerBag, numberOfBags }) => {
         const hasValues = estimatedDistance !== null && estimatedCostPerBag !== null;
-        const totalCost = hasValues ? (estimatedCostPerBag * parseInt(numberOfBags, 10)) : 0;
-
+        const bags = parseInt(numberOfBags, 10) || 1;
+        const totalCost = hasValues ? (estimatedCostPerBag * bags) : 0;
+    
+        const baseCost = hasValues ? estimatedCostPerBag / 1.2 : 0;
+        const yankitFee = hasValues ? estimatedCostPerBag - baseCost : 0;
+        const pricePerKg = hasValues ? baseCost / 20 : 0;
+    
         const cardVariants = {
             hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
         };
-
+    
         const itemVariants = {
             hidden: { opacity: 0, x: -10 },
             visible: { opacity: 1, x: 0, transition: { duration: 0.3, delay: 0.2 } }
@@ -66,6 +71,30 @@ import React from 'react';
                                     </div>
                                     <span className="font-semibold text-lg">${estimatedCostPerBag.toFixed(2)}</span>
                                 </motion.div>
+
+                                <motion.div variants={itemVariants} className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                                <div className="flex items-center">
+                                <DollarSign className="h-5 w-5 mr-3 text-green-500" />
+                                <span className="font-medium">Price per kg</span>
+                                </div>
+                                <span className="font-semibold text-lg">${pricePerKg.toFixed(2)}</span>
+                            </motion.div>
+
+                            <motion.div variants={itemVariants} className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                                <div className="flex items-center">
+                                <BaggageClaimIcon className="h-5 w-5 mr-3 text-purple-500" />
+                            <span className="font-medium">Base price per bag (20kg)</span>
+                            </div>
+                                <span className="font-semibold text-lg">${baseCost.toFixed(2)}</span>
+                            </motion.div>
+
+                            <motion.div variants={itemVariants} className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                            <div className="flex items-center">
+                                <Percent className="h-5 w-5 mr-3 text-red-500" />
+                            <span className="font-medium">Yankit fee (20%)</span>
+                            </div>
+                                <span className="font-semibold text-lg">${yankitFee.toFixed(2)}</span>
+                            </motion.div>
                                 
                                 <Separator className="my-4 bg-slate-200 dark:bg-slate-700" />
 
