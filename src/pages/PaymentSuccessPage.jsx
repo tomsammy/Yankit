@@ -31,7 +31,7 @@ const PaymentSuccessPage = () => {
     const verify = async () => {
       try {
         const { data, error } = await supabase.functions.invoke(
-          'verify-stripe-checkout-session',
+          'verify-stripe-payment-and-update-shipment',
           {
             body: { sessionId },
           }
