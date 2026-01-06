@@ -33,16 +33,16 @@ const useDashboardLogic = (session) => {
 
   const [stats, setStats] = useState({
     listings: 0,
-    shipmentsSent: 0,
-    shipmentsCarried: 0,
+    shipments: 0,
+    yankings: 0,
     rating: 0,
     reviews: 0,
   });
 
-  const [sentShipments, setSentShipments] = useState([]);
-  const [carryingShipments, setCarryingShipments] = useState([]);
-  const [isLoadingSent, setIsLoadingSent] = useState(true);
-  const [isLoadingCarrying, setIsLoadingCarrying] = useState(true);
+  const [shipments, setShipments] = useState([]);
+  const [yankings, setYankings] = useState([]);
+  const [isLoadingShipments, setIsLoadingShipments] = useState(true);
+  const [isLoadingYankings, setIsLoadingYankings] = useState(true);
 
   const fetchAllData = useCallback(async (user) => {
     if (!user) {
@@ -52,8 +52,8 @@ const useDashboardLogic = (session) => {
 
     setLoading(true);
     setError(null);
-    setIsLoadingSent(true);
-    setIsLoadingCarrying(true);
+    setIsLoadingShipments(true);
+    setIsLoadingYankings(true);
 
     try {
       const { data: profileData, error: profileError } = await supabase
@@ -66,9 +66,9 @@ const useDashboardLogic = (session) => {
       setProfile(profileData);
 
       const [
-        yankingCount,
-        sentCount,
-        carriedCount,
+        listingsCount,
+        shipmentsCount,
+        yankingsCount,
         reviews,
       ] = await Promise.all([
         fetchCount('yankings', 'yanker_user_id', user.id),
@@ -83,54 +83,49 @@ const useDashboardLogic = (session) => {
           : 0;
 
       setStats({
-        listings: yankingCount,
-        shipmentsSent: sentCount,
-        shipmentsCarried: carriedCount,
+        listings: listingsCount,
+        shipments: shipmentsCount,
+        yankings: yankingsCount,
         rating: Number(avgRating),
         reviews: reviews.length,
       });
 
-      const sent = await fetchData(
-        'shipments',
-        '*, traveler_profile:profiles!shipments_traveler_user_id_fkey(full_name, avatar_url)',
-        'shipper_user_id',
-        user.id
-      );
+      const [shipmentsData, yankingsData] = await Promise.all([
+        fetchData(
+          'shipments',
+          '*',
+          'shipper_user_id',
+          user.id
+        ),
+        fetchData(
+          'shipments',
+          '*',
+          'traveler_user_id',
+          user.id
+        ),
+      ]);
 
-      const carried = await fetchData(
-        'shipments',
-        '*, sender_profile:profiles!shipments_shipper_user_id_fkey(full_name, avatar_url)',
-        'traveler_user_id',
-        user.id
-      );
-
-      setSentShipments(sent);
-      setCarryingShipments(carried);
+      setShipments(shipmentsData);
+      setYankings(yankingsData);
 
     } catch (err) {
-      console.error('Dashboard fetch error:', err);
       setError(err);
-
       toast({
         title: 'Dashboard Error',
         description: err.message || 'Failed to load dashboard data',
         variant: 'destructive',
         icon: <AlertTriangle className="h-5 w-5" />,
       });
-
     } finally {
-      setIsLoadingSent(false);
-      setIsLoadingCarrying(false);
+      setIsLoadingShipments(false);
+      setIsLoadingYankings(false);
       setLoading(false);
     }
   }, [toast]);
 
   useEffect(() => {
-    if (session?.user) {
-      fetchAllData(session.user);
-    } else {
-      setLoading(false);
-    }
+    if (session?.user) fetchAllData(session.user);
+    else setLoading(false);
   }, [session, fetchAllData]);
 
   const handleProfileUpdate = async (payload) => {
@@ -148,12 +143,12 @@ const useDashboardLogic = (session) => {
   return {
     profile,
     loading,
-    stats,
     error,
-    sentShipments,
-    carryingShipments,
-    isLoadingSent,
-    isLoadingCarrying,
+    stats,
+    shipments,
+    yankings,
+    isLoadingShipments,
+    isLoadingYankings,
     fetchAllData,
     handleProfileUpdate,
   };

@@ -90,7 +90,7 @@ const ShipmentTrackingPage = () => {
             >
                 <motion.div variants={itemVariants} className="mb-6">
                     <Button asChild variant="outline" size="sm">
-                        <Link to="/my-shipments">
+                        <Link to="/my-listings">
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Back to My Shipments
                         </Link>

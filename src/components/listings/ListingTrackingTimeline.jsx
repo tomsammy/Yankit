@@ -45,7 +45,7 @@ const TimelineItem = ({ event, isLast }) => {
     );
 };
 
-const ShipmentTrackingTimeline = ({ events }) => {
+const ListingTrackingTimeline = ({ events }) => {
     if (!events || events.length === 0) {
         return <p className="text-gray-500 dark:text-gray-400">No tracking information available.</p>;
     }
@@ -59,4 +59,4 @@ const ShipmentTrackingTimeline = ({ events }) => {
     );
 };
 
-export default ShipmentTrackingTimeline;
+export default ListingTrackingTimeline;

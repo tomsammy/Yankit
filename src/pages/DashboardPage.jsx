@@ -11,11 +11,11 @@ import React, { useState, useEffect } from 'react';
     import DashboardSettingsTab from '@/components/dashboard/DashboardSettingsTab';
     import UserAuthGuard from '@/components/auth/UserAuthGuard';
     import LoadingSpinner from '@/components/ui/LoadingSpinner'; 
-    import MyShipmentsTabs from '@/components/shipments/MyShipmentsTabs';
     import { useAuth } from '@/contexts/AuthContext';
     import useDashboardLogic from '@/components/dashboard/hooks/useDashboardLogic';
     import AuthErrorDisplay from '@/components/auth/AuthErrorDisplay';
     import DashboardDataErrorDisplay from '@/components/dashboard/DashboardDataErrorDisplay';
+    import MyListingsTab from '@/components/listings/MyListingsTab';
 
     const pageVariants = {
       initial: { opacity: 0, y: 20 },
@@ -26,18 +26,18 @@ import React, { useState, useEffect } from 'react';
     const DashboardPageComponent = () => {
       const { session, loading: authLoading, authError, signOut } = useAuth(); 
       const { 
-        profile, 
-        loading: dataLoading, 
-        stats, 
+        profile,
+        loading: dataLoading,
+        stats,
         error: dataError,
         handleProfileUpdate,
-        sentShipments,
-        carryingShipments,
-        isLoadingSent,
-        isLoadingCarrying,
+        shipments,
+        yankings,
+        isLoadingShipments,
+        isLoadingYankings,
         fetchAllData
       } = useDashboardLogic(session);
-      
+            
       const navigate = useNavigate();
       const location = useLocation();
 
@@ -78,12 +78,12 @@ import React, { useState, useEffect } from 'react';
 
       const tabItems = [
         { value: "profile", label: "Profile", icon: User, content: <DashboardProfileTab profile={profile} session={session} onProfileUpdate={handleProfileUpdate} stats={stats} /> },
-        { value: "shipments", label: "My Shipments", icon: Briefcase, content: <MyShipmentsTabs 
-            sentShipments={sentShipments}
-            carryingShipments={carryingShipments}
-            isLoadingSent={isLoadingSent}
-            isLoadingCarrying={isLoadingCarrying}
-          /> },
+        { value: "listings", label: "My Listings", icon: Briefcase, content: <MyListingsTab 
+          shipments={shipments}
+          yankings={yankings}
+          isLoadingShipments={isLoadingShipments}
+          isLoadingYankings={isLoadingYankings}        />
+         },
         { value: "messages", label: "Messages", icon: MessageSquare, content: <p className="text-center text-muted-foreground">🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀</p> },
         { value: "reviews", label: "My Reviews", icon: Star, content: <DashboardReviewsTab userId={session?.user?.id} /> },
         { value: "settings", label: "Settings", icon: Settings, content: <DashboardSettingsTab /> },
@@ -121,7 +121,7 @@ import React, { useState, useEffect } from 'react';
             </TabsList>
             {tabItems.map((tab) => (
               <TabsContent key={tab.value} value={tab.value} className="mt-6 bg-card dark:bg-slate-800/40 p-4 md:p-6 rounded-lg shadow-md">
-                 {(isLoadingSent || isLoadingCarrying) && activeTab === tab.value ? <LoadingSpinner /> : tab.content}
+                 {(isLoadingShipments || isLoadingYankings) && activeTab === tab.value ? <LoadingSpinner /> : tab.content}
               </TabsContent>
             ))}
           </Tabs>
