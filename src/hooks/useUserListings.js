@@ -55,17 +55,52 @@ const useUserListings = () => {
     }
   }, [userId, toast]);
 
-  const deleteYanking = async (id) => {
-    const { error } = await supabase.from('yankings').delete().eq('id', id);
+  const deleteYanking = async (yanking) => {
+    const { count, error: refErr } = await supabase
+      .from('shipments')
+      .select('id', { count: 'exact', head: true })
+      .eq('matched_yanking_id', yanking.id);
+  
+    if (refErr) throw refErr;
+  
+    if (count && count > 0) {
+      throw new Error(
+        'This yanking has already been accepted and cannot be deleted.'
+      );
+    }
+  
+    const { error } = await supabase
+      .from('yankings')
+      .delete()
+      .eq('id', yanking.id);
+  
     if (error) throw error;
+  
     fetchListings();
   };
+  
+  
 
-  const deleteShipment = async (id) => {
-    const { error } = await supabase.from('shipments').delete().eq('id', id);
+  const deleteShipment = async (shipment) => {
+    if (
+      shipment.status !== 'pending_payment' ||
+      shipment.traveler_user_id
+    ) {
+      throw new Error(
+        'This shipment has been paid or matched and cannot be deleted.'
+      );
+    }
+  
+    const { error } = await supabase
+      .from('shipments')
+      .delete()
+      .eq('id', shipment.id);
+  
     if (error) throw error;
+  
     fetchListings();
   };
+  
 
   useEffect(() => {
     fetchListings();

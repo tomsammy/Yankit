@@ -13,6 +13,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import AuthWall from '@/components/auth/AuthWall';
+import { notifyYankerMatched } from '@/lib/notify';
 
 const YankingMatchesPage = () => {
   const { yankingId } = useParams();
@@ -66,19 +67,35 @@ const YankingMatchesPage = () => {
 
   const confirmOffer = async () => {
     if (!selectedShipment || !session) return;
-
+  
     setConfirming(true);
-
-    const { error } = await supabase.rpc('assign_shipment_to_yanking', {
-      p_shipment_id: selectedShipment.id,
-      p_yanking_id: yankingId,
-      p_yanker_id: session.user.id,
-    });
-
-    setConfirming(false);
-
-    if (!error) {
+  
+    try {
+      const { error } = await supabase.rpc('assign_shipment_to_yanking', {
+        p_shipment_id: selectedShipment.id,
+        p_yanking_id: yankingId,
+        p_yanker_id: session.user.id,
+      });
+  
+      if (error) throw error;
+  
+      const { data: shipper } = await supabase
+        .from('profiles')
+        .select('email')
+        .eq('id', selectedShipment.shipper_user_id)
+        .single();
+  
+      if (shipper?.email) {
+        await notifyYankerMatched({
+          to: shipper.email,
+        });
+      }
+  
       navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setConfirming(false);
     }
   };
 

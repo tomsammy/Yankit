@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/contexts/AuthContext';
@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Loader2, CheckCircle, AlertTriangle, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { notifyPaymentSuccess } from '@/lib/notify';
 
 const PaymentSuccessPage = () => {
   const [status, setStatus] = useState('loading');
   const [shipmentId, setShipmentId] = useState(null);
   const [error, setError] = useState('');
   const location = useLocation();
-  const navigate = useNavigate();
   const { session } = useAuth();
 
   useEffect(() => {
@@ -36,17 +36,23 @@ const PaymentSuccessPage = () => {
             body: { sessionId },
           }
         );
-
+    
         if (error) throw error;
         if (!data?.paid) throw new Error('Payment not completed');
-
+    
         setShipmentId(data.shipmentId);
         setStatus('success');
+    
+        await notifyPaymentSuccess({
+          to: session.user.email,
+        });
+    
       } catch (err) {
         setError(err.message || 'Payment verification failed.');
         setStatus('error');
       }
     };
+    
 
     verify();
   }, [location.search, session]);

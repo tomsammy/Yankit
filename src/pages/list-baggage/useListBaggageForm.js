@@ -12,6 +12,7 @@ import {
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
 import { parseISO } from 'date-fns';
 import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
+import { notifyNewActivityCTA } from '@/lib/notify';
 
 export const useListBaggageForm = () => {
   const { session } = useAuth();
@@ -170,7 +171,18 @@ export const useListBaggageForm = () => {
   if (insertError) throw insertError;
   
   const shipmentId = created.id;
+
+  const { data: users } = await supabase
+    .from('profiles')
+    .select('email')
+    .not('email', 'is', null);
   
+  if (users?.length) {
+    await notifyNewActivityCTA({
+      to: users.map(u => u.email),
+    });
+  }
+    
   const { data: stripeData, error: stripeErr } = await supabase.functions.invoke(
     'create-stripe-checkout-session',
     {
@@ -185,12 +197,6 @@ export const useListBaggageForm = () => {
   if (stripeErr) throw stripeErr;
   
   window.location.href = stripeData.url;          
-    // toast({
-      //   title: 'Success',
-      //   description: 'Shipment listed successfully.',
-      // });
-
-      // navigate('/my-listings');
     } catch (err) {
       console.error(err);
       toast({

@@ -9,6 +9,7 @@ import {
 } from '@/config/constants';
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
 import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
+import { notifyNewActivityCTA } from '@/lib/notify';
 
 export const useYankABagForm = (userId) => {
   const { toast } = useToast();
@@ -174,9 +175,21 @@ export const useYankABagForm = (userId) => {
       if (error) throw error;
   
       setYankingId(data.id);
+
+      const { data: users } = await supabase
+        .from('profiles')
+        .select('email')
+        .not('email', 'is', null);
+      
+      if (users?.length) {
+        await notifyNewActivityCTA({
+          to: users.map(u => u.email),
+        });
+      }
+      
       toast({ title: 'Success', description: 'Yanking listed successfully.' });
       return data;
-    } catch (err) {
+      } catch (err) {
       toast({
         title: 'Error',
         description: err.message || 'Failed to create yanking.',

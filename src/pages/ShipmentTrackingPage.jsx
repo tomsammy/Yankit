@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, AlertTriangle, ArrowLeft, Package, User, MapPin } from 'lucide-react';
+import { Loader2, AlertTriangle, ArrowLeft, Package, MapPin, Luggage } from 'lucide-react';
 import useShipmentTracking from '@/hooks/useShipmentTracking';
-import ShipmentTrackingTimeline from '@/components/shipments/ShipmentTrackingTimeline';
+import ListingTrackingTimeline from '@/components/listings/ListingTrackingTimeline';
 
 const LoadingState = () => (
     <div className="flex flex-col items-center justify-center min-h-[400px]">
@@ -109,7 +109,7 @@ const ShipmentTrackingPage = () => {
                                 <CardDescription>Tracking ID: {shipment.id}</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <ShipmentTrackingTimeline events={trackingEvents} />
+                                <ListingTrackingTimeline events={trackingEvents} />
                             </CardContent>
                         </Card>
                     </motion.div>
@@ -120,9 +120,10 @@ const ShipmentTrackingPage = () => {
                                 <CardTitle className="flex items-center"><Package className="mr-2 h-5 w-5 text-primary" />Shipment Info</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm space-y-2">
-                                <p><strong>Item:</strong> {shipment.item_description || "N/A"}</p>
+                                <p><strong>Number of Bags:</strong> {shipment.number_of_bags || 0}</p>
                                 <p><strong>Weight:</strong> {shipment.agreed_weight_kg} kg</p>
                                 <p><strong>Price:</strong> ${shipment.agreed_price}</p>
+                                <p><strong>Payment Status:</strong> {shipment.is_paid ? 'Paid' : 'Not Paid'}</p>
                             </CardContent>
                         </Card>
 
@@ -131,19 +132,21 @@ const ShipmentTrackingPage = () => {
                                 <CardTitle className="flex items-center"><MapPin className="mr-2 h-5 w-5 text-primary" />Route</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm space-y-2">
-                                <p><strong>From:</strong> {shipment.listing?.origin || "N/A"}</p>
-                                <p><strong>To:</strong> {shipment.listing?.destination || "N/A"}</p>
-                                <p><strong>Est. Departure:</strong> {shipment.listing?.departure_date ? new Date(shipment.listing.departure_date).toLocaleDateString() : 'N/A'}</p>
+                                <p><strong>From:</strong> {shipment.origin || "N/A"}</p>
+                                <p><strong>To:</strong> {shipment.destination || "N/A"}</p>
+                                <p><strong>Est. Departure:</strong> {shipment.departure_date ? new Date(shipment.departure_date).toLocaleDateString() : 'N/A'}</p>
                             </CardContent>
                         </Card>
                         
                         <Card className="shadow-md bg-white dark:bg-slate-800/80 backdrop-blur-sm">
                             <CardHeader>
-                                <CardTitle className="flex items-center"><User className="mr-2 h-5 w-5 text-primary" />Participants</CardTitle>
+                                <CardTitle className="flex items-center"><Luggage className="mr-2 h-5 w-5 text-primary" />Bag Details</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm space-y-2">
-                                <p><strong>Sender:</strong> {shipment.sender_profile?.full_name || "N/A"}</p>
-                                <p><strong>Traveler:</strong> {shipment.traveler_profile?.full_name || "N/A"}</p>
+                                <p><strong>Length:</strong> {shipment.bag_length_cm || "N/A"}cm</p>
+                                <p><strong>Width:</strong> {shipment.bag_width_cm || "N/A"}cm</p>
+                                <p><strong>Height:</strong> {shipment.bag_height_cm || "N/A"}cm</p>
+                                <p><strong>Traveler:</strong> {shipment.traveler_user_id ? 'Matched' : "Not matched" || "N/A"}</p>
                             </CardContent>
                         </Card>
                     </motion.div>

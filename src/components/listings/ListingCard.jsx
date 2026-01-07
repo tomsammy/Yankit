@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -22,15 +22,20 @@ import {
 import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
+import { useToast } from '@/components/ui/use-toast';
 
 const ListingCard = ({ listing, type }) => {
   const navigate = useNavigate();
   const { session } = useAuth();
+  const { toast } = useToast();
+  const [isPaying, setIsPaying] = useState(false);
 
   const isShipper = session?.user?.id === listing.shipper_user_id;
   const isMatched = Boolean(listing.traveler_user_id);
 
   const {
+    id,
     origin,
     destination,
     departure_date,
@@ -38,8 +43,38 @@ const ListingCard = ({ listing, type }) => {
     agreed_price,
     currency,
     status,
-    id,
   } = listing;
+
+  const handleStripePayment = async () => {
+    if (!isShipper || status !== 'pending_payment') return;
+
+    try {
+      setIsPaying(true);
+
+      const { data, error } = await supabase.functions.invoke(
+        'create-stripe-checkout-session',
+        {
+          body: {
+            shipmentId: id,
+            successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+            cancelUrl: `${window.location.origin}/payment-cancel`,
+          },
+        }
+      );
+
+      if (error) throw error;
+      if (!data?.url) throw new Error('Stripe session URL missing');
+
+      window.location.href = data.url;
+    } catch (err) {
+      toast({
+        title: 'Payment Error',
+        description: err.message || 'Unable to start payment.',
+        variant: 'destructive',
+      });
+      setIsPaying(false);
+    }
+  };
 
   const getStatusBadgeVariant = (status) => {
     switch (status) {
@@ -90,7 +125,7 @@ const ListingCard = ({ listing, type }) => {
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-bold flex items-center">
             <Package className="mr-2 h-5 w-5" />
-            {type === 'yankings' ? 'Yanking' : 'Shipment' }
+            {type === 'yankings' ? 'Yanking' : 'Shipment'}
           </CardTitle>
           <Badge variant={getStatusBadgeVariant(status)}>
             {getStatusText(status)}
@@ -126,30 +161,33 @@ const ListingCard = ({ listing, type }) => {
             {agreed_price.toFixed(2)} {currency}
           </div>
 
-          { type === 'shipments' && <div className="flex items-center">
-            {isMatched? (
-              <>
-                <UserCheck className="mr-2 h-4 w-4 text-green-600" />
-                Yanker Matched
-              </>
-            ) : (
-              <>
-                <UserX className="mr-2 h-4 w-4 text-muted-foreground" />
-                Yanker Not Matched
-              </>
-            )}
-          </div>}
+          {type === 'shipments' && (
+            <div className="flex items-center">
+              {isMatched ? (
+                <>
+                  <UserCheck className="mr-2 h-4 w-4 text-green-600" />
+                  Yanker Matched
+                </>
+              ) : (
+                <>
+                  <UserX className="mr-2 h-4 w-4 text-muted-foreground" />
+                  Yanker Not Matched
+                </>
+              )}
+            </div>
+          )}
         </div>
       </CardContent>
 
       <CardFooter className="p-4 bg-slate-50 dark:bg-slate-800/50">
         {isShipper && status === 'pending_payment' ? (
           <Button
-            onClick={() => navigate(`/payment/shipment/${id}`)}
+            onClick={handleStripePayment}
+            disabled={isPaying}
             className="w-full bg-green-600 hover:bg-green-700 text-white"
           >
             <CreditCard className="mr-2 h-4 w-4" />
-            Pay Now
+            {isPaying ? 'Redirecting…' : 'Pay Now'}
           </Button>
         ) : (
           <Button

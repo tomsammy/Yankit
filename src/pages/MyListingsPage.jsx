@@ -42,7 +42,7 @@ import React, { useState, useEffect } from 'react';
         </motion.div>
     );
 
-    const ListingCard = ({ listing, onEdit, onDelete }) => {
+    const ListingCard = ({ listing, onEdit, onDelete, type }) => {
         const {
             id,
             origin,
@@ -58,7 +58,11 @@ import React, { useState, useEffect } from 'react';
 
         const statusDisplay = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
         const statusColorClass = status === 'active' ? 'text-green-500' : 'text-yellow-500';
-
+        const navigate = useNavigate();
+        const cannotDelete =
+        (type === 'shipping' &&
+          (status !== 'pending_payment' || listing.traveler_user_id)) ||
+        (type === 'yanking' && listing.is_matched); 
         return (
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 glassmorphism dark:bg-slate-800/50 dark:border-slate-700/50">
                 <CardHeader>
@@ -79,7 +83,14 @@ import React, { useState, useEffect } from 'react';
                 </CardContent>
                 <CardFooter className="flex justify-end gap-2 pt-4">
                     <Button variant="outline" size="sm" onClick={() => onEdit(id)}><Edit className="w-4 h-4 mr-2" /> Edit</Button>
-                    <Button variant="destructive" size="sm" onClick={() => onDelete(id)}><Trash2 className="w-4 h-4 mr-2" /> Delete</Button>
+                    <Button variant="destructive" size="sm" disabled={cannotDelete} onClick={() => onDelete(listing)}><Trash2 className="w-4 h-4 mr-2" /> Delete</Button>
+                    <Button
+            onClick={() => navigate(`/shipment-tracking/${id}`)}
+            className="mr-2 bg-blue-500" 
+          >
+            Track Shipment
+          </Button>
+
                 </CardFooter>
             </Card>
         );
@@ -105,7 +116,7 @@ import React, { useState, useEffect } from 'react';
 
     const MyListingsPage = () => {
         const { isLoading: isLoadingUser } = useAuth();
-        const { yankingListings, shippingListings, isLoading: isLoadingListings, deleteListing } = useUserListings();
+        const { yankingListings, shippingListings, isLoading: isLoadingListings, deleteYanking, deleteShipment } = useUserListings();
         const navigate = useNavigate();
         const location = useLocation();
         const [isDeleting, setIsDeleting] = useState(false);
@@ -124,17 +135,31 @@ import React, { useState, useEffect } from 'react';
             activeTab === 'yanking' ? navigate(`/edit-yanking/${id}`) : navigate(`/edit-shipment/${id}`);
         };
 
-        const confirmDelete = (listingId) => {
-            setListingToDelete(listingId);
-        };
+        const confirmDelete = (listing) => {
+            setListingToDelete(listing);
+          };
 
-        const handleDelete = async () => {
+          const handleDelete = async () => {
             if (!listingToDelete) return;
+          
             setIsDeleting(true);
-            await deleteListing(listingToDelete);
-            setIsDeleting(false);
-            setListingToDelete(null);
-        };
+          
+            try {
+              if (activeTab === 'yanking') {
+                await deleteYanking(listingToDelete);
+              } else {
+                await deleteShipment(listingToDelete);
+              }
+            } catch (err) {
+              alert(
+                err.message ||
+                'This item cannot be deleted due to its current state.'
+              );
+            } finally {
+              setIsDeleting(false);
+              setListingToDelete(null);
+            }
+          };
 
         if (isLoadingUser || isLoadingListings) {
             return <div className="flex justify-center items-center h-screen"><LoadingSpinner /></div>;
@@ -173,6 +198,7 @@ import React, { useState, useEffect } from 'react';
                                         listing={listing}
                                         onEdit={handleEdit}
                                         onDelete={confirmDelete}
+                                        type = {activeTab}
                                     />
                                 ))}
                             </div>
