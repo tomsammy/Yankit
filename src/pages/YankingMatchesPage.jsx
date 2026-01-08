@@ -41,22 +41,34 @@ const YankingMatchesPage = () => {
         setLoading(false);
         return;
       }
-
+      console.log('session', session);
+      console.log('yankingId', yankingId);
       const matchDate = new Date(yanking.departure_date)
         .toISOString()
         .split('T')[0];
 
-      const { data } = await supabase
+        console.log(matchDate, yanking.destination);
+
+      const { data, error } = await supabase
         .from('shipments')
         .select('*')
         .eq('origin', yanking.origin)
         .eq('destination', yanking.destination)
         .eq('departure_date', matchDate)
-        .eq('status', 'open')
+        .eq('is_paid', true)
         .is('traveler_user_id', null)
         .neq('shipper_user_id', yanking.yanker_user_id)
         .lte('agreed_weight_kg', yanking.available_space_kg)
         .lte('number_of_bags', yanking.number_of_bags);
+
+        console.log(data);
+
+        if (error) {
+          console.error('Supabase error loading shipments', error);
+        } else {
+          console.log('Fetched shipments', data);
+        }
+        
 
       setShipments(data || []);
       setLoading(false);
