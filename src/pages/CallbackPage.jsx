@@ -1,29 +1,72 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import { useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 
 export default function CallbackPage() {
   const navigate = useNavigate()
+  const handledRef = useRef(false)
 
   useEffect(() => {
-    const finishOAuth = async () => {
-      const { data, error } = await supabase.auth.getSession()
+    if (handledRef.current) return
 
-      if (error) {
-        console.error(error)
-        navigate('/signin')
-        return
+    const timeoutId = setTimeout(() => {
+      if (!handledRef.current) {
+        navigate('/signin', { replace: true })
       }
+    }, 10000)
 
-      if (data.session) {
-        navigate('/dashboard', { replace: true })
-      } else {
-        navigate('/signin')
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (handledRef.current) return
+
+        if (event === 'SIGNED_IN' || (event === 'TOKEN_REFRESHED' && session)) {
+          handledRef.current = true
+          clearTimeout(timeoutId)
+          navigate('/dashboard', { replace: true })
+        } else if (event === 'SIGNED_OUT') {
+          handledRef.current = true
+          clearTimeout(timeoutId)
+          navigate('/signin', { replace: true })
+        }
+      }
+    )
+
+    const checkSession = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 500))
+
+        const { data, error } = await supabase.auth.getSession()
+
+        if (handledRef.current) return
+
+        if (error) {
+          handledRef.current = true
+          clearTimeout(timeoutId)
+          navigate('/signin', { replace: true })
+          return
+        }
+
+        if (data.session) {
+          handledRef.current = true
+          clearTimeout(timeoutId)
+          navigate('/dashboard', { replace: true })
+        }
+      } catch (err) {
+        if (!handledRef.current) {
+          handledRef.current = true
+          clearTimeout(timeoutId)
+          navigate('/signin', { replace: true })
+        }
       }
     }
 
-    finishOAuth()
+    checkSession()
+
+    return () => {
+      clearTimeout(timeoutId)
+      subscription.unsubscribe()
+    }
   }, [navigate])
 
   return (

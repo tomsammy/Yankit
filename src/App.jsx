@@ -12,7 +12,7 @@ import React, { Suspense } from 'react';
     import CallbackPage from './pages/CallbackPage';
     import EditShipmentPage from './pages/EditShipmentPage';
     import EditYankingPage from './pages/EditYankingPage';
-import YankingMatchesPage from './pages/YankingMatchesPage';
+    import YankingMatchesPage from './pages/YankingMatchesPage';
 
     const HomePage = React.lazy(() => import('@/pages/HomePage'));
     const SupportPage = React.lazy(() => import('@/pages/SupportPage'));
