@@ -54,3 +54,30 @@ export const notifyNewActivityCTA = async ({ to }) => {
     `,
   });
 };
+
+export const notifyShipmentCancelledForYanker = async ({ to }) => {
+  return sendEmail({
+    to,
+    subject: 'Shipment Cancelled',
+    html: `
+      <h2>Shipment Cancelled</h2>
+      <p>A shipment you were matched with has been cancelled by the sender.</p>
+      <p>You will no longer be responsible for carrying this item.</p>
+      <p><strong>Thank you for using YankIt.</strong></p>
+    `,
+  });
+};
+
+export const notifyYankingCancelledForShipper = async ({ to }) => {
+  return sendEmail({
+    to,
+    subject: 'Yanker Cancelled',
+    html: `
+      <h2>Your Yanker Has Cancelled</h2>
+      <p>The traveler who accepted your shipment has cancelled.</p>
+      <p>Your shipment status has been updated and is no longer matched with that Yanker.</p>
+      <p><strong>Please log in to review your shipment options.</strong></p>
+    `,
+  });
+};
+

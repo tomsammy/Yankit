@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { notifyShipmentCancelledForYanker, notifyYankingCancelledForShipper } from '@/lib/notify';
 
 const useUserListings = () => {
   const { session } = useAuth();
@@ -56,17 +57,32 @@ const useUserListings = () => {
   }, [userId, toast]);
 
   const deleteYanking = async (yanking) => {
-    const { count, error: refErr } = await supabase
+    const { data: shipments, error: refErr } = await supabase
       .from('shipments')
-      .select('id', { count: 'exact', head: true })
+      .select('*')
       .eq('matched_yanking_id', yanking.id);
   
     if (refErr) throw refErr;
   
-    if (count && count > 0) {
-      throw new Error(
-        'This yanking has already been accepted and cannot be deleted.'
-      );
+    for (const shipment of shipments || []) {
+      await supabase
+        .from('shipments')
+        .update({
+          traveler_user_id: null,
+          matched_yanking_id: null,
+          status: 'awaiting_yanker',
+        })
+        .eq('id', shipment.id);
+  
+      const { data: shipper } = await supabase
+        .from('profiles')
+        .select('email')
+        .eq('id', shipment.shipper_user_id)
+        .single();
+  
+      if (shipper?.email) {
+        await notifyYankingCancelledForShipper({ to: shipper.email });
+      }
     }
   
     const { error } = await supabase
@@ -80,28 +96,49 @@ const useUserListings = () => {
   };
   
   
-
   const deleteShipment = async (shipment) => {
-    if (
-      shipment.status !== 'pending_payment' ||
-      shipment.traveler_user_id
-    ) {
-      throw new Error(
-        'This shipment has been paid or matched and cannot be deleted.'
-      );
+    try {
+      if (shipment.is_paid) {
+        const { data, error } = await supabase.functions.invoke('cancel-shipment-and-refund', {
+          body: { shipmentId: shipment.id, retainFeePercentage: 0.2 },
+        });
+        if (error) throw error;
+  
+        if (shipment.traveler_user_id) {
+          const { data: traveler } = await supabase
+            .from('profiles')
+            .select('email')
+            .eq('id', shipment.traveler_user_id)
+            .single();
+          if (traveler?.email) await notifyShipmentCancelledForYanker({ to: traveler.email });
+        }
+      }
+  
+      if (shipment.matched_yanking_id) {
+        await supabase
+          .from('yankings')
+          .update({ matched_shipment_id: null, status: 'available' })
+          .eq('id', shipment.matched_yanking_id);
+      }
+  
+      const { data: deletedData, error: deleteError } = await supabase
+        .from('shipments')
+        .delete()
+        .eq('id', shipment.id)
+        .select();
+      if (deleteError) throw deleteError;
+  
+      fetchListings();
+      return deletedData;
+    } catch (err) {
+      console.error(err);
+      throw err;
     }
-  
-    const { error } = await supabase
-      .from('shipments')
-      .delete()
-      .eq('id', shipment.id);
-  
-    if (error) throw error;
-  
-    fetchListings();
   };
   
-
+  
+  
+  
   useEffect(() => {
     fetchListings();
   }, [fetchListings]);
