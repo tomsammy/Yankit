@@ -42,7 +42,7 @@ import React, { useState, useEffect } from 'react';
         </motion.div>
     );
 
-    const ListingCard = ({ listing, onEdit, onDelete, type }) => {
+    const ListingCard = ({ listing, onEdit, onDelete, type, isDeleting }) => {
         const {
             id,
             origin,
@@ -83,7 +83,10 @@ import React, { useState, useEffect } from 'react';
                 </CardContent>
                 <CardFooter className="flex justify-end gap-2 pt-4">
                     <Button variant="outline" size="sm" onClick={() => onEdit(id)}><Edit className="w-4 h-4 mr-2" /> Edit</Button>
-                    <Button variant="destructive" size="sm" disabled={cannotDelete} onClick={() => onDelete(listing)}><Trash2 className="w-4 h-4 mr-2" /> Delete</Button>
+                    <Button variant="destructive" size="sm" disabled={cannotDelete} onClick={() => onDelete(listing)}>
+                    
+                    {isDeleting ? <><LoadingSpinner size="sm" /> Deleting...</> : <><Trash2 className="w-4 h-4 mr-2" /> Delete</>}
+                    </Button>
                     <Button
             onClick={() => navigate(`/shipment-tracking/${id}`)}
             className="mr-2 bg-blue-500" 
@@ -221,6 +224,7 @@ import React, { useState, useEffect } from 'react';
                                         listing={listing}
                                         onEdit={handleEdit}
                                         onDelete={confirmDelete}
+                                        isDeleting={isDeleting}
                                     />
                                 ))}
                             </div>
@@ -233,7 +237,7 @@ import React, { useState, useEffect } from 'react';
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your listing.
+                                This action cannot be undone. This will permanently delete your listing. {activeTab === 'yankings' ? "" : "Only a partial refund will be made to your account. 20% fees is deducted on deletion. Are you sure you want to continue?"}
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
