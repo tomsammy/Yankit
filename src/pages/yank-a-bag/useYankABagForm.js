@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import {
@@ -10,8 +11,11 @@ import {
 import { haversineDistance, getCoords } from '@/lib/distanceUtils';
 import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
 import { notifyNewActivityCTA } from '@/lib/notify';
+import { parseISO } from 'date-fns';
 
 export const useYankABagForm = (userId) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -46,6 +50,17 @@ export const useYankABagForm = (userId) => {
     setFormData((p) => ({ ...p, [name]: value }));
     if (errors[name]) setErrors((p) => ({ ...p, [name]: null }));
   };
+
+  useEffect(() => {
+    if (location.state?.searchCriteria) {
+      const { origin, destination, date, bags } = location.state.searchCriteria;
+      if (origin) setFormData((p) => ({ ...p, origin }));
+      if (destination) setFormData((p) => ({ ...p, destination }));
+      if (date) setFormData((p) => ({ ...p, departureDate: parseISO(date) }));
+      if (bags) setFormData((p) => ({ ...p, numberOfBags: bags.toString() }));
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, navigate, location.pathname]);
 
   const handleNumberOfBagsChange = (value) => {
     const n = parseInt(value, 10);
