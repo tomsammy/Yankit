@@ -310,8 +310,9 @@ const ListBaggageFormFields = React.memo(({ form, isLoading }) => {
                 disabled={isLoading}
               />
               <div className="space-y-1">
-                <p className="text-sm dark:text-slate-200">
-                  I confirm no prohibited or dangerous items are being sent.
+                <p className="text-sm dark:text-slate-200 ">
+                  <a href='/declaration.pdf' className='text-blue-500 underline' target="blank">
+                  I confirm no prohibited or dangerous items are being sent.</a>
                 </p>
                 <p className="text-xs text-muted-foreground dark:text-slate-400">
                   This includes explosives, flammables, batteries not permitted by airline rules, weapons, illegal substances, and other restricted goods.

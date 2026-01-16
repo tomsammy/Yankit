@@ -101,7 +101,8 @@ const YankABagFormFields = ({
       <div className="border rounded-lg p-4 space-y-3">
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-primary" />
-          <Label>Bag Handling Agreement</Label>
+          <a href='/declaration.pdf' className='text-blue-500 underline' target="blank">
+          Bag Handling Agreement</a>
         </div>
 
         <div className="flex gap-3 items-start">
