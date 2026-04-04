@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { supabase } from '@/lib/supabaseClient';
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog';
-import AuthWall from '@/components/auth/AuthWall';
-import { notifyYankerMatched } from '@/lib/notify';
+} from "@/components/ui/dialog";
+import AuthWall from "@/components/auth/AuthWall";
+import { notifyYankerMatched } from "@/lib/notify";
 
 const YankingMatchesPage = () => {
   const { yankingId } = useParams();
@@ -32,43 +32,42 @@ const YankingMatchesPage = () => {
       setLoading(true);
 
       const { data: yanking } = await supabase
-        .from('yankings')
-        .select('*')
-        .eq('id', yankingId)
+        .from("yankings")
+        .select("*")
+        .eq("id", yankingId)
         .single();
 
       if (!yanking) {
         setLoading(false);
         return;
       }
-      console.log('session', session);
-      console.log('yankingId', yankingId);
+      console.log("session", session);
+      console.log("yankingId", yankingId);
       const matchDate = new Date(yanking.departure_date)
         .toISOString()
-        .split('T')[0];
+        .split("T")[0];
 
-        console.log(matchDate, yanking.destination);
+      console.log(matchDate, yanking.destination);
 
       const { data, error } = await supabase
-        .from('shipments')
-        .select('*')
-        .eq('origin', yanking.origin)
-        .eq('destination', yanking.destination)
-        .eq('departure_date', matchDate)
-        .eq('is_paid', true)
-        .is('traveler_user_id', null)
-        .neq('shipper_user_id', yanking.yanker_user_id)
-        .lte('agreed_weight_kg', yanking.available_space_kg)
-        .lte('number_of_bags', yanking.number_of_bags);
+        .from("shipments")
+        .select("*")
+        .eq("origin", yanking.origin)
+        .eq("destination", yanking.destination)
+        .eq("departure_date", matchDate)
+        .eq("is_paid", true)
+        .is("traveler_user_id", null)
+        .neq("shipper_user_id", yanking.yanker_user_id)
+        .lte("agreed_weight_kg", yanking.available_space_kg)
+        .lte("number_of_bags", yanking.number_of_bags);
 
-        console.log(data);
+      console.log(data);
 
-        if (error) {
-          console.error('Supabase error loading shipments', error);
-        } else {
-          console.log('Fetched shipments', data);
-        }
-        
+      if (error) {
+        console.error("Supabase error loading shipments", error);
+      } else {
+        console.log("Fetched shipments", data);
+      }
 
       setShipments(data || []);
       setLoading(false);
@@ -79,31 +78,31 @@ const YankingMatchesPage = () => {
 
   const confirmOffer = async () => {
     if (!selectedShipment || !session) return;
-  
+
     setConfirming(true);
-  
+
     try {
-      const { error } = await supabase.rpc('assign_shipment_to_yanking', {
+      const { error } = await supabase.rpc("assign_shipment_to_yanking", {
         p_shipment_id: selectedShipment.id,
         p_yanking_id: yankingId,
         p_yanker_id: session.user.id,
       });
-  
+
       if (error) throw error;
-  
+
       const { data: shipper } = await supabase
-        .from('profiles')
-        .select('email')
-        .eq('id', selectedShipment.shipper_user_id)
+        .from("profiles")
+        .select("email")
+        .eq("id", selectedShipment.shipper_user_id)
         .single();
-  
+
       if (shipper?.email) {
         await notifyYankerMatched({
           to: shipper.email,
         });
       }
-  
-      navigate('/dashboard');
+
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     } finally {
@@ -118,7 +117,7 @@ const YankingMatchesPage = () => {
   return (
     <>
       <Helmet>
-        <title>Matching Shipments | Yankit</title>
+        <title>Matching Shipments | Baggit</title>
       </Helmet>
 
       <div className="container mx-auto px-4 py-10 max-w-4xl">
@@ -142,7 +141,7 @@ const YankingMatchesPage = () => {
               <div className="text-sm text-muted-foreground">
                 You’ll be notified when a shipment matches your route.
               </div>
-              <Button onClick={() => navigate('/dashboard')}>
+              <Button onClick={() => navigate("/dashboard")}>
                 Back to Dashboard
               </Button>
             </CardContent>
@@ -177,7 +176,10 @@ const YankingMatchesPage = () => {
         )}
       </div>
 
-      <Dialog open={!!selectedShipment} onOpenChange={() => setSelectedShipment(null)}>
+      <Dialog
+        open={!!selectedShipment}
+        onOpenChange={() => setSelectedShipment(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Shipment</DialogTitle>
@@ -185,13 +187,29 @@ const YankingMatchesPage = () => {
 
           {selectedShipment && (
             <div className="space-y-2 text-sm">
-              <div><b>Route:</b> {selectedShipment.origin} → {selectedShipment.destination}</div>
-              <div><b>Date:</b> {selectedShipment.departure_date}</div>
-              <div><b>Bags:</b> {selectedShipment.number_of_bags}</div>
-              <div><b>Total Weight:</b> {selectedShipment.agreed_weight_kg} kg</div>
-              <div><b>Payout:</b> {selectedShipment.currency} {selectedShipment.agreed_price}</div>
-              <div><b>Recipient:</b> {selectedShipment.recipient_name}</div>
-              <div><b>Contact:</b> {selectedShipment.recipient_contact}</div>
+              <div>
+                <b>Route:</b> {selectedShipment.origin} →{" "}
+                {selectedShipment.destination}
+              </div>
+              <div>
+                <b>Date:</b> {selectedShipment.departure_date}
+              </div>
+              <div>
+                <b>Bags:</b> {selectedShipment.number_of_bags}
+              </div>
+              <div>
+                <b>Total Weight:</b> {selectedShipment.agreed_weight_kg} kg
+              </div>
+              <div>
+                <b>Payout:</b> {selectedShipment.currency}{" "}
+                {selectedShipment.agreed_price}
+              </div>
+              <div>
+                <b>Recipient:</b> {selectedShipment.recipient_name}
+              </div>
+              <div>
+                <b>Contact:</b> {selectedShipment.recipient_contact}
+              </div>
             </div>
           )}
 
@@ -200,7 +218,7 @@ const YankingMatchesPage = () => {
               Cancel
             </Button>
             <Button onClick={confirmOffer} disabled={confirming}>
-              {confirming ? 'Confirming...' : 'Confirm & Accept'}
+              {confirming ? "Confirming..." : "Confirm & Accept"}
             </Button>
           </DialogFooter>
         </DialogContent>

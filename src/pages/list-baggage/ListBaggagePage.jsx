@@ -1,13 +1,13 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { useAuth } from '@/contexts/AuthContext';
-import { useListBaggageForm } from './useListBaggageForm';
-import AuthWall from '@/components/auth/AuthWall';
-import ListBaggagePageHeader from './ListBaggagePageHeader';
-import ListBaggageFormFields from './ListBaggageFormFields';
-import EstimatedCostCard from './EstimatedCostCard';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { useAuth } from "@/contexts/AuthContext";
+import { useListBaggageForm } from "./useListBaggageForm";
+import AuthWall from "@/components/auth/AuthWall";
+import ListBaggagePageHeader from "./ListBaggagePageHeader";
+import ListBaggageFormFields from "./ListBaggageFormFields";
+import EstimatedCostCard from "./EstimatedCostCard";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { Form } from "@/components/ui/form";
@@ -23,7 +23,9 @@ const ListBaggagePage = () => {
     onSubmit,
   } = useListBaggageForm();
 
-  const { formState: { errors } } = form;
+  const {
+    formState: { errors },
+  } = form;
 
   const renderForm = () => (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -37,7 +39,10 @@ const ListBaggagePage = () => {
               />
 
               {errors.root?.serverError && (
-                <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/30">
+                <Alert
+                  variant="destructive"
+                  className="bg-red-50 dark:bg-red-900/30"
+                >
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Submission Error</AlertTitle>
                   <AlertDescription>
@@ -53,14 +58,16 @@ const ListBaggagePage = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                    Submitting...
                   </>
                 ) : isCalculating ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Calculating...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                    Calculating...
                   </>
                 ) : (
-                  'List My Baggage'
+                  "List My Baggage"
                 )}
               </Button>
             </form>
@@ -73,7 +80,7 @@ const ListBaggagePage = () => {
           isCalculating={isCalculating}
           estimatedDistance={estimatedDistance}
           estimatedCostPerBag={estimatedCostPerBag}
-          numberOfBags={form.watch('number_of_bags')}
+          numberOfBags={form.watch("number_of_bags")}
         />
       </div>
     </div>
@@ -82,16 +89,18 @@ const ListBaggagePage = () => {
   return (
     <>
       <Helmet>
-        <title>List Your Bag | Yankit</title>
+        <title>List Your Bag | Baggit</title>
         <meta
           name="description"
-          content="List your available baggage space and earn money by carrying items for others. Join the Yankit community today."
+          content="List your available baggage space and earn money by carrying items for others. Join the Baggit community today."
         />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8 md:py-12">
         <ListBaggagePageHeader />
-        {session ? renderForm() : (
+        {session ? (
+          renderForm()
+        ) : (
           <AuthWall message="You need to be signed in to list your bag. Please sign in or create an account to get started." />
         )}
       </div>

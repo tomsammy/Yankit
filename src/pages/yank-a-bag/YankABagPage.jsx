@@ -1,16 +1,16 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import AuthWall from '@/components/auth/AuthWall';
-import YankABagPageHeader from './YankABagPageHeader';
-import YankABagFormFields from './YankABagFormFields';
-import YankABagEstimatedEarningsCard from './YankABagEstimatedEarningsCard';
-import { useYankABagForm } from './useYankABagForm';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import AuthWall from "@/components/auth/AuthWall";
+import YankABagPageHeader from "./YankABagPageHeader";
+import YankABagFormFields from "./YankABagFormFields";
+import YankABagEstimatedEarningsCard from "./YankABagEstimatedEarningsCard";
+import { useYankABagForm } from "./useYankABagForm";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const YankABagPage = () => {
   const { session } = useAuth();
@@ -35,7 +35,6 @@ const YankABagPage = () => {
     const yanking = await submitYanking();
     if (yanking?.id) navigate(`/yankings/${yanking.id}/matches`);
   };
-  
 
   if (!session) {
     return <AuthWall message="You need to be signed in to Yank a Bag." />;
@@ -44,7 +43,7 @@ const YankABagPage = () => {
   return (
     <>
       <Helmet>
-        <title>Yank a Bag | Yankit</title>
+        <title>Yank a Bag | Baggit</title>
         <meta
           name="description"
           content="Offer your unused baggage allowance and earn while you travel."
@@ -87,10 +86,10 @@ const YankABagPage = () => {
                   }
                 >
                   {isSubmitting
-                    ? 'Submitting...'
+                    ? "Submitting..."
                     : isCalculating
-                    ? 'Calculating...'
-                    : 'List My Baggage Space'}
+                      ? "Calculating..."
+                      : "List My Baggage Space"}
                 </Button>
               </form>
             </CardContent>

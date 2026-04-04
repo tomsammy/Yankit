@@ -1,9 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { PlaneTakeoff, PlaneLanding, ArrowRight, Plane } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { PlaneTakeoff, PlaneLanding, ArrowRight, Plane } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const routes = [
   {
@@ -16,7 +16,7 @@ const routes = [
     originAirportCode: "PER",
     destinationAirportCode: "LHR",
     originAirportName: "Perth Airport",
-    destinationAirportName: "London Heathrow Airport"
+    destinationAirportName: "London Heathrow Airport",
   },
   {
     name: "Melbourne to Dallas",
@@ -28,7 +28,7 @@ const routes = [
     originAirportCode: "MEL",
     destinationAirportCode: "DFW",
     originAirportName: "Melbourne Airport",
-    destinationAirportName: "Dallas/Fort Worth International Airport"
+    destinationAirportName: "Dallas/Fort Worth International Airport",
   },
   {
     name: "Auckland to Dubai",
@@ -40,7 +40,7 @@ const routes = [
     originAirportCode: "AKL",
     destinationAirportCode: "DXB",
     originAirportName: "Auckland Airport",
-    destinationAirportName: "Dubai International Airport"
+    destinationAirportName: "Dubai International Airport",
   },
   {
     name: "Perth to Johannesburg",
@@ -52,7 +52,7 @@ const routes = [
     originAirportCode: "PER",
     destinationAirportCode: "JNB",
     originAirportName: "Perth Airport",
-    destinationAirportName: "O.R. Tambo International Airport"
+    destinationAirportName: "O.R. Tambo International Airport",
   },
 ];
 
@@ -60,13 +60,13 @@ const FeaturedRoutesSection = () => {
   const navigate = useNavigate();
 
   const handleSearchRoute = (route) => {
-    navigate('/', { 
-        state: { 
-            prefillSearch: {
-                origin: route.originAirportCode,
-                destination: route.destinationAirportCode,
-            }
-        } 
+    navigate("/", {
+      state: {
+        prefillSearch: {
+          origin: route.originAirportCode,
+          destination: route.destinationAirportCode,
+        },
+      },
     });
   };
 
@@ -99,11 +99,11 @@ const FeaturedRoutesSection = () => {
             Featured Routes
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-xl mx-auto">
-            Discover earning opportunities on Yankit with these featured routes.
+            Discover earning opportunities on Baggit with these featured routes.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -122,31 +122,47 @@ const FeaturedRoutesSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-3 left-3 right-3">
                     <div className="flex items-center justify-between text-white mb-1">
-                        <div className="text-center">
-                            <PlaneTakeoff className="w-5 h-5 mx-auto text-sky-400 dark:text-sky-300" />
-                            <span className="block text-xs font-medium drop-shadow-md mt-0.5">{route.originAirportCode}</span>
-                            <span className="block text-[10px] opacity-80 drop-shadow-md">{route.originCity}</span>
-                        </div>
-                        <Plane className="w-6 h-6 text-white opacity-80 self-start mt-1" />
-                        <div className="text-center">
-                            <PlaneLanding className="w-5 h-5 mx-auto text-amber-400 dark:text-amber-300" />
-                            <span className="block text-xs font-medium drop-shadow-md mt-0.5">{route.destinationAirportCode}</span>
-                            <span className="block text-[10px] opacity-80 drop-shadow-md">{route.destinationCity}</span>
-                        </div>
+                      <div className="text-center">
+                        <PlaneTakeoff className="w-5 h-5 mx-auto text-sky-400 dark:text-sky-300" />
+                        <span className="block text-xs font-medium drop-shadow-md mt-0.5">
+                          {route.originAirportCode}
+                        </span>
+                        <span className="block text-[10px] opacity-80 drop-shadow-md">
+                          {route.originCity}
+                        </span>
+                      </div>
+                      <Plane className="w-6 h-6 text-white opacity-80 self-start mt-1" />
+                      <div className="text-center">
+                        <PlaneLanding className="w-5 h-5 mx-auto text-amber-400 dark:text-amber-300" />
+                        <span className="block text-xs font-medium drop-shadow-md mt-0.5">
+                          {route.destinationAirportCode}
+                        </span>
+                        <span className="block text-[10px] opacity-80 drop-shadow-md">
+                          {route.destinationCity}
+                        </span>
+                      </div>
                     </div>
-                    <h3 className="text-white text-base font-semibold drop-shadow-md mt-1 text-center flex items-center justify-center space-x-1.5 truncate" title={`${route.originCity} to ${route.destinationCity}`}>
+                    <h3
+                      className="text-white text-base font-semibold drop-shadow-md mt-1 text-center flex items-center justify-center space-x-1.5 truncate"
+                      title={`${route.originCity} to ${route.destinationCity}`}
+                    >
                       <span className="truncate">{route.originCity}</span>
-                      <Plane size={16} className="text-white opacity-90 shrink-0" />
+                      <Plane
+                        size={16}
+                        className="text-white opacity-90 shrink-0"
+                      />
                       <span className="truncate">{route.destinationCity}</span>
                     </h3>
                   </div>
                 </div>
                 <CardContent className="p-4 flex-grow flex flex-col justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground dark:text-slate-400 mb-3 min-h-[40px]">{route.description}</p>
+                    <p className="text-sm text-muted-foreground dark:text-slate-400 mb-3 min-h-[40px]">
+                      {route.description}
+                    </p>
                   </div>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full mt-2 text-primary hover:bg-primary/10 dark:text-secondary dark:hover:bg-secondary/20 justify-start"
                     onClick={() => handleSearchRoute(route)}
                   >
