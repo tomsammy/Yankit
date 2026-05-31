@@ -20,7 +20,7 @@ export const SignUpPageHeader = () => (
       Create Your Account
     </CardTitle>
     <CardDescription className="text-muted-foreground dark:text-slate-300">
-      Join <span className="font-vernaccia-bold">Baggit</span> and unlock a new
+      Join <span className="font-vernaccia-bold">Yankit</span> and unlock a new
       way to ship & travel!
     </CardDescription>
   </CardHeader>

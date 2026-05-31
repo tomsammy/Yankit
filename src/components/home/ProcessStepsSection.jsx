@@ -18,7 +18,7 @@ const defaultSteps = [
     icon: <UserPlus />,
     title: "Sign Up / Log In",
     description:
-      "Create your free <span class='font-vernaccia-bold'>Baggit</span> account to get started.",
+      "Create your free <span class='font-vernaccia-bold'>Yankit</span> account to get started.",
   },
   {
     icon: <Briefcase />,
@@ -42,13 +42,13 @@ const defaultSteps = [
     icon: <MapPin />,
     title: "Drop Off & Assess",
     description:
-      "Sender drops the bag at a Baggit drop-off point for safety assessment by staff.",
+      "Sender drops the bag at a Yankit drop-off point for safety assessment by staff.",
   },
   {
     icon: <Plane />,
     title: "Traveller Pick Up",
     description:
-      "Traveller is notified to pick up the assessed bag from the Baggit point.",
+      "Traveller is notified to pick up the assessed bag from the Yankit point.",
   },
   {
     icon: <CheckCircle />,

@@ -17,12 +17,12 @@ const CallToActionSection = () => {
           <Sparkles className="w-12 h-12 mx-auto mb-4 text-yellow-300" />
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
             Ready to Experience Smarter Shipping with{" "}
-            <span className="font-vernaccia-bold">Baggit</span>?
+            <span className="font-vernaccia-bold">Yankit</span>?
           </h2>
           <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
             Join our community today! Whether you're looking to send a package
             affordably or earn by utilizing your travel space,{" "}
-            <span className="font-vernaccia-bold">Baggit</span> makes it easy.
+            <span className="font-vernaccia-bold">Yankit</span> makes it easy.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

@@ -43,7 +43,7 @@ const SafetyTrustSection = () => {
           <ShieldCheck className="w-16 h-16 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-extrabold text-foreground dark:text-white mb-3">
             Your Safety is Our Priority at{" "}
-            <span className="font-vernaccia-bold">Baggit</span>
+            <span className="font-vernaccia-bold">Yankit</span>
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto">
             We're committed to creating a secure and trustworthy environment for

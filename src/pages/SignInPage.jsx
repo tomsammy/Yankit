@@ -38,7 +38,7 @@ const SignInPage = () => {
               <AnimatedIcon icon={LogIn} />
               <AuthPageHeader>Welcome Back!</AuthPageHeader>
               <AuthPageSubHeader>
-                Sign in to continue your journey with Baggit.
+                Sign in to continue your journey with Yankit.
               </AuthPageSubHeader>
             </div>
 

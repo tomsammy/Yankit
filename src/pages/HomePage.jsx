@@ -15,8 +15,8 @@ const HomePage = () => {
     <div className="space-y-16 md:space-y-24">
       <HeroSection />
       <ProcessStepsSection
-        title="How <span class='font-vernaccia-bold'>Baggit</span> Works: Simple & Secure"
-        subtitle="Follow these easy steps to send or carry items with <span class='font-vernaccia-bold'>Baggit</span>."
+        title="How <span class='font-vernaccia-bold'>Yankit</span> Works: Simple & Secure"
+        subtitle="Follow these easy steps to send or carry items with <span class='font-vernaccia-bold'>Yankit</span>."
       />
       <AppFeaturesOverview />
       <WhyChooseUsSection />

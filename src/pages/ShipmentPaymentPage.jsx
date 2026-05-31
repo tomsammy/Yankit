@@ -261,7 +261,7 @@ const ShipmentPaymentPage = () => {
         <CardFooter className="p-6 border-t dark:border-slate-700/50">
           <p className="text-xs text-muted-foreground dark:text-slate-400">
             You will be redirected to Stripe's secure payment page to complete
-            your transaction. Baggit holds the funds until a traveler is found
+            your transaction. Yankit holds the funds until a traveler is found
             and the shipment is completed.
           </p>
         </CardFooter>

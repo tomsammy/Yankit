@@ -37,7 +37,7 @@ const paymentOptions = [
     icon: <ShieldCheck className="w-10 h-10 text-green-500 mb-4" />,
     title: "Secure Transactions",
     description:
-      "<span class='font-vernaccia-bold'>Baggit</span> holds funds securely until successful delivery confirmation, providing complete peace of mind for both shippers and travelers.",
+      "<span class='font-vernaccia-bold'>Yankit</span> holds funds securely until successful delivery confirmation, providing complete peace of mind for both shippers and travelers.",
   },
 ];
 
@@ -56,7 +56,7 @@ const PaymentOptionsSection = () => {
             Flexible & Secure Payment Methods
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto">
-            <span className="font-vernaccia-bold">Baggit</span> offers
+            <span className="font-vernaccia-bold">Yankit</span> offers
             convenient and secure ways to handle transactions.
           </p>
         </motion.div>

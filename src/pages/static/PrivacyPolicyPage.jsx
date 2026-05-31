@@ -12,8 +12,8 @@ const PrivacyPolicyPage = () => {
       </p>
 
       <p>
-        <span className="font-vernaccia-bold">Baggit</span> Proprietary Ltd. ("
-        <span className="font-vernaccia-bold">Baggit</span>," "we," "us," or
+        <span className="font-vernaccia-bold">Yankit</span> Proprietary Ltd. ("
+        <span className="font-vernaccia-bold">Yankit</span>," "we," "us," or
         "our") is committed to protecting your privacy. This Privacy Policy
         explains how we collect, use, disclose, and safeguard your information
         when you use our website, mobile applications, and services
@@ -103,7 +103,7 @@ const PrivacyPolicyPage = () => {
         <li>To enforce our Terms of Service and other policies.</li>
         <li>
           To comply with legal obligations and protect the rights, property, and
-          safety of <span className="font-vernaccia-bold">Baggit</span>, our
+          safety of <span className="font-vernaccia-bold">Yankit</span>, our
           users, and others.
         </li>
         <li>For analytics and research purposes.</li>
@@ -136,7 +136,7 @@ const PrivacyPolicyPage = () => {
         <li>
           <strong>To Protect Rights and Safety:</strong> We may disclose
           information to protect the rights, property, or safety of{" "}
-          <span className="font-vernaccia-bold">Baggit</span>, our users, or the
+          <span className="font-vernaccia-bold">Yankit</span>, our users, or the
           public as required or permitted by law.
         </li>
         <li>
@@ -280,7 +280,7 @@ const PrivacyPolicyPage = () => {
         </a>
         <br />
         Address: Privacy Officer,{" "}
-        <span className="font-vernaccia-bold">Baggit</span> Proprietary Ltd.,
+        <span className="font-vernaccia-bold">Yankit</span> Proprietary Ltd.,
         Building 5, 22 Magnolia Dr, Brookwater QLD 4300, Australia.
       </p>
       <p>

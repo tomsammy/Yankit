@@ -6,7 +6,7 @@ const PressPage = () => {
   return (
     <StaticPageLayout title="Press & Media" icon={Newspaper}>
       <p>
-        Welcome to the <span className="font-vernaccia-bold">Baggit</span> press
+        Welcome to the <span className="font-vernaccia-bold">Yankit</span> press
         room. Here you'll find information about our company, brand assets, and
         contact details for media inquiries. We are excited to share our story
         and how we are changing the way people think about sending and receiving
@@ -14,10 +14,10 @@ const PressPage = () => {
       </p>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4 text-primary dark:text-secondary">
-        About <span className="font-vernaccia-bold">Baggit</span>
+        About <span className="font-vernaccia-bold">Yankit</span>
       </h2>
       <p>
-        <span className="font-vernaccia-bold">Baggit</span> is a peer-to-peer
+        <span className="font-vernaccia-bold">Yankit</span> is a peer-to-peer
         platform connecting Senders with Travellers (Yankers) who have spare
         baggage allowance. Our mission is to make item sharing more affordable,
         efficient, and community-driven. Based in Brisbane, Australia, we are
@@ -28,7 +28,7 @@ const PressPage = () => {
         Media Kit & Brand Assets
       </h2>
       <p>
-        For official <span className="font-vernaccia-bold">Baggit</span> logos,
+        For official <span className="font-vernaccia-bold">Yankit</span> logos,
         brand guidelines, and high-resolution images, please request access by
         contacting our media team. We kindly ask that you adhere to our brand
         guidelines when using these assets.
@@ -52,7 +52,7 @@ const PressPage = () => {
         </h3>
         <p className="text-slate-600 dark:text-slate-300">
           Check back soon for updates on{" "}
-          <span className="font-vernaccia-bold">Baggit</span>'s journey and
+          <span className="font-vernaccia-bold">Yankit</span>'s journey and
           achievements.
         </p>
       </div>
@@ -66,7 +66,7 @@ const PressPage = () => {
       </p>
       <p className="font-medium">
         Media Relations Team <br />
-        <span className="font-vernaccia-bold">Baggit</span> Pty Ltd <br />
+        <span className="font-vernaccia-bold">Yankit</span> Pty Ltd <br />
         Email:{" "}
         <a
           href="mailto:press@yankit.com.au"
@@ -81,7 +81,7 @@ const PressPage = () => {
       <p>
         Follow us on our social media channels to stay connected with the latest
         news and updates from{" "}
-        <span className="font-vernaccia-bold">Baggit</span>.
+        <span className="font-vernaccia-bold">Yankit</span>.
       </p>
     </StaticPageLayout>
   );

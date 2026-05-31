@@ -22,7 +22,11 @@ const Header = () => {
       <div className="container flex h-24 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center">
-            <img src="./logo.png" alt="Baggit Logo" className="w-1/3" />
+            <img
+              src="https://horizons-cdn.hostinger.com/d12faae7-6d4e-43e9-a404-0bda323ca6da/b45b7dddca7d4c0267c9efe2a42ca292.png"
+              alt="Yankit Logo"
+              className="w-1/3"
+            />
           </Link>
           <DesktopNavigation links={navLinks} />
         </div>

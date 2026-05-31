@@ -24,13 +24,13 @@ const HeroSection = () => {
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
             Travel Light, Ship Smart with{" "}
-            <span className="font-vernaccia-bold">Baggit</span>
+            <span className="font-vernaccia-bold">Yankit</span>
           </h1>
           <p className="text-lg md:text-xl text-white mb-10">
             Connect with travellers to send your packed bags globally, or earn
             by 'yanking' bags for others. Efficient, affordable, and
             community-driven shipping. Why mail it when you can{" "}
-            <span className="font-vernaccia-bold">Baggit</span> it!
+            <span className="font-vernaccia-bold">Yankit</span> it!
           </p>
 
           <UniversalSearchForm />
@@ -46,7 +46,7 @@ const HeroSection = () => {
               className="text-white hover:text-slate-200 dark:text-sky-300 dark:hover:text-sky-100 transition-colors duration-200 group text-sm font-medium inline-flex items-center"
             >
               Learn how{" "}
-              <span className="font-vernaccia-bold ml-1 mr-1">Baggit</span>{" "}
+              <span className="font-vernaccia-bold ml-1 mr-1">Yankit</span>{" "}
               works
               <ArrowRight className="inline-block ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>

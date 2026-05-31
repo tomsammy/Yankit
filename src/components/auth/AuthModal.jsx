@@ -50,8 +50,8 @@ const AuthModal = ({
             </DialogTitle>
             <DialogDescription className="text-muted-foreground dark:text-slate-300">
               {activeTab === "signin"
-                ? "Sign in to continue your journey with Baggit."
-                : "Join Baggit today to send and carry items globally."}
+                ? "Sign in to continue your journey with Yankit."
+                : "Join Yankit today to send and carry items globally."}
             </DialogDescription>
           </DialogHeader>
 
@@ -68,7 +68,7 @@ const AuthModal = ({
                 Ensure you comply with all airline regulations and customs laws
                 regarding items you are sending for both the origin and
                 destination countries.{" "}
-                <span className="font-vernaccia-bold">Baggit</span> takes the
+                <span className="font-vernaccia-bold">Yankit</span> takes the
                 safety of the public and safe and convenient peer-to-peer
                 shipping seriously.
               </AlertDescription>

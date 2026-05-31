@@ -126,7 +126,7 @@ const DashboardSettingsTab = () => {
 
       <SettingsSection
         title="Notification Preferences"
-        description="Control how you receive notifications from Baggit."
+        description="Control how you receive notifications from Yankit."
         icon={Bell}
       >
         <NotificationSettings />
@@ -196,7 +196,7 @@ const DashboardSettingsTab = () => {
 
       <SettingsSection
         title="Sign Out"
-        description="Securely sign out of your Baggit account."
+        description="Securely sign out of your Yankit account."
         icon={LogOut}
       >
         <Button

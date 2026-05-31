@@ -117,7 +117,7 @@ const YankingMatchesPage = () => {
   return (
     <>
       <Helmet>
-        <title>Matching Shipments | Baggit</title>
+        <title>Matching Shipments | Yankit</title>
       </Helmet>
 
       <div className="container mx-auto px-4 py-10 max-w-4xl">

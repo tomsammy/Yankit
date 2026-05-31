@@ -134,7 +134,7 @@ const EstimatedCostCard = ({
               >
                 <div className="flex items-center">
                   <Percent className="h-5 w-5 mr-3 text-red-500" />
-                  <span className="font-medium">Baggit fee (20%)</span>
+                  <span className="font-medium">Yankit fee (20%)</span>
                 </div>
                 <span className="font-semibold text-lg">
                   ${yankitFee.toFixed(2)}

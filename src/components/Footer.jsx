@@ -49,10 +49,14 @@ const Footer = () => {
           <div className="md:col-span-2">
             <div className="mb-4 flex flex-col items-start gap-3">
               <Link to="/">
-                <img src="./logo.png" alt="Baggit Logo" className="w-1/3" />
+                <img
+                  src="https://horizons-cdn.hostinger.com/d12faae7-6d4e-43e9-a404-0bda323ca6da/b45b7dddca7d4c0267c9efe2a42ca292.png"
+                  alt="Yankit Logo"
+                  className="w-1/3"
+                />
               </Link>
               <div className="w-1/2 wrap">
-                Baggit is an innovative Australian-based company passionate
+                Yankit is an innovative Australian-based company passionate
                 about connecting people and making global item sharing simpler,
                 more affordable, and community-driven.
               </div>
@@ -83,7 +87,7 @@ const Footer = () => {
 
         <div className="border-t border-blue-500/50 mt-10 pt-8 text-center text-blue-200 text-xs">
           <span className="font-vernaccia-bold">
-            © Baggit Proprietary Ltd. ABN: 57 688 896 620. ACN: 689 896 620.
+            © Yankit Proprietary Ltd. ABN: 57 688 896 620. ACN: 689 896 620.
           </span>
         </div>
       </div>

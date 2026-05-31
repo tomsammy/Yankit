@@ -394,7 +394,7 @@ const ContractControls = ({
               </AlertDialogTitle>
               <AlertDialogDescription>
                 This action will cancel the contract. This may have implications
-                based on <span className="font-vernaccia-bold">Baggit</span>'s
+                based on <span className="font-vernaccia-bold">Yankit</span>'s
                 terms of service.
               </AlertDialogDescription>
             </AlertDialogHeader>

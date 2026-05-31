@@ -100,7 +100,7 @@ const HowItWorksPage = () => {
       icon: MapPin,
       title: "Drop Off & Assess",
       description:
-        "Drop your bag at the designated Baggit drop-off point near the departure airport for staff assessment.",
+        "Drop your bag at the designated Yankit drop-off point near the departure airport for staff assessment.",
       colorClass: "bg-primary",
     },
     {
@@ -131,7 +131,7 @@ const HowItWorksPage = () => {
       icon: Shield,
       title: "Pick Up Securely",
       description:
-        "Pick up the bag from the Baggit drop-off point, where it has been safely assessed by our staff.",
+        "Pick up the bag from the Yankit drop-off point, where it has been safely assessed by our staff.",
       colorClass: "bg-primary",
     },
     {
@@ -154,7 +154,7 @@ const HowItWorksPage = () => {
       icon: Shield,
       title: "Secure Assessment",
       description:
-        "All bags are assessed by Baggit staff at drop-off points for safety and peace of mind.",
+        "All bags are assessed by Yankit staff at drop-off points for safety and peace of mind.",
     },
     {
       icon: Briefcase,
@@ -183,13 +183,13 @@ const HowItWorksPage = () => {
             variants={itemVariants}
             className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600"
           >
-            How <span className="font-vernaccia-bold">Baggit</span> Works
+            How <span className="font-vernaccia-bold">Yankit</span> Works
           </motion.h1>
           <motion.p
             variants={itemVariants}
             className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto"
           >
-            Baggit is a revolutionary way that brings together travellers with
+            Yankit is a revolutionary way that brings together travellers with
             those wanting to send anything, anywhere, domestically or
             internationally. It is a simple platform that enables travellers to
             list their allowable baggage space, and our algorithm matches them
@@ -280,7 +280,7 @@ const HowItWorksPage = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10 md:mb-12">
             Why Choose{" "}
             <span className="font-vernaccia-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600">
-              Baggit
+              Yankit
             </span>
             ?
           </h2>
@@ -313,7 +313,7 @@ const HowItWorksPage = () => {
             className="text-gray-700 mb-8 max-w-xl mx-auto"
           >
             Join the{" "}
-            <span className="font-vernaccia-bold text-gray-900">Baggit</span>{" "}
+            <span className="font-vernaccia-bold text-gray-900">Yankit</span>{" "}
             community today and experience the future of peer-to-peer shipping
             and travel earnings.
           </motion.p>

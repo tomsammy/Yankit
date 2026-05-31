@@ -86,7 +86,7 @@ const AppFeaturesOverview = () => {
             Powerful Features, Seamless Experience
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto">
-            <span className="font-vernaccia-bold">Baggit</span> is designed to
+            <span className="font-vernaccia-bold">Yankit</span> is designed to
             make peer-to-peer shipping straightforward and secure.
           </p>
         </motion.div>

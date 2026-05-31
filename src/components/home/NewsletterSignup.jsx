@@ -27,7 +27,7 @@ const NewsletterSignup = () => {
     toast({
       title: "Subscribed!",
       description:
-        "Thanks for signing up to the <span class='font-vernaccia-bold'>Baggit</span> newsletter!",
+        "Thanks for signing up to the <span class='font-vernaccia-bold'>Yankit</span> newsletter!",
       variant: "default",
       className: "bg-green-500 dark:bg-green-600 text-white",
     });
@@ -46,7 +46,7 @@ const NewsletterSignup = () => {
           <Mail className="w-12 h-12 text-primary mx-auto mb-4" />
           <h2 className="text-2xl md:text-3xl font-extrabold text-foreground dark:text-white mb-3">
             Stay Updated with{" "}
-            <span className="font-vernaccia-bold">Baggit</span>
+            <span className="font-vernaccia-bold">Yankit</span>
           </h2>
           <p className="text-muted-foreground dark:text-slate-300 mb-8">
             Subscribe to our newsletter for the latest news, offers, and travel

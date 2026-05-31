@@ -127,7 +127,7 @@ const YankABagNowEstimatedEarningsCard = ({
           <div className="flex items-center">
             <Percent className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
             <span className="text-sm text-muted-foreground dark:text-slate-400">
-              Baggit fee (20%)
+              Yankit fee (20%)
             </span>
           </div>
           <span className="text-sm font-semibold text-red-600 dark:text-red-300">

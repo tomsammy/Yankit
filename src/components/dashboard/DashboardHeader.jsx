@@ -26,7 +26,7 @@ const DashboardHeader = ({ profile, onSignOut }) => {
             !
           </h1>
           <p className="text-muted-foreground dark:text-slate-300 mt-1">
-            Here's your <span className="font-vernaccia-bold">Baggit</span>{" "}
+            Here's your <span className="font-vernaccia-bold">Yankit</span>{" "}
             activity overview.
           </p>
         </div>

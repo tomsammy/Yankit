@@ -16,7 +16,7 @@ const PaymentCancelledPage = () => {
   return (
     <>
       <Helmet>
-        <title>Payment Cancelled | Baggit</title>
+        <title>Payment Cancelled | Yankit</title>
       </Helmet>
       <div className="min-h-[calc(100vh-200px)] flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4">
         <motion.div

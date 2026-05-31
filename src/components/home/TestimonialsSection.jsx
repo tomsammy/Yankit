@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const testimonials = [
   {
     quote:
-      "Using <span class='font-vernaccia-bold'>Baggit</span> was a breeze! I sent a gift to my family overseas for half the usual cost. The traveler was communicative and everything arrived perfectly.",
+      "Using <span class='font-vernaccia-bold'>Yankit</span> was a breeze! I sent a gift to my family overseas for half the usual cost. The traveler was communicative and everything arrived perfectly.",
     name: "Aisha K.",
     location: "Shipper - Sydney to Lagos",
     avatar:
@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     quote:
-      "I travel frequently for work and <span class='font-vernaccia-bold'>Baggit</span> helps me cover some of my flight costs. It's easy to list my space and connect with shippers. Highly recommend!",
+      "I travel frequently for work and <span class='font-vernaccia-bold'>Yankit</span> helps me cover some of my flight costs. It's easy to list my space and connect with shippers. Highly recommend!",
     name: "Ben L.",
     location: "Traveler - Melbourne to London",
     avatar:
@@ -24,7 +24,7 @@ const testimonials = [
   },
   {
     quote:
-      "Needed to send urgent documents and <span class='font-vernaccia-bold'>Baggit</span> came through. Found a traveler leaving the next day. Much faster and cheaper than express courier services.",
+      "Needed to send urgent documents and <span class='font-vernaccia-bold'>Yankit</span> came through. Found a traveler leaving the next day. Much faster and cheaper than express courier services.",
     name: "Sarah P.",
     location: "Shipper - Perth to Singapore",
     avatar:
@@ -59,7 +59,7 @@ const TestimonialsSection = () => {
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-xl mx-auto">
             Hear what our community says about their{" "}
-            <span className="font-vernaccia-bold">Baggit</span> experiences.
+            <span className="font-vernaccia-bold">Yankit</span> experiences.
           </p>
         </motion.div>
 

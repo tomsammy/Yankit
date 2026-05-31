@@ -123,7 +123,7 @@ const Chatbot = () => {
           >
             <header className="p-4 bg-gradient-to-r from-primary to-purple-600 text-white flex items-center justify-between">
               <h3 className="font-semibold text-lg">
-                <span className="font-vernaccia-bold">Baggit</span> Assistant
+                <span className="font-vernaccia-bold">Yankit</span> Assistant
               </h3>
               <Button
                 variant="ghost"

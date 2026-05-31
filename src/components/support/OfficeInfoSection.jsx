@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Building } from "lucide-react";
 
 const OfficeInfoSection = () => {
   const officeDetails = {
-    name: "<span class='font-vernaccia-bold'>Baggit</span> Proprietary Ltd",
+    name: "<span class='font-vernaccia-bold'>Yankit</span> Proprietary Ltd",
     address: "Building 5, 22 Magnolia Dr, Brookwater QLD 4300",
     phone: "+61 7 1234 5678",
     email: "support@yankit.com.au",

@@ -29,7 +29,7 @@ const YankABagNowPageHeader = () => {
           Yank a Bag
         </h1>
         <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-white/90 drop-shadow-sm">
-          Got extra space in your luggage? List it on Baggit and earn money by
+          Got extra space in your luggage? List it on Yankit and earn money by
           carrying items for others.
         </p>
       </div>

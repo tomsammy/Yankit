@@ -308,7 +308,7 @@ const UniversalSearchForm = ({ initialMode = "send", onSearch }) => {
         className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-md p-6 md:p-8 rounded-xl shadow-2xl max-w-3xl mx-auto"
       >
         <h2 className="text-center text-xl md:text-2xl font-semibold text-sky-100 dark:text-sky-300 mb-6">
-          Baggit - Why Mail It When You Can Yank It!
+          Yankit - Why Mail It When You Can Yank It!
         </h2>
         <SearchModeToggle
           searchMode={searchMode}

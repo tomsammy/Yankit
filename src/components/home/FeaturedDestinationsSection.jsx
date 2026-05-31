@@ -99,7 +99,7 @@ const FeaturedRoutesSection = () => {
             Featured Routes
           </h2>
           <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-xl mx-auto">
-            Discover earning opportunities on Baggit with these featured routes.
+            Discover earning opportunities on Yankit with these featured routes.
           </p>
         </motion.div>
 

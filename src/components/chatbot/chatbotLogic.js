@@ -70,7 +70,7 @@ const commonKeywords = {
 const conversationFlows = {
   initial: {
     greeting:
-      "Welcome to <span class='font-vernaccia-bold'>Baggit</span>! I'm your virtual assistant. How can I help you today?",
+      "Welcome to <span class='font-vernaccia-bold'>Yankit</span>! I'm your virtual assistant. How can I help you today?",
     options: [
       {
         id: "book_flight",
@@ -80,7 +80,7 @@ const conversationFlows = {
       },
       {
         id: "what_is_yankit",
-        text: 'What is <span class="font-vernaccia-bold">Baggit</span>?',
+        text: 'What is <span class="font-vernaccia-bold">Yankit</span>?',
         icon: Info,
         nextFlow: "aboutYankit",
       },
@@ -146,7 +146,7 @@ const conversationFlows = {
   },
   aboutYankit: {
     response:
-      "<span class='font-vernaccia-bold'>Baggit</span> is a dual-service platform. We offer competitive flight bookings AND a peer-to-peer service connecting people who need to send items (Senders) with travellers who have spare baggage allowance (Yankers).",
+      "<span class='font-vernaccia-bold'>Yankit</span> is a dual-service platform. We offer competitive flight bookings AND a peer-to-peer service connecting people who need to send items (Senders) with travellers who have spare baggage allowance (Yankers).",
     options: [
       {
         id: "learn_flights_from_about",
@@ -182,7 +182,7 @@ const conversationFlows = {
   },
   bookingFlightInfo: {
     response:
-      "Yes, you can book flights directly through <span class='font-vernaccia-bold'>Baggit</span>! We offer competitive prices and a seamless booking experience. Would you like to search for a flight now?",
+      "Yes, you can book flights directly through <span class='font-vernaccia-bold'>Yankit</span>! We offer competitive prices and a seamless booking experience. Would you like to search for a flight now?",
     options: [
       {
         id: "go_to_flights",
@@ -210,7 +210,7 @@ const conversationFlows = {
   },
   sendingItemInfo: {
     response:
-      "To send an item: \n1. Go to 'Send a Bag'. \n2. Search for Yankers (travellers) going to your destination. \n3. Contact a Yanker via in-app chat, agree on terms, and finalize the contract. \nPayment is held securely by <span class='font-vernaccia-bold'>Baggit</span> and released after confirmation.",
+      "To send an item: \n1. Go to 'Send a Bag'. \n2. Search for Yankers (travellers) going to your destination. \n3. Contact a Yanker via in-app chat, agree on terms, and finalize the contract. \nPayment is held securely by <span class='font-vernaccia-bold'>Yankit</span> and released after confirmation.",
     options: [
       {
         id: "search_listings_now",
@@ -287,7 +287,7 @@ const conversationFlows = {
   },
   baggageAllowanceInfo: {
     response:
-      "Yankers can offer space for up to 2 bags. Each bag must not exceed 20kg. Senders must ensure their items comply with these limits and all airline/customs regulations for both origin and destination countries. <span class='font-vernaccia-bold'>Baggit</span> is not responsible for the contents.",
+      "Yankers can offer space for up to 2 bags. Each bag must not exceed 20kg. Senders must ensure their items comply with these limits and all airline/customs regulations for both origin and destination countries. <span class='font-vernaccia-bold'>Yankit</span> is not responsible for the contents.",
     options: [
       {
         id: "prohibited_items_from_allowance",
@@ -351,11 +351,11 @@ const conversationFlows = {
   },
   feesInfo: {
     response:
-      "Senders pay the agreed amount for the service. <span class='font-vernaccia-bold'>Baggit</span> charges a small service fee to both Senders and Yankers from this amount upon successful completion. This fee is clearly shown before you confirm a contract. Payments are held securely by <span class='font-vernaccia-bold'>Baggit</span> and released to the Yanker after delivery confirmation.",
+      "Senders pay the agreed amount for the service. <span class='font-vernaccia-bold'>Yankit</span> charges a small service fee to both Senders and Yankers from this amount upon successful completion. This fee is clearly shown before you confirm a contract. Payments are held securely by <span class='font-vernaccia-bold'>Yankit</span> and released to the Yanker after delivery confirmation.",
     options: [
       {
         id: "how_it_works_fees",
-        text: 'How <span class="font-vernaccia-bold">Baggit</span> Works',
+        text: 'How <span class="font-vernaccia-bold">Yankit</span> Works',
         icon: Info,
         nextFlow: "aboutYankit",
       },
@@ -380,7 +380,7 @@ const conversationFlows = {
   },
   safetyInfo: {
     response:
-      "<span class='font-vernaccia-bold'>Baggit</span> prioritizes safety. We use in-app messaging for secure communication, have a review system, and encourage user verification. However, users are responsible for items sent/carried and must comply with all laws. For details, visit our Trust & Safety page.",
+      "<span class='font-vernaccia-bold'>Yankit</span> prioritizes safety. We use in-app messaging for secure communication, have a review system, and encourage user verification. However, users are responsible for items sent/carried and must comply with all laws. For details, visit our Trust & Safety page.",
     options: [
       {
         id: "trust_safety_page_safety",
@@ -578,7 +578,7 @@ const conversationFlows = {
   },
   trackingInfo: {
     response:
-      "Once a contract is active, you can communicate with the Yanker via in-app chat for updates. The Yanker is responsible for providing the bag tag evidence after check-in. Formal tracking like courier services is not part of <span class='font-vernaccia-bold'>Baggit</span>, it's peer-to-peer.",
+      "Once a contract is active, you can communicate with the Yanker via in-app chat for updates. The Yanker is responsible for providing the bag tag evidence after check-in. Formal tracking like courier services is not part of <span class='font-vernaccia-bold'>Yankit</span>, it's peer-to-peer.",
     options: [
       {
         id: "my_activity_tracking",
@@ -590,7 +590,7 @@ const conversationFlows = {
       },
       {
         id: "how_it_works_tracking",
-        text: 'How <span class="font-vernaccia-bold">Baggit</span> Works',
+        text: 'How <span class="font-vernaccia-bold">Yankit</span> Works',
         icon: Info,
         nextFlow: "aboutYankit",
       },

@@ -43,7 +43,7 @@ const YankABagPage = () => {
   return (
     <>
       <Helmet>
-        <title>Yank a Bag | Baggit</title>
+        <title>Yank a Bag | Yankit</title>
         <meta
           name="description"
           content="Offer your unused baggage allowance and earn while you travel."

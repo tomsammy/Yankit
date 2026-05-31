@@ -12,12 +12,12 @@ const TermsOfServicePage = () => {
       </p>
 
       <p>
-        Welcome to <span className="font-vernaccia-bold">Baggit</span>! These
+        Welcome to <span className="font-vernaccia-bold">Yankit</span>! These
         Terms of Service ("Terms") govern your use of the{" "}
-        <span className="font-vernaccia-bold">Baggit</span> website, mobile
+        <span className="font-vernaccia-bold">Yankit</span> website, mobile
         applications, and services (collectively, the "Platform") provided by{" "}
-        <span className="font-vernaccia-bold">Baggit</span> Proprietary Ltd. ("
-        <span className="font-vernaccia-bold">Baggit</span>," "we," "us," or
+        <span className="font-vernaccia-bold">Yankit</span> Proprietary Ltd. ("
+        <span className="font-vernaccia-bold">Yankit</span>," "we," "us," or
         "our"). By accessing or using our Platform, you agree to be bound by
         these Terms.
       </p>
@@ -26,11 +26,11 @@ const TermsOfServicePage = () => {
         1. Platform Overview
       </h2>
       <p>
-        <span className="font-vernaccia-bold">Baggit</span> is a peer-to-peer
+        <span className="font-vernaccia-bold">Yankit</span> is a peer-to-peer
         platform that connects users who wish to send items ("Senders") with
         users who are travelling and have available baggage allowance to carry
         such items ("Yankers" or "Travellers").{" "}
-        <span className="font-vernaccia-bold">Baggit</span> facilitates these
+        <span className="font-vernaccia-bold">Yankit</span> facilitates these
         connections but is not a party to any agreement between Senders and
         Yankers, nor is it a carrier, freight forwarder, or logistics provider.
       </p>
@@ -50,7 +50,7 @@ const TermsOfServicePage = () => {
         3. User Conduct and Responsibilities
       </h2>
       <p>
-        As a user of the <span className="font-vernaccia-bold">Baggit</span>{" "}
+        As a user of the <span className="font-vernaccia-bold">Yankit</span>{" "}
         Platform, you agree to:
       </p>
       <ul className="list-disc list-inside ml-4 space-y-2">
@@ -71,7 +71,7 @@ const TermsOfServicePage = () => {
         <li>Communicate respectfully and professionally with other users.</li>
         <li>
           Not engage in fraudulent activities, misrepresentation, or any conduct
-          that could harm <span className="font-vernaccia-bold">Baggit</span> or
+          that could harm <span className="font-vernaccia-bold">Yankit</span> or
           its users.
         </li>
         <li>
@@ -83,7 +83,7 @@ const TermsOfServicePage = () => {
         Senders are solely responsible for the items they request to be carried.
         Yankers are solely responsible for the items they agree to carry and for
         ensuring compliance with all travel and customs regulations.{" "}
-        <span className="font-vernaccia-bold">Baggit</span> explicitly disclaims
+        <span className="font-vernaccia-bold">Yankit</span> explicitly disclaims
         any liability for the nature, legality, or condition of items exchanged
         through the Platform.
       </p>
@@ -105,15 +105,15 @@ const TermsOfServicePage = () => {
         </li>
         <li>
           <strong>Payments:</strong> Senders pay the agreed-upon fee through the
-          Platform. <span className="font-vernaccia-bold">Baggit</span> uses
+          Platform. <span className="font-vernaccia-bold">Yankit</span> uses
           third-party payment processors (e.g., Stripe) to handle transactions.
-          Funds are held by <span className="font-vernaccia-bold">Baggit</span>{" "}
+          Funds are held by <span className="font-vernaccia-bold">Yankit</span>{" "}
           (or its processor) and released to the Yanker upon confirmation of
           successful delivery by the Sender.
         </li>
         <li>
           <strong>Service Fees:</strong>{" "}
-          <span className="font-vernaccia-bold">Baggit</span> charges a service
+          <span className="font-vernaccia-bold">Yankit</span> charges a service
           fee to both Senders and Yankers for successfully completed
           transactions. These fees will be clearly communicated before
           confirming a transaction.
@@ -122,7 +122,7 @@ const TermsOfServicePage = () => {
           <strong>Cancellations and Refunds:</strong> Cancellation and refund
           policies will be detailed on the Platform and may depend on the timing
           of the cancellation and the agreement between users.{" "}
-          <span className="font-vernaccia-bold">Baggit</span> reserves the right
+          <span className="font-vernaccia-bold">Yankit</span> reserves the right
           to mediate disputes regarding cancellations and refunds.
         </li>
       </ul>
@@ -133,18 +133,18 @@ const TermsOfServicePage = () => {
       <p>
         The Platform and its original content, features, and functionality are
         and will remain the exclusive property of{" "}
-        <span className="font-vernaccia-bold">Baggit</span> Proprietary Ltd. and
+        <span className="font-vernaccia-bold">Yankit</span> Proprietary Ltd. and
         its licensors. Our trademarks and trade dress may not be used in
         connection with any product or service without the prior written consent
-        of <span className="font-vernaccia-bold">Baggit</span>.
+        of <span className="font-vernaccia-bold">Yankit</span>.
       </p>
       <p>
         By submitting content (e.g., listing descriptions, reviews) to the
-        Platform, you grant <span className="font-vernaccia-bold">Baggit</span>{" "}
+        Platform, you grant <span className="font-vernaccia-bold">Yankit</span>{" "}
         a worldwide, non-exclusive, royalty-free, sublicensable, and
         transferable license to use, reproduce, distribute, prepare derivative
         works of, display, and perform such content in connection with the
-        Platform and <span className="font-vernaccia-bold">Baggit</span>'s (and
+        Platform and <span className="font-vernaccia-bold">Yankit</span>'s (and
         its successors') business.
       </p>
 
@@ -153,21 +153,21 @@ const TermsOfServicePage = () => {
       </h2>
       <p>
         The Platform is provided on an "AS IS" and "AS AVAILABLE" basis.{" "}
-        <span className="font-vernaccia-bold">Baggit</span> makes no warranties,
+        <span className="font-vernaccia-bold">Yankit</span> makes no warranties,
         express or implied, regarding the Platform's reliability, security, or
         suitability for your needs.
       </p>
       <p>
-        <span className="font-vernaccia-bold">Baggit</span> is not responsible
+        <span className="font-vernaccia-bold">Yankit</span> is not responsible
         for the conduct of its users, the legality or condition of items
         transported, or the performance of any agreements made between users.
         Any disputes between users must be resolved directly between them,
-        although <span className="font-vernaccia-bold">Baggit</span> may offer a
+        although <span className="font-vernaccia-bold">Yankit</span> may offer a
         dispute resolution process.
       </p>
       <p>
         To the fullest extent permitted by law (including the Australian
-        Consumer Law), <span className="font-vernaccia-bold">Baggit</span>{" "}
+        Consumer Law), <span className="font-vernaccia-bold">Yankit</span>{" "}
         Proprietary Ltd., its directors, employees, partners, agents, suppliers,
         or affiliates, shall not be liable for any indirect, incidental,
         special, consequential, or punitive damages, including without
@@ -183,7 +183,7 @@ const TermsOfServicePage = () => {
       <p>
         Our liability for any breach of a condition or warranty implied by law
         and which cannot be excluded, is limited to the extent possible, at{" "}
-        <span className="font-vernaccia-bold">Baggit</span>'s option, to: (a)
+        <span className="font-vernaccia-bold">Yankit</span>'s option, to: (a)
         the supplying of the services again; or (b) the payment of the cost of
         having the services supplied again.
       </p>
@@ -193,7 +193,7 @@ const TermsOfServicePage = () => {
       </h2>
       <p>
         You agree to defend, indemnify, and hold harmless{" "}
-        <span className="font-vernaccia-bold">Baggit</span> Proprietary Ltd. and
+        <span className="font-vernaccia-bold">Yankit</span> Proprietary Ltd. and
         its licensee and licensors, and their employees, contractors, agents,
         officers, and directors, from and against any and all claims, damages,
         obligations, losses, liabilities, costs or debt, and expenses (including

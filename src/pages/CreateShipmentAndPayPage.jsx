@@ -118,7 +118,7 @@ const CreateShipmentAndPayPage = () => {
               Secure Your Shipment
             </CardTitle>
             <CardDescription className="text-muted-foreground pt-2">
-              Your payment will be held securely by Baggit and only released to
+              Your payment will be held securely by Yankit and only released to
               the Yanker after successful delivery.
             </CardDescription>
           </CardHeader>

@@ -4,9 +4,9 @@ import { Briefcase } from "lucide-react";
 
 const CareersPage = () => {
   return (
-    <StaticPageLayout title="Careers at Baggit" icon={Briefcase}>
+    <StaticPageLayout title="Careers at Yankit" icon={Briefcase}>
       <p>
-        Join the <span className="font-vernaccia-bold">Baggit</span> team and
+        Join the <span className="font-vernaccia-bold">Yankit</span> team and
         help us reshape the future of item sharing and logistics! We are a
         dynamic and growing company based in Brisbane, Australia, with a global
         vision. We're looking for passionate, innovative, and driven individuals
@@ -54,7 +54,7 @@ const CareersPage = () => {
         <p className="text-slate-600 dark:text-slate-300">
           Please check back later for specific job postings. However, if you are
           passionate about what we do and believe you can contribute to{" "}
-          <span className="font-vernaccia-bold">Baggit</span>'s success, we'd
+          <span className="font-vernaccia-bold">Yankit</span>'s success, we'd
           love to hear from you!
         </p>
       </div>
@@ -66,7 +66,7 @@ const CareersPage = () => {
         If you are interested in potential future opportunities or wish to
         submit a general application, please send your resume and a cover letter
         explaining your interest in{" "}
-        <span className="font-vernaccia-bold">Baggit</span> and how you can
+        <span className="font-vernaccia-bold">Yankit</span> and how you can
         contribute to our team to:
       </p>
       <p className="font-medium text-primary dark:text-secondary">
@@ -80,7 +80,7 @@ const CareersPage = () => {
         line of your email.
       </p>
       <p>
-        <span className="font-vernaccia-bold">Baggit</span> Pty Ltd is an equal
+        <span className="font-vernaccia-bold">Yankit</span> Pty Ltd is an equal
         opportunity employer. We celebrate diversity and are committed to
         creating an inclusive environment for all employees.
       </p>

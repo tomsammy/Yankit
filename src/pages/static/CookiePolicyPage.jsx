@@ -13,8 +13,8 @@ const CookiePolicyPage = () => {
 
       <p>
         This Cookie Policy explains how{" "}
-        <span className="font-vernaccia-bold">Baggit</span> Pty Ltd ("
-        <span className="font-vernaccia-bold">Baggit</span>," "we," "us," or
+        <span className="font-vernaccia-bold">Yankit</span> Pty Ltd ("
+        <span className="font-vernaccia-bold">Yankit</span>," "we," "us," or
         "our") uses cookies and similar tracking technologies on our website,
         mobile applications, and services (collectively, the "Platform"). It
         also explains what these technologies are and why we use them, as well
@@ -32,7 +32,7 @@ const CookiePolicyPage = () => {
       </p>
       <p>
         Cookies set by the website owner (in this case,{" "}
-        <span className="font-vernaccia-bold">Baggit</span>) are called
+        <span className="font-vernaccia-bold">Yankit</span>) are called
         "first-party cookies". Cookies set by parties other than the website
         owner are called "third-party cookies". Third-party cookies enable
         third-party features or functionality to be provided on or through the

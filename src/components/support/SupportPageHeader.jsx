@@ -31,7 +31,7 @@ const SupportPageHeader = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <span className="font-vernaccia-bold">Baggit</span> Support Center
+        <span className="font-vernaccia-bold">Yankit</span> Support Center
       </motion.h1>
       <motion.p
         className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto"

@@ -4,14 +4,14 @@ import { ShieldCheck } from "lucide-react";
 
 const TrustSafetyPage = () => {
   return (
-    <StaticPageLayout title="Trust & Safety at Baggit" icon={ShieldCheck}>
+    <StaticPageLayout title="Trust & Safety at Yankit" icon={ShieldCheck}>
       <p>
-        At <span className="font-vernaccia-bold">Baggit</span>, creating a
+        At <span className="font-vernaccia-bold">Yankit</span>, creating a
         trustworthy and secure environment for our community is our top
         priority. We understand that you're entrusting us and other users with
         your items and travel plans, and we take that responsibility seriously.
         Here’s how we work to keep{" "}
-        <span className="font-vernaccia-bold">Baggit</span> safe for everyone.
+        <span className="font-vernaccia-bold">Yankit</span> safe for everyone.
       </p>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4 text-primary dark:text-secondary">
@@ -19,8 +19,8 @@ const TrustSafetyPage = () => {
       </h2>
       <ul className="list-disc list-inside ml-4 space-y-3">
         <li>
-          <strong>Baggit Staff Assessment:</strong> To ensure safety, all bags
-          must be dropped off by the sender at a designated Baggit drop-off
+          <strong>Yankit Staff Assessment:</strong> To ensure safety, all bags
+          must be dropped off by the sender at a designated Yankit drop-off
           point. Our staff assesses the items before they are handed over to the
           traveller.
         </li>
@@ -32,7 +32,7 @@ const TrustSafetyPage = () => {
         <li>
           <strong>Secure Payments:</strong> Our platform integrates with trusted
           payment gateways (like Stripe) to handle transactions securely. Funds
-          are held by <span className="font-vernaccia-bold">Baggit</span> and
+          are held by <span className="font-vernaccia-bold">Yankit</span> and
           released to the Yanker only after the Sender confirms successful
           receipt of the item(s).
         </li>
@@ -50,7 +50,7 @@ const TrustSafetyPage = () => {
         </li>
         <li>
           <strong>Prohibited Items & Activities:</strong>{" "}
-          <span className="font-vernaccia-bold">Baggit</span> strictly prohibits
+          <span className="font-vernaccia-bold">Yankit</span> strictly prohibits
           the sending or carrying of illegal goods, hazardous materials,
           weapons, counterfeit items, and any other items restricted by airline
           regulations or customs laws.
@@ -89,12 +89,12 @@ const TrustSafetyPage = () => {
         </li>
         <li>
           <strong>Use Secure Payment:</strong> Always make payments through the{" "}
-          <span className="font-vernaccia-bold">Baggit</span> platform. Do not
+          <span className="font-vernaccia-bold">Yankit</span> platform. Do not
           engage in off-platform payments.
         </li>
         <li>
           <strong>Drop Off Securely:</strong> Drop your bag only at the
-          designated Baggit drop-off point for assessment.
+          designated Yankit drop-off point for assessment.
         </li>
         <li>
           <strong>Confirm Receipt Promptly:</strong> Once your recipient
@@ -109,7 +109,7 @@ const TrustSafetyPage = () => {
       <ul className="list-disc list-inside ml-4 space-y-2">
         <li>
           <strong>Pick Up Assessed Bags:</strong> Only pick up bags from the
-          designated Baggit drop-off point after they have been assessed by our
+          designated Yankit drop-off point after they have been assessed by our
           staff.
         </li>
         <li>
@@ -123,7 +123,7 @@ const TrustSafetyPage = () => {
         <li>
           <strong>Report Suspicious Activity:</strong> If you encounter any
           suspicious requests or behaviour, report it to{" "}
-          <span className="font-vernaccia-bold">Baggit</span> support
+          <span className="font-vernaccia-bold">Yankit</span> support
           immediately.
         </li>
       </ul>

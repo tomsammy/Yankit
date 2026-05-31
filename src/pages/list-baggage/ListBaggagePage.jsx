@@ -89,10 +89,10 @@ const ListBaggagePage = () => {
   return (
     <>
       <Helmet>
-        <title>List Your Bag | Baggit</title>
+        <title>List Your Bag | Yankit</title>
         <meta
           name="description"
-          content="List your available baggage space and earn money by carrying items for others. Join the Baggit community today."
+          content="List your available baggage space and earn money by carrying items for others. Join the Yankit community today."
         />
       </Helmet>
 

@@ -111,7 +111,7 @@ const NotificationSettings = () => {
     {
       id: "promotional_email",
       label: "Promotions & News",
-      description: "Receive occasional updates and special offers from Baggit.",
+      description: "Receive occasional updates and special offers from Yankit.",
       key: "promotional_email",
     },
   ];
