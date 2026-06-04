@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, AlertTriangle, ArrowLeft, Package, MapPin, Luggage } from 'lucide-react';
+import { Loader2, AlertTriangle, ArrowLeft, Package, MapPin, Luggage, ShieldCheck, CheckCircle } from 'lucide-react';
 import useShipmentTracking from '@/hooks/useShipmentTracking';
 import ListingTrackingTimeline from '@/components/listings/ListingTrackingTimeline';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
+import { useToast } from '@/components/ui/use-toast';
 
 const LoadingState = () => (
     <div className="flex flex-col items-center justify-center min-h-[400px]">
@@ -29,6 +32,41 @@ const ErrorState = ({ error }) => (
 const ShipmentTrackingPage = () => {
     const { shipmentId } = useParams();
     const { shipment, trackingEvents, loading, error } = useShipmentTracking(shipmentId);
+    const { session } = useAuth();
+    const { toast } = useToast();
+    const [confirmingDelivery, setConfirmingDelivery] = useState(false);
+
+    const handleConfirmDelivery = async () => {
+        if (!session?.access_token) return;
+        setConfirmingDelivery(true);
+        try {
+            const { data, error: functionError } = await supabase.functions.invoke("confirm-delivery", {
+                headers: {
+                    Authorization: `Bearer ${session.access_token}`
+                },
+                body: { shipmentId }
+            });
+            if (functionError) throw functionError;
+            if (data.error) throw new Error(data.error);
+
+            toast({
+                title: "Delivery Confirmed! 🎉",
+                description: "Escrow funds have been released and queued for transfer.",
+            });
+            
+            // Reload page to update tracking timeline and status
+            window.location.reload();
+        } catch (err) {
+            console.error("Delivery confirmation failed:", err);
+            toast({
+                variant: "destructive",
+                title: "Confirmation Failed",
+                description: err.message || "Failed to confirm delivery. Please try again."
+            });
+        } finally {
+            setConfirmingDelivery(false);
+        }
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -115,6 +153,46 @@ const ShipmentTrackingPage = () => {
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="space-y-6">
+                        {shipment.is_paid && (
+                            <Card className="shadow-md bg-white dark:bg-slate-800/80 backdrop-blur-sm border-l-4 border-l-green-500">
+                                <CardHeader className="pb-3">
+                                    <CardTitle className="flex items-center text-green-600 dark:text-green-400">
+                                        <ShieldCheck className="mr-2 h-5 w-5" />
+                                        Escrow Active
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="text-sm space-y-2">
+                                    <p className="text-muted-foreground text-xs leading-relaxed">
+                                        Payment is held securely and will be released to the traveler 24 hours after delivery confirmation.
+                                    </p>
+                                    <p className="text-xs pt-1">
+                                        <strong>Escrow Status:</strong>{" "}
+                                        {shipment.status === "delivered" || shipment.status === "completed" ? (
+                                            <span className="text-green-500 font-semibold">Released (Holdback Period)</span>
+                                        ) : (
+                                            <span className="text-blue-500 font-semibold">Held Securely</span>
+                                        )}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        )}
+
+                        {shipment.shipper_user_id === session?.user?.id && 
+                         ["in_transit", "delivery_pending"].includes(shipment.status) && (
+                            <Button 
+                                onClick={handleConfirmDelivery}
+                                disabled={confirmingDelivery}
+                                className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-6 text-md shadow-lg"
+                            >
+                                {confirmingDelivery ? (
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                ) : (
+                                    <CheckCircle className="mr-2 h-5 w-5" />
+                                )}
+                                Confirm Delivery
+                            </Button>
+                        )}
+
                         <Card className="shadow-md bg-white dark:bg-slate-800/80 backdrop-blur-sm">
                             <CardHeader>
                                 <CardTitle className="flex items-center"><Package className="mr-2 h-5 w-5 text-primary" />Shipment Info</CardTitle>
