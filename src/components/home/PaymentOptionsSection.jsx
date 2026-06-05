@@ -3,29 +3,15 @@ import { motion } from "framer-motion";
 import {
   CreditCard,
   ShieldCheck,
-  Smartphone,
-  Wallet,
   Route,
 } from "lucide-react";
 
 const paymentOptions = [
   {
     icon: <CreditCard className="w-10 h-10 text-primary mb-4" />,
-    title: "All Major Cards (via Stripe)",
+    title: "All Major Cards",
     description:
-      "Securely pay using your Visa, Mastercard, American Express, and other major credit or debit cards. Processed by Stripe for maximum security.",
-  },
-  {
-    icon: <Wallet className="w-10 h-10 text-primary mb-4" />,
-    title: "Revolut Pay",
-    description:
-      "Experience seamless and instant payments with Revolut Pay. Fast, secure, and convenient for all your transactions.",
-  },
-  {
-    icon: <Smartphone className="w-10 h-10 text-primary mb-4" />,
-    title: "PAYID",
-    description:
-      "Make fast and simple payments directly from your bank account using PAYID. A quick and modern way to transact.",
+      "Securely pay using your Visa, Mastercard, American Express, and other major credit or debit cards. Processed securely via Escrow.com.",
   },
   {
     icon: <Route className="w-10 h-10 text-primary mb-4" />,
