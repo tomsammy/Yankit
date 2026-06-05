@@ -94,6 +94,33 @@ const ContractControls = ({
     }
     setIsLoading(true);
     try {
+      if (newStatus === "In Transit") {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          const { data: functionData, error: functionError } = await supabase.functions.invoke("confirm-delivery", {
+            headers: {
+              Authorization: `Bearer ${session.access_token}`
+            },
+            body: { shipmentId: contract.id, action: "ship" }
+          });
+          if (functionError) throw functionError;
+          if (functionData.error) throw new Error(functionData.error);
+          
+          onContractUpdate({ ...contract, status: "In Transit" });
+          toast({
+            title: "Success",
+            description: successMessage,
+            className: "bg-green-500 text-white",
+          });
+          if (systemMessage && onSendMessage) {
+            onSendMessage(systemMessage);
+          }
+          return;
+        } else {
+          throw new Error("Authentication session not found");
+        }
+      }
+
       const { data, error } = await supabase
         .from("shipments")
         .update({ status: newStatus })

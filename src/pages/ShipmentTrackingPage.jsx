@@ -44,14 +44,25 @@ const ShipmentTrackingPage = () => {
                 headers: {
                     Authorization: `Bearer ${session.access_token}`
                 },
-                body: { shipmentId }
+                body: { shipmentId, action: "confirm" }
             });
+            
             if (functionError) throw functionError;
-            if (data.error) throw new Error(data.error);
+            
+            if (data.error && !data.url) throw new Error(data.error);
+
+            if (data.url) {
+                toast({
+                    title: "Manual Verification Required",
+                    description: data.error || "Redirecting you to Escrow.com to confirm receipt.",
+                });
+                window.open(data.url, "_blank");
+                return;
+            }
 
             toast({
                 title: "Delivery Confirmed! 🎉",
-                description: "Escrow funds have been released and queued for transfer.",
+                description: "Escrow funds have been successfully released.",
             });
             
             // Reload page to update tracking timeline and status
@@ -161,19 +172,19 @@ const ShipmentTrackingPage = () => {
                                         Escrow Active
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent className="text-sm space-y-2">
-                                    <p className="text-muted-foreground text-xs leading-relaxed">
-                                        Payment is held securely and will be released to the traveler 24 hours after delivery confirmation.
-                                    </p>
-                                    <p className="text-xs pt-1">
-                                        <strong>Escrow Status:</strong>{" "}
-                                        {shipment.status === "delivered" || shipment.status === "completed" ? (
-                                            <span className="text-green-500 font-semibold">Released (Holdback Period)</span>
-                                        ) : (
-                                            <span className="text-blue-500 font-semibold">Held Securely</span>
-                                        )}
-                                    </p>
-                                </CardContent>
+                                    <CardContent className="text-sm space-y-2">
+                                        <p className="text-muted-foreground text-xs leading-relaxed">
+                                            Payment is held securely by Escrow.com and released to the traveler upon delivery confirmation.
+                                        </p>
+                                        <p className="text-xs pt-1">
+                                            <strong>Escrow Status:</strong>{" "}
+                                            {shipment.status === "delivered" || shipment.status === "completed" ? (
+                                                <span className="text-green-500 font-semibold">Released to Traveler</span>
+                                            ) : (
+                                                <span className="text-blue-500 font-semibold">Held Securely</span>
+                                            )}
+                                        </p>
+                                    </CardContent>
                             </Card>
                         )}
 
