@@ -32,16 +32,46 @@ const BlogPage = () => {
           Discover travel tips, P2P shipping guides, company news, and inspiring stories from the global <span className="font-vernaccia-bold">Yankit</span> community.
         </p>
         
-        {/* TrySoro Blog Embed Container */}
+        {/* CSS for :empty state spinner */}
+        <style>{`
+          #soro-blog:empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            border: 1px dashed #e2e8f0;
+            border-radius: 1rem;
+          }
+          #soro-blog:empty::before {
+            content: "";
+            width: 2rem;
+            height: 2rem;
+            border: 4px solid #1d4ed8;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: soro-spin 1s linear infinite;
+          }
+          @keyframes soro-spin {
+            to { transform: rotate(360deg); }
+          }
+          .dark #soro-blog:empty {
+            border-color: #1e293b;
+          }
+          .dark #soro-blog:empty::before {
+            border-color: #3b82f6;
+            border-top-color: transparent;
+          }
+        `}</style>
+
+        {/* 
+          TrySoro Blog Embed Container
+          Rendered with NO children in React Virtual DOM so React's reconciliation engine
+          never overwrites the HTML elements injected by the TrySoro script.
+        */}
         <div 
           id="soro-blog" 
-          className="w-full min-h-[600px] bg-transparent rounded-2xl transition-all duration-300 flex items-center justify-center border border-dashed border-slate-200 dark:border-slate-800"
-        >
-          <div className="text-center py-12">
-            <div className="inline-block w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-sm text-muted-foreground">Loading blog articles...</p>
-          </div>
-        </div>
+          className="w-full min-h-[600px] bg-transparent rounded-2xl transition-all duration-300"
+        />
       </div>
     </StaticPageLayout>
   );
