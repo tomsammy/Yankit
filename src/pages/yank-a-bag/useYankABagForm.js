@@ -1,17 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
-import { useToast } from '@/components/ui/use-toast';
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/components/ui/use-toast";
 import {
   MAX_BAGGAGE_WEIGHT_PER_BAG,
   MAX_BAGS_PER_LISTING,
   BASE_EARNING,
   PER_KM_RATE,
-} from '@/config/constants';
-import { haversineDistance, getCoords } from '@/lib/distanceUtils';
-import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
-import { notifyNewActivityCTA } from '@/lib/notify';
-import { parseISO } from 'date-fns';
+} from "@/data/constants";
+import { haversineDistance, getCoords } from "@/lib/distanceUtils";
+import { YANKIT_SERVICE_FEE_PERCENTAGE } from "../../data/constants";
+import { notifyNewActivityCTA } from "@/lib/notify";
+import { parseISO } from "date-fns";
 
 export const useYankABagForm = (userId) => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const useYankABagForm = (userId) => {
     origin: null,
     destination: null,
     departureDate: null,
-    numberOfBags: '1',
+    numberOfBags: "1",
     bagHandlingAccepted: false,
   });
 
@@ -37,7 +37,10 @@ export const useYankABagForm = (userId) => {
 
   const handleInputChange = (e) => {
     const { name, type, value, checked } = e.target;
-    setFormData((p) => ({ ...p, [name]: type === 'checkbox' ? checked : value }));
+    setFormData((p) => ({
+      ...p,
+      [name]: type === "checkbox" ? checked : value,
+    }));
     if (errors[name]) setErrors((p) => ({ ...p, [name]: null }));
   };
 
@@ -65,11 +68,14 @@ export const useYankABagForm = (userId) => {
   const handleNumberOfBagsChange = (value) => {
     const n = parseInt(value, 10);
     if (isNaN(n) || n < 1) {
-      setFormData((p) => ({ ...p, numberOfBags: '1' }));
+      setFormData((p) => ({ ...p, numberOfBags: "1" }));
     } else if (n > MAX_BAGS_PER_LISTING) {
-      setFormData((p) => ({ ...p, numberOfBags: MAX_BAGS_PER_LISTING.toString() }));
+      setFormData((p) => ({
+        ...p,
+        numberOfBags: MAX_BAGS_PER_LISTING.toString(),
+      }));
       toast({
-        title: 'Max Bags Reached',
+        title: "Max Bags Reached",
         description: `Maximum ${MAX_BAGS_PER_LISTING} bags allowed.`,
       });
     } else {
@@ -80,21 +86,24 @@ export const useYankABagForm = (userId) => {
   const validateForm = () => {
     const e = {};
 
-    if (!formData.origin) e.origin = 'Origin airport is required.';
-    if (!formData.destination) e.destination = 'Destination airport is required.';
+    if (!formData.origin) e.origin = "Origin airport is required.";
+    if (!formData.destination)
+      e.destination = "Destination airport is required.";
 
     if (
       formData.origin &&
       formData.destination &&
       formData.origin.value === formData.destination.value
     ) {
-      e.origin = e.destination = 'Origin and destination cannot be the same.';
+      e.origin = e.destination = "Origin and destination cannot be the same.";
     }
 
-    if (!formData.departureDate) e.departureDate = 'Departure date is required.';
+    if (!formData.departureDate)
+      e.departureDate = "Departure date is required.";
     if (!formData.bagHandlingAccepted)
-      e.bagHandlingAccepted = 'You must accept the bag handling agreement.';
-    if (isCalculating) e.confirmation = 'Please wait for calculation to finish.';
+      e.bagHandlingAccepted = "You must accept the bag handling agreement.";
+    if (isCalculating)
+      e.confirmation = "Please wait for calculation to finish.";
 
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -116,7 +125,8 @@ export const useYankABagForm = (userId) => {
     const distance = Math.round(haversineDistance(o, d));
     const bags = parseInt(formData.numberOfBags, 10) || 1;
     const grossEarning = (BASE_EARNING + distance * PER_KM_RATE) * bags;
-    const netEarning = grossEarning - (grossEarning * YANKIT_SERVICE_FEE_PERCENTAGE);
+    const netEarning =
+      grossEarning - grossEarning * YANKIT_SERVICE_FEE_PERCENTAGE;
 
     setEstimatedDistance(distance);
     setEstimatedEarnings(Number(netEarning.toFixed(2)));
@@ -134,23 +144,23 @@ export const useYankABagForm = (userId) => {
     setIsFetchingMatches(true);
 
     const matchDate = new Date(formData.departureDate)
-    .toISOString()
-    .split('T')[0];
+      .toISOString()
+      .split("T")[0];
 
     const { data, error } = await supabase
-      .from('shipments')
-      .select('*')
-      .eq('origin', formData.origin.label)
-      .eq('destination', formData.destination.label)
-      .eq('departure_date', matchDate)      
-      .eq('status', 'open')
-      .is('traveler_user_id', null)
-      .neq('shipper_user_id', userId)
+      .from("shipments")
+      .select("*")
+      .eq("origin", formData.origin.label)
+      .eq("destination", formData.destination.label)
+      .eq("departure_date", matchDate)
+      .eq("status", "open")
+      .is("traveler_user_id", null)
+      .neq("shipper_user_id", userId)
       .lte(
-        'agreed_weight_kg',
-        parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG
+        "agreed_weight_kg",
+        parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG,
       )
-      .lte('number_of_bags', parseInt(formData.numberOfBags, 10));
+      .lte("number_of_bags", parseInt(formData.numberOfBags, 10));
 
     if (!error) setMatchingShipments(data || []);
     setIsFetchingMatches(false);
@@ -163,59 +173,58 @@ export const useYankABagForm = (userId) => {
   const submitYanking = async () => {
     if (!userId) return null;
     if (!validateForm()) return null;
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const { data, error } = await supabase
-        .from('yankings')
+        .from("yankings")
         .insert({
           yanker_user_id: userId,
           origin: formData.origin.label,
           destination: formData.destination.label,
           departure_date: new Date(formData.departureDate)
-          .toISOString()
-          .split('T')[0],
-                  number_of_bags: parseInt(formData.numberOfBags, 10),
+            .toISOString()
+            .split("T")[0],
+          number_of_bags: parseInt(formData.numberOfBags, 10),
           available_space_kg:
             parseInt(formData.numberOfBags, 10) * MAX_BAGGAGE_WEIGHT_PER_BAG,
           estimated_distance_km: estimatedDistance,
           estimated_earnings: estimatedEarnings,
           bag_handling_accepted: true,
-          status: 'active',
+          status: "active",
         })
         .select()
         .single();
-  
+
       if (error) throw error;
-  
+
       setYankingId(data.id);
 
       const { data: users } = await supabase
-        .from('profiles')
-        .select('email')
-        .not('email', 'is', null);
-      
+        .from("profiles")
+        .select("email")
+        .not("email", "is", null);
+
       if (users?.length) {
         await notifyNewActivityCTA({
-          to: users.map(u => u.email),
+          to: users.map((u) => u.email),
         });
       }
-      
-      toast({ title: 'Success', description: 'Yanking listed successfully.' });
+
+      toast({ title: "Success", description: "Yanking listed successfully." });
       return data;
-      } catch (err) {
+    } catch (err) {
       toast({
-        title: 'Error',
-        description: err.message || 'Failed to create yanking.',
-        variant: 'destructive',
+        title: "Error",
+        description: err.message || "Failed to create yanking.",
+        variant: "destructive",
       });
       return null;
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   return {
     formData,

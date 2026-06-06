@@ -1,16 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar as CalendarIcon, Briefcase, ShieldCheck } from 'lucide-react';
+import { Calendar as CalendarIcon, Briefcase, ShieldCheck } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { AirportSelect } from '@/components/AirportSelect';
-import { MAX_BAGS_PER_LISTING } from '@/config/constants';
+import { AirportSelect } from "@/components/AirportSelect";
+import { MAX_BAGS_PER_LISTING } from "@/data/constants";
 
 const YankABagFormFields = ({
   formData,
@@ -35,22 +39,30 @@ const YankABagFormFields = ({
           <Label>Origin Airport</Label>
           <AirportSelect
             value={formData.origin}
-            onChange={(v) => handleAirportChange('origin', v)}
+            onChange={(v) => handleAirportChange("origin", v)}
             type="origin"
             disabled={isLoading}
           />
-          {errors.origin && <motion.p className="text-xs text-red-500 mt-2">{errors.origin}</motion.p>}
+          {errors.origin && (
+            <motion.p className="text-xs text-red-500 mt-2">
+              {errors.origin}
+            </motion.p>
+          )}
         </div>
 
         <div>
           <Label>Destination Airport</Label>
           <AirportSelect
             value={formData.destination}
-            onChange={(v) => handleAirportChange('destination', v)}
+            onChange={(v) => handleAirportChange("destination", v)}
             type="destination"
             disabled={isLoading}
           />
-          {errors.destination && <motion.p className="text-xs text-red-500 mt-2">{errors.destination}</motion.p>}
+          {errors.destination && (
+            <motion.p className="text-xs text-red-500 mt-2">
+              {errors.destination}
+            </motion.p>
+          )}
         </div>
       </div>
 
@@ -61,11 +73,16 @@ const YankABagFormFields = ({
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className={cn("w-full justify-start", !formData.departureDate && "text-muted-foreground")}
+                className={cn(
+                  "w-full justify-start",
+                  !formData.departureDate && "text-muted-foreground",
+                )}
                 disabled={isLoading}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {formData.departureDate ? format(formData.departureDate, "PPP") : "Select Departure Date"}
+                {formData.departureDate
+                  ? format(formData.departureDate, "PPP")
+                  : "Select Departure Date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0">
@@ -73,11 +90,17 @@ const YankABagFormFields = ({
                 mode="single"
                 selected={formData.departureDate}
                 onSelect={handleDateSelect}
-                disabled={(d) => d < new Date(new Date().setDate(new Date().getDate() - 1))}
+                disabled={(d) =>
+                  d < new Date(new Date().setDate(new Date().getDate() - 1))
+                }
               />
             </PopoverContent>
           </Popover>
-          {errors.departureDate && <motion.p className="text-xs text-red-500 mt-2">{errors.departureDate}</motion.p>}
+          {errors.departureDate && (
+            <motion.p className="text-xs text-red-500 mt-2">
+              {errors.departureDate}
+            </motion.p>
+          )}
         </div>
 
         <div>
@@ -94,15 +117,24 @@ const YankABagFormFields = ({
               disabled={isLoading}
             />
           </div>
-          {errors.numberOfBags && <motion.p className="text-xs text-red-500 mt-2">{errors.numberOfBags}</motion.p>}
+          {errors.numberOfBags && (
+            <motion.p className="text-xs text-red-500 mt-2">
+              {errors.numberOfBags}
+            </motion.p>
+          )}
         </div>
       </div>
 
       <div className="border rounded-lg p-4 space-y-3">
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-primary" />
-          <a href='/declaration.pdf' className='text-blue-500 underline' target="blank">
-          Bag Handling Agreement</a>
+          <a
+            href="/declaration.pdf"
+            className="text-blue-500 underline"
+            target="blank"
+          >
+            Bag Handling Agreement
+          </a>
         </div>
 
         <div className="flex gap-3 items-start">
@@ -111,8 +143,8 @@ const YankABagFormFields = ({
             onCheckedChange={(v) =>
               handleInputChange({
                 target: {
-                  name: 'bagHandlingAccepted',
-                  type: 'checkbox',
+                  name: "bagHandlingAccepted",
+                  type: "checkbox",
                   checked: v === true,
                 },
               })
@@ -120,12 +152,15 @@ const YankABagFormFields = ({
             disabled={isLoading}
           />
           <p className="text-sm">
-            I confirm that I will not open, tamper with, or alter the bag and will deliver it as received.
+            I confirm that I will not open, tamper with, or alter the bag and
+            will deliver it as received.
           </p>
         </div>
 
         {errors.bagHandlingAccepted && (
-          <motion.p className="text-xs text-red-500">{errors.bagHandlingAccepted}</motion.p>
+          <motion.p className="text-xs text-red-500">
+            {errors.bagHandlingAccepted}
+          </motion.p>
         )}
       </div>
     </div>

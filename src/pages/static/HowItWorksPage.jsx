@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import SEO from "@/components/SEO";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -171,177 +172,188 @@ const HowItWorksPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 py-12 md:py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="text-center mb-16 md:mb-24"
-        >
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600"
+    <>
+      <SEO
+        title="How Peer-to-Peer Shipping Works | Yankit"
+        description="Learn how Yankit's 7-step process works. Match, pay, drop off, deliver. Secure escrow until delivery. Join
+thousands of savers today."
+        path="/"
+        ogImageName="logo.png"
+        // schema={schema}
+      />
+      <div className="min-h-screen bg-gray-100 text-gray-900 py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center mb-16 md:mb-24"
           >
-            How <span className="font-vernaccia-bold">Yankit</span> Works
-          </motion.h1>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto"
-          >
-            Yankit is a revolutionary way that brings together travellers with
-            those wanting to send anything, anywhere, domestically or
-            internationally. It is a simple platform that enables travellers to
-            list their allowable baggage space, and our algorithm matches them
-            with senders for a seamless, secure experience.
-          </motion.p>
-        </motion.section>
-
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="mb-16 md:mb-24"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            For <span className="text-primary">Senders</span>: Ship with Ease
-          </h2>
-          <p className="text-center text-gray-700 mb-10 md:mb-12 max-w-2xl mx-auto">
-            Follow these simple steps to send your items securely.
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {senderSteps.map((step, index) => (
-              <StepCard
-                key={index}
-                icon={step.icon}
-                title={step.title}
-                description={step.description}
-                stepNumber={String(index + 1).padStart(2, "0")}
-                className={step.colorClass}
-              />
-            ))}
-          </div>
-          <motion.div variants={itemVariants} className="text-center mt-12">
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300"
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600"
             >
-              <Link to="/list-baggage">
-                Send an Item Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.section>
-
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="mb-16 md:mb-24"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            For <span className="text-primary">Travelers</span>: Earn on the Go
-          </h2>
-          <p className="text-center text-gray-700 mb-10 md:mb-12 max-w-2xl mx-auto">
-            Turn your extra baggage space into extra cash on your next trip.
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {travelerSteps.map((step, index) => (
-              <StepCard
-                key={index}
-                icon={step.icon}
-                title={step.title}
-                description={step.description}
-                stepNumber={String(index + 1).padStart(2, "0")}
-                className={step.colorClass}
-              />
-            ))}
-          </div>
-          <motion.div variants={itemVariants} className="text-center mt-12">
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300"
+              How <span className="font-vernaccia-bold">Yankit</span> Works
+            </motion.h1>
+            <motion.p
+              variants={itemVariants}
+              className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto"
             >
-              <Link to="/yank-a-bag">
-                List Your Trip <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.section>
+              Yankit is a revolutionary way that brings together travellers with
+              those wanting to send anything, anywhere, domestically or
+              internationally. It is a simple platform that enables travellers
+              to list their allowable baggage space, and our algorithm matches
+              them with senders for a seamless, secure experience.
+            </motion.p>
+          </motion.section>
 
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="mb-16 md:mb-24"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10 md:mb-12">
-            Why Choose{" "}
-            <span className="font-vernaccia-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600">
-              Yankit
-            </span>
-            ?
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {benefits.map((benefit, index) => (
-              <BenefitCard
-                key={index}
-                icon={benefit.icon}
-                title={benefit.title}
-                description={benefit.description}
-              />
-            ))}
-          </div>
-        </motion.section>
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16 md:mb-24"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+              For <span className="text-primary">Senders</span>: Ship with Ease
+            </h2>
+            <p className="text-center text-gray-700 mb-10 md:mb-12 max-w-2xl mx-auto">
+              Follow these simple steps to send your items securely.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {senderSteps.map((step, index) => (
+                <StepCard
+                  key={index}
+                  icon={step.icon}
+                  title={step.title}
+                  description={step.description}
+                  stepNumber={String(index + 1).padStart(2, "0")}
+                  className={step.colorClass}
+                />
+              ))}
+            </div>
+            <motion.div variants={itemVariants} className="text-center mt-12">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300"
+              >
+                <Link to="/list-baggage">
+                  Send an Item Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.section>
 
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-200"
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16 md:mb-24"
           >
-            Ready to Get Started?
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-gray-700 mb-8 max-w-xl mx-auto"
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+              For <span className="text-primary">Travelers</span>: Earn on the
+              Go
+            </h2>
+            <p className="text-center text-gray-700 mb-10 md:mb-12 max-w-2xl mx-auto">
+              Turn your extra baggage space into extra cash on your next trip.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {travelerSteps.map((step, index) => (
+                <StepCard
+                  key={index}
+                  icon={step.icon}
+                  title={step.title}
+                  description={step.description}
+                  stepNumber={String(index + 1).padStart(2, "0")}
+                  className={step.colorClass}
+                />
+              ))}
+            </div>
+            <motion.div variants={itemVariants} className="text-center mt-12">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300"
+              >
+                <Link to="/yank-a-bag">
+                  List Your Trip <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.section>
+
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16 md:mb-24"
           >
-            Join the{" "}
-            <span className="font-vernaccia-bold text-gray-900">Yankit</span>{" "}
-            community today and experience the future of peer-to-peer shipping
-            and travel earnings.
-          </motion.p>
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row justify-center items-center gap-4"
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10 md:mb-12">
+              Why Choose{" "}
+              <span className="font-vernaccia-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600">
+                Yankit
+              </span>
+              ?
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {benefits.map((benefit, index) => (
+                <BenefitCard
+                  key={index}
+                  icon={benefit.icon}
+                  title={benefit.title}
+                  description={benefit.description}
+                />
+              ))}
+            </div>
+          </motion.section>
+
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-200"
           >
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
+            <motion.h2
+              variants={itemVariants}
+              className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
             >
-              <Link to="/signup">
-                Sign Up Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-primary text-primary hover:bg-primary/10 w-full sm:w-auto font-semibold transform hover:scale-105 transition-transform duration-300"
+              Ready to Get Started?
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="text-gray-700 mb-8 max-w-xl mx-auto"
             >
-              <Link to="/support">Learn More</Link>
-            </Button>
-          </motion.div>
-        </motion.section>
+              Join the{" "}
+              <span className="font-vernaccia-bold text-gray-900">Yankit</span>{" "}
+              community today and experience the future of peer-to-peer shipping
+              and travel earnings.
+            </motion.p>
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row justify-center items-center gap-4"
+            >
+              <Button
+                asChild
+                size="lg"
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold shadow-lg transform hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
+              >
+                <Link to="/signup">
+                  Sign Up Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-primary text-primary hover:bg-primary/10 w-full sm:w-auto font-semibold transform hover:scale-105 transition-transform duration-300"
+              >
+                <Link to="/support">Learn More</Link>
+              </Button>
+            </motion.div>
+          </motion.section>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 HowItWorksPage.displayName = "HowItWorksPage";

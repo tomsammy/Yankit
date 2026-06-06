@@ -16,7 +16,7 @@ import {
   BaggageClaimIcon,
   Percent,
 } from "lucide-react";
-import { DEFAULT_CURRENCY } from "@/config/constants";
+import { DEFAULT_CURRENCY } from "@/data/constants";
 
 const YankABagNowEstimatedEarningsCard = ({
   isLoading,

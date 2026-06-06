@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import SEO from "@/components/SEO";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import AuthWall from "@/components/auth/AuthWall";
@@ -42,13 +42,14 @@ const YankABagPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Yank a Bag | Yankit</title>
-        <meta
-          name="description"
-          content="Offer your unused baggage allowance and earn while you travel."
-        />
-      </Helmet>
+      <SEO
+        title="Earn Money Delivering Luggage | Yankit"
+        description="Monetize your baggage space while you travel. Pick up shipments, earn cash, offset flight costs. Join
+Yankit's earning community."
+        path="/"
+        ogImageName="logo.png"
+        // schema={schema}
+      />
 
       <div className="container mx-auto px-4 py-8 md:py-12">
         <YankABagPageHeader />
@@ -74,6 +75,19 @@ const YankABagPage = () => {
                     <AlertDescription>{errors.confirmation}</AlertDescription>
                   </Alert>
                 )}
+
+                <div className="mt-10 w-full text-end">
+                  <p className="text-xs text-muted-foreground dark:text-slate-400">
+                    Bags are stored at{" "}
+                    <a
+                      href="https://radicalstorage.com"
+                      target="blank"
+                      className="text-blue-500 underline"
+                    >
+                      radicalstorage.com
+                    </a>
+                  </p>
+                </div>
 
                 <Button
                   type="submit"

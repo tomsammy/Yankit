@@ -22,7 +22,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useSession } from "@/hooks/useSession";
 import AuthModal from "@/components/auth/AuthModal";
 import { cn } from "@/lib/utils";
-import { MAX_BAGS_PER_LISTING } from "@/config/constants";
+import { MAX_BAGS_PER_LISTING } from "@/data/constants";
 import { globalAirportsList } from "@/lib/airportData";
 
 const SearchModeButton = ({

@@ -1,18 +1,18 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
-import { useToast } from '@/components/ui/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { useState, useEffect, useCallback } from 'react';
+import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect, useCallback } from "react";
 import {
   MAX_BAGGAGE_WEIGHT_PER_BAG,
   BASE_EARNING,
   PER_KM_RATE,
-} from '@/config/constants';
-import { haversineDistance, getCoords } from '@/lib/distanceUtils';
-import { parseISO } from 'date-fns';
-import { YANKIT_SERVICE_FEE_PERCENTAGE } from '../../config/constants';
-import { notifyNewActivityCTA } from '@/lib/notify';
+} from "@/data/constants";
+import { haversineDistance, getCoords } from "@/lib/distanceUtils";
+import { parseISO } from "date-fns";
+import { YANKIT_SERVICE_FEE_PERCENTAGE } from "../../data/constants";
+import { notifyNewActivityCTA } from "@/lib/notify";
 
 export const useListBaggageForm = () => {
   const { session } = useAuth();
@@ -30,28 +30,28 @@ export const useListBaggageForm = () => {
       origin: null,
       destination: null,
       departure_date: null,
-      number_of_bags: '1',
+      number_of_bags: "1",
       bag_weight_kg: `${MAX_BAGGAGE_WEIGHT_PER_BAG}`,
-      bag_length_cm: '',
-      bag_width_cm: '',
-      bag_height_cm: '',
-      recipient_name: '',
-      recipient_contact: '',
+      bag_length_cm: "",
+      bag_width_cm: "",
+      bag_height_cm: "",
+      recipient_name: "",
+      recipient_contact: "",
       dangerous_goods_declaration: false,
     },
   });
 
   const { watch, setError, clearErrors, setValue } = form;
-  const origin = watch('origin');
-  const destination = watch('destination');
+  const origin = watch("origin");
+  const destination = watch("destination");
 
   useEffect(() => {
     if (location.state?.searchCriteria) {
       const { origin, destination, date, bags } = location.state.searchCriteria;
-      if (origin) setValue('origin', origin);
-      if (destination) setValue('destination', destination);
-      if (date) setValue('departure_date', parseISO(date));
-      if (bags) setValue('number_of_bags', bags.toString());
+      if (origin) setValue("origin", origin);
+      if (destination) setValue("destination", destination);
+      if (date) setValue("departure_date", parseISO(date));
+      if (bags) setValue("number_of_bags", bags.toString());
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location.state, setValue, navigate, location.pathname]);
@@ -66,9 +66,9 @@ export const useListBaggageForm = () => {
     setIsCalculating(true);
 
     if (origin.value === destination.value) {
-      setError('destination', {
-        type: 'manual',
-        message: 'Origin and destination airports cannot be the same.',
+      setError("destination", {
+        type: "manual",
+        message: "Origin and destination airports cannot be the same.",
       });
       setIsCalculating(false);
       return;
@@ -80,10 +80,10 @@ export const useListBaggageForm = () => {
     if (o && d) {
       const distance = Math.round(haversineDistance(o, d));
       const grossCost = BASE_EARNING + distance * PER_KM_RATE;
-      const netCost = grossCost + (grossCost * YANKIT_SERVICE_FEE_PERCENTAGE);
+      const netCost = grossCost + grossCost * YANKIT_SERVICE_FEE_PERCENTAGE;
       setEstimatedDistance(distance);
       setEstimatedCostPerBag(Number(netCost.toFixed(2)));
-      clearErrors('destination');
+      clearErrors("destination");
     } else {
       setEstimatedDistance(null);
       setEstimatedCostPerBag(null);
@@ -100,27 +100,27 @@ export const useListBaggageForm = () => {
   const onSubmit = form.handleSubmit(async (data) => {
     if (!session?.user) {
       toast({
-        title: 'Authentication Error',
-        description: 'You must be logged in.',
-        variant: 'destructive',
+        title: "Authentication Error",
+        description: "You must be logged in.",
+        variant: "destructive",
       });
       return;
     }
 
     if (!estimatedCostPerBag) {
       toast({
-        title: 'Calculation Error',
-        description: 'Unable to calculate earnings.',
-        variant: 'destructive',
+        title: "Calculation Error",
+        description: "Unable to calculate earnings.",
+        variant: "destructive",
       });
       return;
     }
 
     if (!data.dangerous_goods_declaration) {
       toast({
-        title: 'Declaration Required',
-        description: 'You must confirm no dangerous goods.',
-        variant: 'destructive',
+        title: "Declaration Required",
+        description: "You must confirm no dangerous goods.",
+        variant: "destructive",
       });
       return;
     }
@@ -134,9 +134,9 @@ export const useListBaggageForm = () => {
       bagWeight > MAX_BAGGAGE_WEIGHT_PER_BAG
     ) {
       toast({
-        title: 'Validation Error',
+        title: "Validation Error",
         description: `Bag weight must be between 1 and ${MAX_BAGGAGE_WEIGHT_PER_BAG}kg.`,
-        variant: 'destructive',
+        variant: "destructive",
       });
       return;
     }
@@ -145,64 +145,62 @@ export const useListBaggageForm = () => {
     const totalAmount = estimatedCostPerBag * bags;
 
     try {
-    const { data: created, error: insertError } = await supabase
-    .from('shipments')
-    .insert({
-      shipper_user_id: session.user.id,
-      origin: data.origin.label,
-      destination: data.destination.label,
-      departure_date: data.departure_date,
-      agreed_weight_kg: bagWeight * bags,
-      agreed_price: totalAmount,
-      status: 'pending_payment',
-      currency: 'USD',
-      number_of_bags: bags,
-      bag_weight_kg: bagWeight,
-      bag_length_cm: Number(data.bag_length_cm),
-      bag_width_cm: Number(data.bag_width_cm),
-      bag_height_cm: Number(data.bag_height_cm),
-      recipient_name: data.recipient_name,
-      recipient_contact: data.recipient_contact,
-      dangerous_goods_declaration: true,
-    })
-    .select('id')
-    .single();
-  
-  if (insertError) throw insertError;
-  
-  const shipmentId = created.id;
+      const { data: created, error: insertError } = await supabase
+        .from("shipments")
+        .insert({
+          shipper_user_id: session.user.id,
+          origin: data.origin.label,
+          destination: data.destination.label,
+          departure_date: data.departure_date,
+          agreed_weight_kg: bagWeight * bags,
+          agreed_price: totalAmount,
+          status: "pending_payment",
+          currency: "USD",
+          number_of_bags: bags,
+          bag_weight_kg: bagWeight,
+          bag_length_cm: Number(data.bag_length_cm),
+          bag_width_cm: Number(data.bag_width_cm),
+          bag_height_cm: Number(data.bag_height_cm),
+          recipient_name: data.recipient_name,
+          recipient_contact: data.recipient_contact,
+          dangerous_goods_declaration: true,
+        })
+        .select("id")
+        .single();
 
-  const { data: users } = await supabase
-    .from('profiles')
-    .select('email')
-    .not('email', 'is', null);
-  
-  if (users?.length) {
-    await notifyNewActivityCTA({
-      to: users.map(u => u.email),
-    });
-  }
-    
-  const { data: stripeData, error: stripeErr } = await supabase.functions.invoke(
-    'create-stripe-checkout-session',
-    {
-      body: {
-        shipmentId,
-        successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-        cancelUrl: `${window.location.origin}/payment-cancel`,
-      },
-    }
-  );
-  
-  if (stripeErr) throw stripeErr;
-  
-  window.location.href = stripeData.url;          
+      if (insertError) throw insertError;
+
+      const shipmentId = created.id;
+
+      const { data: users } = await supabase
+        .from("profiles")
+        .select("email")
+        .not("email", "is", null);
+
+      if (users?.length) {
+        await notifyNewActivityCTA({
+          to: users.map((u) => u.email),
+        });
+      }
+
+      const { data: stripeData, error: stripeErr } =
+        await supabase.functions.invoke("create-stripe-checkout-session", {
+          body: {
+            shipmentId,
+            successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+            cancelUrl: `${window.location.origin}/payment-cancel`,
+          },
+        });
+
+      if (stripeErr) throw stripeErr;
+
+      window.location.href = stripeData.url;
     } catch (err) {
       console.error(err);
       toast({
-        title: 'Error',
-        description: err.message || 'Unexpected error.',
-        variant: 'destructive',
+        title: "Error",
+        description: err.message || "Unexpected error.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
