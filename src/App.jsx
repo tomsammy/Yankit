@@ -33,7 +33,7 @@ import React, { Suspense } from 'react';
     
     const AboutPage = React.lazy(() => import('@/pages/static/AboutPage'));
     const CareersPage = React.lazy(() => import('@/pages/static/CareersPage'));
-    const PressPage = React.lazy(() => import('@/pages/static/PressPage'));
+    const BlogPage = React.lazy(() => import('@/pages/static/BlogPage'));
     const TrustSafetyPage = React.lazy(() => import('@/pages/static/TrustSafetyPage'));
     const TermsOfServicePage = React.lazy(() => import('@/pages/static/TermsOfServicePage'));
     const PrivacyPolicyPage = React.lazy(() => import('@/pages/static/PrivacyPolicyPage'));
@@ -69,7 +69,8 @@ import React, { Suspense } from 'react';
       { path: "/payment-cancelled", element: <PaymentCancelledPage />, isProtected: true, name: "Payment Cancelled" },
       { path: "/about", element: <AboutPage />, name: "About Us" },
       { path: "/careers", element: <CareersPage />, name: "Careers" },
-      { path: "/press", element: <PressPage />, name: "Press" },
+      { path: "/press", element: <BlogPage />, name: "Blog" },
+      { path: "/blog", element: <BlogPage />, name: "Blog" },
       { path: "/trust-safety", element: <TrustSafetyPage />, name: "Trust & Safety" },
       { path: "/terms", element: <TermsOfServicePage />, name: "Terms of Service" },
       { path: "/privacy", element: <PrivacyPolicyPage />, name: "Privacy Policy" },

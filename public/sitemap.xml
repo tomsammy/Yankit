@@ -46,8 +46,14 @@
   </url>
 
   <url>
+    <loc>https://yankit.com.au/blog</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
     <loc>https://yankit.com.au/press</loc>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
     <changefreq>yearly</changefreq>
   </url>
 
