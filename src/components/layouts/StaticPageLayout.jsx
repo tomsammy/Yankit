@@ -27,7 +27,7 @@ import React from 'react';
               {Icon && (
                 <Icon className="w-16 h-16 text-primary dark:text-secondary mx-auto mb-4" />
               )}
-              <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary">
+              <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary py-2">
                 {title}
               </h1>
             </header>

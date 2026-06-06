@@ -26,7 +26,7 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <StaticPageLayout title="Yankit Blog & Insights" icon={BookOpen}>
+    <StaticPageLayout title="Yankit Blogs & Insights" icon={BookOpen}>
       <div className="space-y-6">
         <p className="text-lg text-muted-foreground dark:text-slate-300 max-w-3xl mb-8">
           Discover travel tips, P2P shipping guides, company news, and inspiring stories from the global <span className="font-vernaccia-bold">Yankit</span> community.
