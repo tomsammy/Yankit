@@ -11,7 +11,7 @@ const blogPosts = [
     date: "June 5, 2026",
     author: "Samuel Thomas",
     excerpt: "We're excited to partner with Escrow.com to bring fully secure, milestone-based peer-to-peer payouts to our global user community.",
-    imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "/images/blog/escrow_migration.png",
     content: `
       <p>Today marks a major milestone in the evolution of Yankit. We are thrilled to announce that we have fully migrated our peer-to-peer payment and escrow infrastructure to <strong>Escrow.com</strong>, the world's leading licensed and regulated online escrow service.</p>
       
@@ -39,7 +39,7 @@ const blogPosts = [
     date: "June 4, 2026",
     author: "Emily Grace",
     excerpt: "Learn the best practices for packing, declaring, and sending your packages securely through peer-to-peer travel networks.",
-    imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "/images/blog/p2p_shipping.png",
     content: `
       <p>Peer-to-peer (P2P) shipping is changing the global logistics game. By utilizing the unused baggage space of travelers, you can send items internationally at a fraction of the cost of traditional couriers. However, safety and compliance must always come first.</p>
       
@@ -63,7 +63,7 @@ const blogPosts = [
     date: "June 2, 2026",
     author: "Liam Fletcher",
     excerpt: "Discover how globetrotters are offsetting their flight costs by sharing their unused baggage allowance with people in their community.",
-    imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "/images/blog/offset_flight.png",
     content: `
       <p>Travel is back, and flight tickets are more expensive than ever. But what if you could offset a significant portion of your airfare simply by packing a bit lighter? That's exactly what thousands of "Yankers" are doing on our platform.</p>
       
@@ -88,7 +88,7 @@ const blogPosts = [
     date: "May 28, 2026",
     author: "Sophia Martinez",
     excerpt: "From rolling clothes to packing cubes, these space-saving hacks will help you maximize your baggage allowance like a pro.",
-    imageUrl: "https://images.unsplash.com/photo-1553531384-cc64ac80f931?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "/images/blog/packing_hacks.png",
     content: `
       <p>Whether you're traveling for leisure or listing your space on Yankit to earn extra income, packing efficiently is a must-have skill. Here are our top 7 packing secrets:</p>
       
