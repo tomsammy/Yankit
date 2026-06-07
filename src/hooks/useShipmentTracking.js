@@ -109,6 +109,9 @@ const useShipmentTracking = (shipmentId) => {
                 .single();
 
             if (shipmentError) {
+                if (shipmentError.code === 'PGRST116') {
+                    throw new Error("You must be logged in as the shipper or traveler to track this shipment, or the shipment does not exist.");
+                }
                 throw shipmentError;
             }
 

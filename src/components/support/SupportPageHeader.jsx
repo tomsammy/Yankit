@@ -14,7 +14,7 @@ const SupportPageHeader = () => {
         <img
           alt="Abstract geometric background for support header"
           className="w-full h-full object-cover opacity-20"
-          src="https://images.unsplash.com/photo-1610459946348-d256a697227a"
+          src="https://images.unsplash.com/photo-1610459946348-d256a697227a?auto=format&fit=crop&w=1200&q=75"
         />
       </div>
       <motion.div

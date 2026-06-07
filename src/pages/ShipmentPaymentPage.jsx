@@ -53,7 +53,7 @@ const ShipmentPaymentPage = () => {
           title: "Unauthorized",
           description: "You are not authorized to pay for this shipment.",
         });
-        navigate("/my-shipments");
+        navigate("/my-listings");
         return;
       }
 
@@ -74,7 +74,7 @@ const ShipmentPaymentPage = () => {
         title: "Error",
         description: `Could not load shipment details: ${error.message}`,
       });
-      navigate("/my-shipments");
+      navigate("/my-listings");
     } finally {
       setIsLoading(false);
     }
@@ -137,7 +137,7 @@ const ShipmentPaymentPage = () => {
         <p className="text-muted-foreground">
           We couldn't find the shipment you're looking for.
         </p>
-        <Button onClick={() => navigate("/my-shipments")} className="mt-6">
+        <Button onClick={() => navigate("/my-listings")} className="mt-6">
           Go to My Shipments
         </Button>
       </div>

@@ -55,7 +55,7 @@ const YankingMatchesPage = () => {
         .eq("origin", yanking.origin)
         .eq("destination", yanking.destination)
         .eq("departure_date", matchDate)
-        .eq("is_paid", true)
+        .eq("status", "open")
         .is("traveler_user_id", null)
         .neq("shipper_user_id", yanking.yanker_user_id)
         .lte("agreed_weight_kg", yanking.available_space_kg)

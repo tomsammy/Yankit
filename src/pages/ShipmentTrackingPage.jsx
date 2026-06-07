@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, AlertTriangle, ArrowLeft, Package, MapPin, Luggage, ShieldCheck, CheckCircle } from 'lucide-react';
+import { Loader2, AlertTriangle, ArrowLeft, Package, MapPin, Luggage, ShieldCheck, CheckCircle, CreditCard } from 'lucide-react';
 import useShipmentTracking from '@/hooks/useShipmentTracking';
 import ListingTrackingTimeline from '@/components/listings/ListingTrackingTimeline';
 import { useAuth } from '@/contexts/AuthContext';
@@ -24,7 +24,7 @@ const ErrorState = ({ error }) => (
         <p className="text-destructive font-semibold">Could not load shipment details.</p>
         <p className="text-muted-foreground text-sm max-w-md">{error || "There was an error fetching the tracking information. Please try again later."}</p>
         <Button asChild variant="outline" className="mt-4">
-          <Link to="/my-shipments"><ArrowLeft className="mr-2 h-4 w-4" />Back to Shipments</Link>
+          <Link to="/my-listings"><ArrowLeft className="mr-2 h-4 w-4" />Back to Shipments</Link>
         </Button>
     </div>
 );
@@ -35,6 +35,37 @@ const ShipmentTrackingPage = () => {
     const { session } = useAuth();
     const { toast } = useToast();
     const [confirmingDelivery, setConfirmingDelivery] = useState(false);
+    const [isPaying, setIsPaying] = useState(false);
+
+    const handleEscrowPayment = async () => {
+        try {
+            setIsPaying(true);
+            const { data, error: functionError } = await supabase.functions.invoke(
+                'create-escrow-transaction',
+                {
+                    body: {
+                        shipmentId,
+                        successUrl: `${window.location.origin}/shipment-tracking/${shipmentId}?payment_success=true`,
+                        cancelUrl: `${window.location.origin}/shipment-tracking/${shipmentId}?payment_cancelled=true`,
+                    },
+                }
+            );
+
+            if (functionError) throw functionError;
+            if (data?.error) throw new Error(data.error);
+            if (!data?.url) throw new Error('Escrow checkout URL missing');
+
+            window.location.href = data.url;
+        } catch (err) {
+            console.error("Escrow payment initiation failed:", err);
+            toast({
+                title: 'Payment Error',
+                description: err.message || 'Unable to start payment.',
+                variant: 'destructive',
+            });
+            setIsPaying(false);
+        }
+    };
 
     const handleConfirmDelivery = async () => {
         if (!session?.access_token) return;
@@ -164,6 +195,34 @@ const ShipmentTrackingPage = () => {
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="space-y-6">
+                        {!shipment.is_paid && shipment.traveler_user_id && shipment.shipper_user_id === session?.user?.id && (
+                            <Card className="shadow-md bg-white dark:bg-slate-800/80 backdrop-blur-sm border-l-4 border-l-yellow-500">
+                                <CardHeader className="pb-3">
+                                    <CardTitle className="flex items-center text-yellow-600 dark:text-yellow-400">
+                                        <AlertTriangle className="mr-2 h-5 w-5 animate-pulse" />
+                                        Traveler Matched - Escrow Payment Required
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="text-sm space-y-3">
+                                    <p className="text-muted-foreground text-xs leading-relaxed">
+                                        A traveler has agreed to carry your bag! To secure this shipment, you must fund the Escrow.com transaction. The funds will be held securely until delivery.
+                                    </p>
+                                    <Button
+                                        onClick={handleEscrowPayment}
+                                        disabled={isPaying}
+                                        className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-bold py-4 shadow-md flex items-center justify-center gap-2"
+                                    >
+                                        {isPaying ? (
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                        ) : (
+                                            <CreditCard className="h-4 w-4" />
+                                        )}
+                                        {isPaying ? "Redirecting..." : `Pay Escrow $${shipment.agreed_price.toFixed(2)}`}
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        )}
+
                         {shipment.is_paid && (
                             <Card className="shadow-md bg-white dark:bg-slate-800/80 backdrop-blur-sm border-l-4 border-l-green-500">
                                 <CardHeader className="pb-3">

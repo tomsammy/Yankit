@@ -56,12 +56,21 @@ import React, { useState, useEffect } from 'react';
             status,
         } = listing;
 
-        const statusDisplay = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
-        const statusColorClass = status === 'active' ? 'text-green-500' : 'text-yellow-500';
+        let statusDisplay = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
+        let statusColorClass = status === 'active' ? 'text-green-500' : 'text-yellow-500';
+        if (type !== 'yanking') {
+            if (!listing.is_paid && listing.traveler_user_id) {
+                statusDisplay = 'Awaiting Payment';
+                statusColorClass = 'text-red-500 font-bold';
+            } else if (status === 'open' && !listing.traveler_user_id) {
+                statusDisplay = 'Looking for Traveler';
+                statusColorClass = 'text-yellow-500';
+            }
+        }
         const navigate = useNavigate();
         const cannotDelete =
-        (type === 'shipping' &&
-          (status !== 'pending_payment' || listing.traveler_user_id)) ||
+        (type !== 'yanking' &&
+          ['active', 'in_transit', 'delivered', 'completed'].includes(status)) ||
         (type === 'yanking' && listing.is_matched); 
         return (
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 glassmorphism dark:bg-slate-800/50 dark:border-slate-700/50">

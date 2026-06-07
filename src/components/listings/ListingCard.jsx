@@ -46,7 +46,7 @@ const ListingCard = ({ listing, type }) => {
   } = listing;
 
   const handleEscrowPayment = async () => {
-    if (!isShipper || status !== 'pending_payment') return;
+    if (!isShipper || listing.is_paid || !listing.traveler_user_id) return;
 
     try {
       setIsPaying(true);
@@ -57,7 +57,7 @@ const ListingCard = ({ listing, type }) => {
           body: {
             shipmentId: id,
             successUrl: `${window.location.origin}/shipment-tracking/${id}?payment_success=true`,
-            cancelUrl: `${window.location.origin}/payment-cancel`,
+            cancelUrl: `${window.location.origin}/payment-cancelled`,
           },
         }
       );
@@ -76,7 +76,14 @@ const ListingCard = ({ listing, type }) => {
     }
   };
 
-  const getStatusBadgeVariant = (status) => {
+  const getStatusBadgeVariant = (listing) => {
+    const { status, traveler_user_id, is_paid } = listing;
+    if (!is_paid && traveler_user_id) {
+      return 'destructive';
+    }
+    if (status === 'open' && !traveler_user_id) {
+      return 'secondary';
+    }
     switch (status) {
       case 'pending_payment':
         return 'destructive';
@@ -96,14 +103,21 @@ const ListingCard = ({ listing, type }) => {
     }
   };
 
-  const getStatusText = (status) => {
+  const getStatusText = (listing) => {
+    const { status, traveler_user_id, is_paid } = listing;
+    if (!is_paid && traveler_user_id) {
+      return 'Awaiting Payment';
+    }
+    if (status === 'open' && !traveler_user_id) {
+      return 'Looking for Traveler';
+    }
     switch (status) {
       case 'pending_payment':
         return 'Awaiting Payment';
       case 'awaiting_match':
-        return 'Looking for Yanker';
+        return 'Looking for Traveler';
       case 'pending_acceptance':
-        return 'Awaiting Yanker Acceptance';
+        return 'Awaiting Traveler Acceptance';
       case 'active':
         return 'Active';
       case 'in_transit':
@@ -127,8 +141,8 @@ const ListingCard = ({ listing, type }) => {
             <Package className="mr-2 h-5 w-5" />
             {type === 'yankings' ? 'Yanking' : 'Shipment'}
           </CardTitle>
-          <Badge variant={getStatusBadgeVariant(status)}>
-            {getStatusText(status)}
+          <Badge variant={getStatusBadgeVariant(listing)}>
+            {getStatusText(listing)}
           </Badge>
         </div>
       </CardHeader>
@@ -180,7 +194,7 @@ const ListingCard = ({ listing, type }) => {
       </CardContent>
 
       <CardFooter className="p-4 bg-slate-50 dark:bg-slate-800/50">
-        {isShipper && status === 'pending_payment' ? (
+        {isShipper && !listing.is_paid && listing.traveler_user_id ? (
           <Button
             onClick={handleEscrowPayment}
             disabled={isPaying}
