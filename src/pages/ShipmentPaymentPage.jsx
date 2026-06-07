@@ -87,15 +87,9 @@ const ShipmentPaymentPage = () => {
   const handleGeneratePaymentLink = async () => {
     setIsGeneratingLink(true);
     try {
-      const stripe = await getStripe();
-      if (!stripe) {
-        throw new Error("Stripe.js has not loaded yet.");
-      }
-
       const { data: functionData, error: functionError } =
-        await supabase.functions.invoke("create-stripe-checkout-session", {
+        await supabase.functions.invoke("create-escrow-transaction", {
           body: {
-            priceId: STRIPE_SHIPMENT_PRICE_ID,
             shipmentId: shipmentDetails.id,
             successUrl: `${window.location.origin}/shipment-tracking/${shipmentDetails.id}?payment_success=true`,
             cancelUrl: `${window.location.origin}/shipment-payment/${shipmentDetails.id}?payment_cancel=true`,
@@ -106,34 +100,14 @@ const ShipmentPaymentPage = () => {
 
       if (functionData.error) throw new Error(functionData.error);
 
-      if (functionData.sessionId) {
-        const { error: updateError } = await supabase
-          .from("shipments")
-          .update({ status: "awaiting_yanker" })
-          .eq("id", shipmentId);
-
-        if (updateError) {
-          toast({
-            variant: "destructive",
-            title: "Status Update Failed",
-            description:
-              "Could not update shipment status, but your payment will proceed.",
-          });
-        } else {
-          toast({
-            title: "Success!",
-            description: "Redirecting to Stripe checkout...",
-          });
-        }
-
-        const { error: stripeError } = await stripe.redirectToCheckout({
-          sessionId: functionData.sessionId,
+      if (functionData.url) {
+        toast({
+          title: "Redirecting...",
+          description: "Moving you to Escrow.com checkout portal.",
         });
-        if (stripeError) {
-          throw new Error(stripeError.message);
-        }
+        window.location.href = functionData.url;
       } else {
-        throw new Error("Could not retrieve Stripe session ID.");
+        throw new Error("Could not retrieve Escrow checkout URL.");
       }
     } catch (error) {
       console.error("Error generating payment link:", error);

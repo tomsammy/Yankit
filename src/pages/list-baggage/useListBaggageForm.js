@@ -154,7 +154,7 @@ export const useListBaggageForm = () => {
           departure_date: data.departure_date,
           agreed_weight_kg: bagWeight * bags,
           agreed_price: totalAmount,
-          status: "pending_payment",
+          status: "open",
           currency: "USD",
           number_of_bags: bags,
           bag_weight_kg: bagWeight,
@@ -178,23 +178,21 @@ export const useListBaggageForm = () => {
         .not("email", "is", null);
 
       if (users?.length) {
-        await notifyNewActivityCTA({
+        // Silently notify or handle warning
+        notifyNewActivityCTA({
           to: users.map((u) => u.email),
-        });
+        }).catch((e) =>
+          console.warn("Activity notification failed (silently bypassed):", e),
+        );
       }
 
-      const { data: stripeData, error: stripeErr } =
-        await supabase.functions.invoke("create-stripe-checkout-session", {
-          body: {
-            shipmentId,
-            successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-            cancelUrl: `${window.location.origin}/payment-cancel`,
-          },
-        });
+      toast({
+        title: "Success",
+        description: "Baggage listed successfully! Awaiting a traveler match.",
+        className: "bg-green-500 dark:bg-green-600 text-white",
+      });
 
-      if (stripeErr) throw stripeErr;
-
-      window.location.href = stripeData.url;
+      navigate(`/shipment-tracking/${shipmentId}`);
     } catch (err) {
       console.error(err);
       toast({

@@ -49,16 +49,10 @@ const CreateShipmentAndPayPage = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const stripe = await getStripe();
-      if (!stripe) {
-        throw new Error("Stripe.js has not loaded yet.");
-      }
-
       const { data, error: functionError } = await supabase.functions.invoke(
-        "create-stripe-checkout-session",
+        "create-escrow-transaction",
         {
           body: {
-            priceId: STRIPE_SHIPMENT_PRICE_ID,
             shipmentId: shipment.id,
             successUrl: `${window.location.origin}/shipment-tracking/${shipment.id}?payment_success=true`,
             cancelUrl: `${window.location.origin}/create-shipment-and-pay?payment_cancel=true`,
@@ -74,15 +68,10 @@ const CreateShipmentAndPayPage = () => {
         throw new Error(data.error);
       }
 
-      if (data.sessionId) {
-        const { error: stripeError } = await stripe.redirectToCheckout({
-          sessionId: data.sessionId,
-        });
-        if (stripeError) {
-          throw new Error(stripeError.message);
-        }
+      if (data.url) {
+        window.location.href = data.url;
       } else {
-        throw new Error("Could not retrieve Stripe session ID.");
+        throw new Error("Could not retrieve Escrow checkout URL.");
       }
     } catch (err) {
       console.error("Payment initiation failed:", err);

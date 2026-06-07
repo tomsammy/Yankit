@@ -45,25 +45,25 @@ const ListingCard = ({ listing, type }) => {
     status,
   } = listing;
 
-  const handleStripePayment = async () => {
+  const handleEscrowPayment = async () => {
     if (!isShipper || status !== 'pending_payment') return;
 
     try {
       setIsPaying(true);
 
       const { data, error } = await supabase.functions.invoke(
-        'create-stripe-checkout-session',
+        'create-escrow-transaction',
         {
           body: {
             shipmentId: id,
-            successUrl: `${window.location.origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+            successUrl: `${window.location.origin}/shipment-tracking/${id}?payment_success=true`,
             cancelUrl: `${window.location.origin}/payment-cancel`,
           },
         }
       );
 
       if (error) throw error;
-      if (!data?.url) throw new Error('Stripe session URL missing');
+      if (!data?.url) throw new Error('Escrow checkout URL missing');
 
       window.location.href = data.url;
     } catch (err) {
@@ -182,7 +182,7 @@ const ListingCard = ({ listing, type }) => {
       <CardFooter className="p-4 bg-slate-50 dark:bg-slate-800/50">
         {isShipper && status === 'pending_payment' ? (
           <Button
-            onClick={handleStripePayment}
+            onClick={handleEscrowPayment}
             disabled={isPaying}
             className="w-full bg-green-600 hover:bg-green-700 text-white"
           >

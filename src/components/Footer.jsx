@@ -27,8 +27,8 @@ const Footer = () => {
         path: "/careers",
       },
       {
-        name: "Press",
-        path: "/press",
+        name: "Blog",
+        path: "/blog",
       },
     ],
     support: [

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
     import { useNavigate, useLocation } from 'react-router-dom';
     import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-    import { User, Star, Settings, Briefcase, MessageSquare } from 'lucide-react';
+    import { User, Star, Settings, Briefcase, MessageSquare, CreditCard } from 'lucide-react';
     import { motion } from 'framer-motion';
 
     import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
     import DashboardProfileTab from '@/components/dashboard/DashboardProfileTab';
     import DashboardReviewsTab from '@/components/dashboard/DashboardReviewsTab';
     import DashboardSettingsTab from '@/components/dashboard/DashboardSettingsTab';
+    import DashboardPayoutTab from '@/components/dashboard/DashboardPayoutTab';
     import UserAuthGuard from '@/components/auth/UserAuthGuard';
     import LoadingSpinner from '@/components/ui/LoadingSpinner'; 
     import { useAuth } from '@/contexts/AuthContext';
@@ -84,6 +85,7 @@ import React, { useState, useEffect } from 'react';
           isLoadingShipments={isLoadingShipments}
           isLoadingYankings={isLoadingYankings}        />
          },
+        { value: "payouts", label: "Payouts", icon: CreditCard, content: <DashboardPayoutTab session={session} /> },
         { value: "messages", label: "Messages", icon: MessageSquare, content: <p className="text-center text-muted-foreground">🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀</p> },
         { value: "reviews", label: "My Reviews", icon: Star, content: <DashboardReviewsTab userId={session?.user?.id} /> },
         { value: "settings", label: "Settings", icon: Settings, content: <DashboardSettingsTab /> },
@@ -102,7 +104,7 @@ import React, { useState, useEffect } from 'react';
           <DashboardQuickActions />
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 h-15 bg-primary/10 dark:bg-slate-800/60 p-2 rounded-lg ">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 h-15 bg-primary/10 dark:bg-slate-800/60 p-2 rounded-lg ">
               {tabItems.map((tab) => (
                 <TabsTrigger 
                   key={tab.value} 
