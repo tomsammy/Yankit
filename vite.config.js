@@ -260,7 +260,26 @@ export default defineConfig({
 				'@babel/traverse',
 				'@babel/generator',
 				'@babel/types'
-			]
+			],
+			output: {
+				manualChunks(id) {
+					if (id.includes('node_modules')) {
+						if (id.includes('@supabase') || id.includes('supabase')) {
+							return 'vendor-supabase';
+						}
+						if (id.includes('lucide-react')) {
+							return 'vendor-lucide';
+						}
+						if (id.includes('framer-motion')) {
+							return 'vendor-framer-motion';
+						}
+						if (id.includes('react-router-dom') || id.includes('react-router') || id.includes('@remix-run')) {
+							return 'vendor-react-router';
+						}
+						return 'vendor-core';
+					}
+				}
+			}
 		}
 	}
 });
