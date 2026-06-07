@@ -11,7 +11,9 @@ const HeroSection = () => {
         <img
           alt="Abstract airport pattern"
           className="w-full h-full object-cover"
-          src="./hero.jpeg"
+          src="./hero.webp"
+          fetchpriority="high"
+          loading="eager"
         />
       </div>
 

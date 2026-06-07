@@ -14,7 +14,6 @@ import {
 import { Loader2, Info, CreditCard, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { getStripe } from "@/lib/stripe";
 
 const STRIPE_SHIPMENT_PRICE_ID = "price_1S1fZKGdi1lKRwhj5miGgAUq";
 

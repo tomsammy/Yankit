@@ -21,7 +21,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { getStripe } from "@/lib/stripe";
 
 const STRIPE_SHIPMENT_PRICE_ID = "price_1S1fZKGdi1lKRwhj5miGgAUq";
 
